@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Urna.UrnaController">
+   <children>
+      <SplitPane dividerPositions="0.29797979797979796" prefHeight="400.0" prefWidth="608.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="405.0" prefWidth="196.0">
+               <children>
+                  <Button fx:id="btnCandidatos" onAction="#loadCandidatos" layoutX="27.0" layoutY="127.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Candidatos" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="27.0" AnchorPane.topAnchor="127.0" />
+                  <Button fx:id="btnMesarios" onAction="#loadMesarios" layoutX="27.0" layoutY="167.0" mnemonicParsing="false" text="Mesários" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="27.0" AnchorPane.topAnchor="167.0" />
+                  <Button fx:id="btnEleitores" onAction="#loadEleitores" layoutX="27.0" layoutY="87.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="Eleitores" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="27.0" AnchorPane.topAnchor="87.0" />
+                  <Button fx:id="btnChapas" onAction="#loadChapas" layoutX="27.0" layoutY="207.0" mnemonicParsing="false" text="Chapas" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="27.0" AnchorPane.topAnchor="207.0" />
+                  <Button fx:id="btnGrupos" onAction="#loadGrupos" layoutX="27.0" layoutY="247.0" mnemonicParsing="false" text="Grupos" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="27.0" AnchorPane.topAnchor="247.0" />
+                  <Button fx:id="btnEleicao" onAction="#loadEleicao" layoutX="27.0" layoutY="287.0" mnemonicParsing="false" text="Eleição" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="27.0" AnchorPane.topAnchor="287.0" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <TableView layoutY="54.0" prefHeight="293.0" prefWidth="422.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="54.0">
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="C1" />
+                      <TableColumn prefWidth="75.0" text="C2" />
+                    </columns>
+                  </TableView>
+                  <TextField layoutX="11.0" layoutY="14.0" prefHeight="25.0" prefWidth="332.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="79.0" AnchorPane.topAnchor="14.0" />
+                  <Button layoutX="356.0" layoutY="14.0" mnemonicParsing="false" text="Buscar" AnchorPane.leftAnchor="356.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="14.0" />
+                  <Button layoutX="115.0" layoutY="359.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="86.0" text="Alterar" AnchorPane.leftAnchor="115.0" AnchorPane.rightAnchor="221.0" AnchorPane.topAnchor="359.0" />
+                  <Button layoutX="307.0" layoutY="359.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="86.0" text="Remover" AnchorPane.leftAnchor="307.0" AnchorPane.rightAnchor="29.0" AnchorPane.topAnchor="359.0" />
+                  <Button layoutX="211.0" layoutY="359.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="86.0" text="Visualizar" AnchorPane.leftAnchor="211.0" AnchorPane.rightAnchor="125.0" AnchorPane.topAnchor="359.0" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

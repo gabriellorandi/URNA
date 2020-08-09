@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Candidato.CandidatoController">
+   <children>
+      <TextField fx:id="txtId" layoutX="102.0" layoutY="129.0" prefHeight="25.0" prefWidth="204.0" promptText="ID" AnchorPane.leftAnchor="102.0" AnchorPane.rightAnchor="294.0" AnchorPane.topAnchor="130.0" />
+      <TextField fx:id="txtCpf" layoutX="102.0" layoutY="226.0" prefHeight="25.0" prefWidth="204.0" promptText="CPF" AnchorPane.leftAnchor="102.0" AnchorPane.rightAnchor="294.0" AnchorPane.topAnchor="230.0" />
+      <TextField fx:id="txtNome" layoutX="102.0" layoutY="175.0" prefHeight="25.0" prefWidth="204.0" promptText="Nome" AnchorPane.leftAnchor="102.0" AnchorPane.rightAnchor="294.0" AnchorPane.topAnchor="180.0" />
+      <Button fx:id="btnAdd" layoutX="102.0" layoutY="328.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="139.0" text="Adicionar" />
+      <Button fx:id="btnCancel" layoutX="274.0" layoutY="328.0" mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="139.0" text="Cancelar" />
+   </children>
+
+
+</AnchorPane>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Mesario.MesarioController">
+   <children>
+      <TextField fx:id="txtId" layoutX="198.0" layoutY="125.0" prefHeight="25.0" prefWidth="204.0" promptText="ID" AnchorPane.leftAnchor="198.0" AnchorPane.rightAnchor="198.0" AnchorPane.topAnchor="125.0" />
+      <TextField fx:id="txtNome" layoutX="198.0" layoutY="175.0" prefHeight="25.0" prefWidth="204.0" promptText="Nome" AnchorPane.leftAnchor="198.0" AnchorPane.rightAnchor="198.0" AnchorPane.topAnchor="175.0" />
+      <Button fx:id="btnAdd" layoutX="145.0" layoutY="323.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="139.0" text="Adicionar" />
+      <Button fx:id="btnCancel" onAction="#close" layoutX="317.0" layoutY="323.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="139.0" text="Cancelar" />
+   </children>
+</AnchorPane>
