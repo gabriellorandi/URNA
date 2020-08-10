@@ -22,6 +22,7 @@ public class CandidatoController {
 
         Stage stage = (Stage)btnCancel.getScene().getWindow();
 
+        stage.setTitle("Urna");
         Scene scene = new Scene(parent);
         stage.setScene(scene);
         stage.show();

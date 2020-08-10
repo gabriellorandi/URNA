@@ -14,6 +14,8 @@ public class UrnaMain extends Application {
     @Override public void start(Stage stage) throws Exception {
         Pane sceneGraph = FXMLLoader.load(getClass().getResource("../Login/Login.fxml"));
         Scene scene = new Scene(sceneGraph, WIDTH, HEIGHT);
+
+        stage.setTitle("Login");
         stage.setScene(scene);
         stage.show();
     }
