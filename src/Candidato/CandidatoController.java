@@ -7,7 +7,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -16,16 +19,22 @@ import java.util.List;
 public class CandidatoController {
     @FXML TextField txtId;
     @FXML TextField txtNome;
-    @FXML TextField txtCpf;
     @FXML Button btnAdd;
     @FXML Button btnCancel;
 
+    @FXML private TableView<Candidato> tableView;
+    @FXML private TableColumn<Candidato, Long> candidatoId;
+    @FXML private TableColumn<Candidato, String> candidatoNome;
+
     List<Candidato> candidatos;
 
-    public CandidatoController() {
-
+    @FXML
+    public void initialize() {
         candidatos = new ArrayList<>();
+        tableView.getItems().addAll(candidatos);
 
+        candidatoId.setCellValueFactory(new PropertyValueFactory<>("candidatoId"));
+        candidatoNome.setCellValueFactory(new PropertyValueFactory<>("candidatoNome"));
     }
 
     public void close(ActionEvent event) throws Exception{
@@ -52,7 +61,11 @@ public class CandidatoController {
 
     }
 
-    public void cadastrarCandidato(Candidato candidato) {
+    public void cadastrarCandidato() {
+
+        Candidato candidato = new Candidato();
+        candidato.setId(Long.parseLong(txtId.getText()));
+        candidato.setNome(txtNome.getText());
 
         candidatos.add(candidato);
 

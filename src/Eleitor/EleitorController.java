@@ -5,26 +5,38 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EleitorController {
+
     @FXML TextField txtId;
     @FXML TextField txtNome;
     @FXML TextField txtCpf;
-    @FXML Button btnAdd;
+    @FXML Button btnCadastrar;
     @FXML Button btnCancel;
-    @FXML TextField buscar;
+
+    @FXML private TableView<Eleitor> tableView;
+    @FXML private TableColumn<Eleitor, Long> eleitorId;
+    @FXML private TableColumn<Eleitor, String> eleitorNome;
+    @FXML private TableColumn<Eleitor, Long> eleitorCPF;
 
     List<Eleitor> eleitores;
 
-    public EleitorController() {
 
+    @FXML
+    public void initialize() {
         eleitores = new ArrayList<>();
+        tableView.getItems().addAll(eleitores);
+
+        eleitorId.setCellValueFactory(new PropertyValueFactory<>("eleitorId"));
+        eleitorNome.setCellValueFactory(new PropertyValueFactory<>("eleitorNome"));
+        eleitorCPF.setCellValueFactory(new PropertyValueFactory<>("eleitorCpf"));
+
 
     }
 
@@ -52,9 +64,16 @@ public class EleitorController {
 
     }
 
-    public void cadastrarEleitor(Eleitor eleitor) {
+    public void cadastrarEleitor() {
+
+        Eleitor eleitor = new Eleitor();
+        eleitor.setId( Long.parseLong(txtId.getText()));
+        eleitor.setCpf( Long.parseLong(txtCpf.getText()) );
+        eleitor.setNome( txtNome.getText() );
 
         eleitores.add(eleitor);
+
+        tableView.refresh();
 
     }
 

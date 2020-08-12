@@ -1,6 +1,5 @@
 package Mesario;
 
-import Candidato.Candidato;
 import Eleitor.Eleitor;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,7 +7,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -20,8 +22,20 @@ public class MesarioController {
     @FXML Button btnAdd;
     @FXML Button btnCancel;
 
+    @FXML private TableView<Mesario> tableView;
+    @FXML private TableColumn<Mesario, Long> mesarioId;
+    @FXML private TableColumn<Mesario, String> mesarioNome;
+
     List<Mesario> mesarios;
 
+    @FXML
+    public void initialize() {
+        mesarios = new ArrayList<>();
+        tableView.getItems().addAll(mesarios);
+
+        mesarioId.setCellValueFactory(new PropertyValueFactory<>("mesarioId"));
+        mesarioNome.setCellValueFactory(new PropertyValueFactory<>("mesarioNome"));
+    }
 
     public void close(ActionEvent event) throws Exception{
 
@@ -36,7 +50,7 @@ public class MesarioController {
     }
 
 
-    public List<Mesario> buscarEleitor(String busca) {
+    public List<Mesario> buscarMesario(String busca) {
 
         List<Mesario> buscarCandidatos = new ArrayList<>();
         for (Mesario mesario : mesarios) {
@@ -48,7 +62,11 @@ public class MesarioController {
 
     }
 
-    public void cadastrarCandidato(Mesario mesario) {
+    public void cadastrarMesario() {
+
+        Mesario mesario = new Mesario();
+        mesario.setId( Long.parseLong( txtId.getText() ) );
+        mesario.setNome( txtNome.getText() );
 
         mesarios.add(mesario);
 

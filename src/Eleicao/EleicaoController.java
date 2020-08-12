@@ -6,14 +6,32 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EleicaoController {
     @FXML TextField txtId;
     @FXML TextField txtHora;
     @FXML Button btnAdd;
     @FXML Button btnCancel;
+
+    @FXML private TableView<Eleicao> tableView;
+    @FXML private TableColumn<Eleicao, Long> eleicaoId;
+
+
+    List<Eleicao> eleicaos;
+
+    @FXML
+    public void initialize() {
+        eleicaos = new ArrayList<>();
+        tableView.getItems().addAll(eleicaos);
+
+    }
 
     public void close(ActionEvent event) throws Exception{
 
@@ -25,5 +43,8 @@ public class EleicaoController {
         Scene scene = new Scene(parent);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void cadastrarEleicao( ) {
     }
 }
