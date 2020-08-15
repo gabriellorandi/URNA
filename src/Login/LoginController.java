@@ -1,5 +1,6 @@
 package Login;
 
+import Utils.PostgreSQLJDBC;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -36,6 +37,10 @@ public class LoginController extends Application {
 
     @FXML
     public void login(ActionEvent event) throws Exception {
+
+        PostgreSQLJDBC bancoDados = new PostgreSQLJDBC();
+
+        bancoDados.conectar();
 
         Parent parent = FXMLLoader.load(getClass().getResource("../Urna/Urna.fxml"));
 

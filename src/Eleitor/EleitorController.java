@@ -15,6 +15,7 @@ import java.util.List;
 public class EleitorController {
 
     @FXML TextField txtId;
+    @FXML TextField txtRegistro;
     @FXML TextField txtNome;
     @FXML TextField txtCpf;
     @FXML Button btnCadastrar;
@@ -26,17 +27,36 @@ public class EleitorController {
     @FXML private TableColumn<Eleitor, Long> eleitorCPF;
 
     List<Eleitor> eleitores;
+    EleitorDAO eleitorDAO;
 
 
     @FXML
     public void initialize() {
-        eleitores = new ArrayList<>();
+
+        eleitorDAO = new EleitorDAO();
+        eleitores = eleitorDAO.selecionarEleitores();
+
+        eleitorId.setCellValueFactory(new PropertyValueFactory<Eleitor,Long>("id"));
+        eleitorNome.setCellValueFactory(new PropertyValueFactory<Eleitor,String>("nome"));
+        eleitorCPF.setCellValueFactory(new PropertyValueFactory<Eleitor,Long>("cpf"));
+
         tableView.getItems().addAll(eleitores);
+        tableView.refresh();
 
-        eleitorId.setCellValueFactory(new PropertyValueFactory<>("eleitorId"));
-        eleitorNome.setCellValueFactory(new PropertyValueFactory<>("eleitorNome"));
-        eleitorCPF.setCellValueFactory(new PropertyValueFactory<>("eleitorCpf"));
+    }
 
+    public void atualizarEleitor() {
+
+        Eleitor eleitor = buscarEleitor();
+
+        if(eleitor != null) {
+            eleitor.setId( Long.parseLong(txtId.getText()));
+            eleitor.setCpf( Long.parseLong(txtCpf.getText()) );
+            eleitor.setNome( txtNome.getText() );
+
+            tableView.refresh();
+
+        }
 
     }
 
@@ -52,49 +72,60 @@ public class EleitorController {
         stage.show();
     }
 
-    public List<Eleitor> buscarEleitor(String busca) {
+    public Eleitor buscarEleitor() {
 
-        List<Eleitor> buscaEleitores = new ArrayList<>();
-        for (Eleitor eleitor : eleitores) {
-            if(eleitor.getNome().contains(busca) )
-                buscaEleitores.add(eleitor);
+        Eleitor eleitor = tableView.getSelectionModel().getSelectedItem();
+
+        if(eleitor != null) {
+            for (Eleitor e : eleitores) {
+                if(eleitor.equals(e) ) {
+                    return eleitor;
+                }
+            }
         }
 
-        return buscaEleitores;
-
+        return null;
     }
 
     public void cadastrarEleitor() {
 
         Eleitor eleitor = new Eleitor();
-        eleitor.setId( Long.parseLong(txtId.getText()));
+        eleitor.setId( Long.parseLong(txtId.getText()) );
         eleitor.setCpf( Long.parseLong(txtCpf.getText()) );
         eleitor.setNome( txtNome.getText() );
 
-        eleitores.add(eleitor);
+        if(!contemEleitor(eleitor)) {
 
-        tableView.refresh();
+            eleitor = eleitorDAO.cadastrarEleitor(eleitor);
+            eleitores.add(eleitor);
+            tableView.getItems().setAll(eleitores);
+            tableView.refresh();
+        }
+
+    }
+
+    public void removerEleitor() {
+
+        Eleitor eleitor = tableView.getSelectionModel().getSelectedItem();
+
+        if(eleitor != null) {
+            eleitores.remove(eleitor);
+
+            eleitorDAO.removerEleitor(eleitor.getId());
+
+            tableView.getItems().setAll(eleitores);
+            tableView.refresh();
+        }
 
     }
 
 
-    public Eleitor selecionarEleitor(Long id) {
+    public Boolean contemEleitor(Eleitor eleitor) {
 
-        List<Eleitor> buscaEleitores = new ArrayList<>();
-        for (Eleitor eleitor : eleitores) {
-            if(eleitor.getId() == id ){
-                return eleitor;
-            }
+        for(Eleitor e : eleitores) {
+            if(e.equals(eleitor))
+                return true;
         }
-        return null;
-    }
-
-    public void removerEleitor(Long id) {
-
-        for (Eleitor eleitor : eleitores) {
-            if(eleitor.getId() == id ){
-                eleitores.remove(eleitor);
-            }
-        }
+        return false;
     }
 }

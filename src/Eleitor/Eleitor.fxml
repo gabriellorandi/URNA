@@ -12,15 +12,16 @@
       <TextField fx:id="txtNome" layoutX="234.0" layoutY="30.0" prefHeight="25.0" prefWidth="193.0" promptText="Nome" AnchorPane.leftAnchor="234.0" AnchorPane.rightAnchor="382.0" AnchorPane.topAnchor="30.0" />
       <TextField fx:id="txtCpf" layoutX="443.0" layoutY="30.0" prefHeight="25.0" prefWidth="193.0" promptText="CPF" AnchorPane.leftAnchor="443.0" AnchorPane.rightAnchor="173.0" AnchorPane.topAnchor="30.0" />
       <Button fx:id="btnCadastrar" layoutX="650.0" layoutY="30.0" mnemonicParsing="false" onAction="#cadastrarEleitor" prefHeight="25.0" prefWidth="139.0" text="Adicionar" />
-      <Button fx:id="btnCancel" cancelButton="true" layoutX="22.0" layoutY="382.0" mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="139.0" text="Cancelar" />
-      <Button fx:id="btnCancel1" cancelButton="true" layoutX="192.0" layoutY="382.0" mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="139.0" text="Importar" />
+      <Button fx:id="btnCancel" cancelButton="true" layoutX="650.0" layoutY="382.0" mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="139.0" text="Cancelar" />
+      <Button fx:id="btnCancel1" cancelButton="true" layoutX="358.0" layoutY="382.0" mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="139.0" text="Importar" />
       <TableView fx:id="tableView" layoutX="22.0" layoutY="72.0" prefHeight="284.0" prefWidth="760.0">
         <columns>
-          <TableColumn fx:id="eleitorId" prefWidth="135.0" text="ID" />
-          <TableColumn fx:id="eleitorNome" prefWidth="156.0" text="Nome" />
-            <TableColumn fx:id="eleitorCPF" prefWidth="172.0" text="CPF" />
-            <TableColumn fx:id="acao" prefWidth="172.0" text="Ação" />
+          <TableColumn fx:id="eleitorId" prefWidth="194.0" text="ID" />
+          <TableColumn fx:id="eleitorNome" minWidth="0.0" prefWidth="253.0" text="Nome" />
+            <TableColumn fx:id="eleitorCPF" prefWidth="312.0" text="CPF" />
         </columns>
       </TableView>
+      <Button fx:id="btnRemover" layoutX="22.0" layoutY="382.0" mnemonicParsing="false" onAction="#removerEleitor" prefHeight="25.0" prefWidth="139.0" text="Remover" />
+      <Button fx:id="btnAtualizar" layoutX="192.0" layoutY="382.0" mnemonicParsing="false" onAction="#atualizarEleitor" prefHeight="25.0" prefWidth="139.0" text="Atualizar" />
    </children>
 </AnchorPane>
