@@ -10,7 +10,7 @@ public class Candidato {
 
     private Long id;
     private String nome;
-    private Long file;
+    private Long cpf;
     private File foto;
 
     private Chapa chapa;
@@ -31,14 +31,6 @@ public class Candidato {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public Long getFile() {
-        return file;
-    }
-
-    public void setFile(Long file) {
-        this.file = file;
     }
 
     public File getFoto() {
@@ -71,5 +63,13 @@ public class Candidato {
 
     public void setGrupo(Grupo grupo) {
         this.grupo = grupo;
+    }
+
+    public Long getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(Long cpf) {
+        this.cpf = cpf;
     }
 }

@@ -17,6 +17,9 @@ public class UrnaController {
     Button btnCandidatos;
 
     @FXML
+    Button btnCargos;
+
+    @FXML
     Button btnMesarios;
 
     @FXML
@@ -99,6 +102,18 @@ public class UrnaController {
         Stage stage = new Stage();
         Scene scene = new Scene(parent,WIDTH,HEIGHT);
         stage.setTitle("Adicionar Eleição");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    public void loadCargos(ActionEvent event) throws Exception {
+
+        Parent parent = FXMLLoader.load(getClass().getResource("../Cargo/Cargo.fxml"));
+
+        Stage stage = new Stage();
+        Scene scene = new Scene(parent,WIDTH,HEIGHT);
+        stage.setTitle("Adicionar Cargo");
         stage.setScene(scene);
         stage.show();
     }
