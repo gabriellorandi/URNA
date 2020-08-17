@@ -3,6 +3,7 @@ package Chapa;
 public class Chapa {
 
     private Long id;
+    private String sigla;
     private String nome;
 
 
@@ -20,5 +21,13 @@ public class Chapa {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getSigla() {
+        return sigla;
+    }
+
+    public void setSigla(String sigla) {
+        this.sigla = sigla;
     }
 }

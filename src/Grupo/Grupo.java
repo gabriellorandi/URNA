@@ -3,7 +3,6 @@ package Grupo;
 public class Grupo {
 
     private Long id;
-    private String sigla;
     private String nome;
 
     public Long getId() {
@@ -14,13 +13,6 @@ public class Grupo {
         this.id = id;
     }
 
-    public String getSigla() {
-        return sigla;
-    }
-
-    public void setSigla(String sigla) {
-        this.sigla = sigla;
-    }
 
     public String getNome() {
         return nome;

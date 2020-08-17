@@ -1,4 +1,4 @@
-package Chapa;
+package Grupo;
 
 import Utils.PSQLException;
 import Utils.PostgreSQLJDBC;
@@ -10,29 +10,28 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChapaDAO {
+public class GrupoDAO {
 
-    public Chapa cadastrarChapa(Chapa c) {
+    public Grupo cadastrarGrupo(Grupo g) {
 
         try {
             Connection conn = PostgreSQLJDBC.conectar();
-            PreparedStatement prestmt = conn.prepareStatement("INSERT INTO Chapa(sigla,nome) VALUES (?,?)");
-            prestmt.setLong(1,c.getId());
-            prestmt.setString(2,c.getSigla());
-            prestmt.setString(3,c.getNome());
+            PreparedStatement prestmt = conn.prepareStatement("INSERT INTO Grupo(nome) VALUES (?)");
+            prestmt.setLong(1,g.getId());
+            prestmt.setString(2,g.getNome());
             prestmt.execute();
             prestmt.close();
         } catch (SQLException sql) {
             new PSQLException(sql);
         }
-        return c;
+        return g;
     }
 
-    public void removerChapa(Long id) {
+    public void removerGrupo(Long id) {
 
         try {
             Connection conn = PostgreSQLJDBC.conectar();
-            PreparedStatement prestmt = conn.prepareStatement("DELETE FROM Chapa WHERE id = ?");
+            PreparedStatement prestmt = conn.prepareStatement("DELETE FROM Grupo WHERE id = ?");
             prestmt.setLong(1,id);
             prestmt.execute();
             prestmt.close();
@@ -41,30 +40,29 @@ public class ChapaDAO {
         }
     }
 
-    public List<Chapa> selecionarChapas() {
+    public List<Grupo> selecionarGrupos() {
 
-        List<Chapa> chapas = new ArrayList<>();
+        List<Grupo> grupos = new ArrayList<>();
         try{
             Connection conn = PostgreSQLJDBC.conectar();
-            PreparedStatement prestmt = conn.prepareStatement("SELECT id,sigla,nome FROM Chapa ");
+            PreparedStatement prestmt = conn.prepareStatement("SELECT id,nome FROM Grupo ");
 
             ResultSet rs = prestmt.executeQuery();
 
             if(rs.next()) {
-                Chapa e = new Chapa();
+                Grupo g = new Grupo();
 
-                e.setId( rs.getLong("id") );
-                e.setSigla( rs.getString("sigla") );
-                e.setNome( rs.getString("nome") );
+                g.setId( rs.getLong("id") );
+                g.setNome( rs.getString("nome") );
 
-                chapas.add(e);
+                grupos.add(g);
             }
 
             prestmt.close();
         }catch (SQLException sql) {
             new PSQLException(sql);
         }
-        return chapas;
+        return grupos;
     }
 
 }
