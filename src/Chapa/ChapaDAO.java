@@ -17,9 +17,8 @@ public class ChapaDAO {
         try {
             Connection conn = PostgreSQLJDBC.conectar();
             PreparedStatement prestmt = conn.prepareStatement("INSERT INTO Chapa(sigla,nome) VALUES (?,?)");
-            prestmt.setLong(1,c.getId());
-            prestmt.setString(2,c.getSigla());
-            prestmt.setString(3,c.getNome());
+            prestmt.setString(1,c.getSigla());
+            prestmt.setString(2,c.getNome());
             prestmt.execute();
             prestmt.close();
         } catch (SQLException sql) {
@@ -50,7 +49,7 @@ public class ChapaDAO {
 
             ResultSet rs = prestmt.executeQuery();
 
-            if(rs.next()) {
+            while(rs.next()) {
                 Chapa e = new Chapa();
 
                 e.setId( rs.getLong("id") );

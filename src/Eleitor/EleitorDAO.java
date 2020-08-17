@@ -52,7 +52,7 @@ public class EleitorDAO {
 
             ResultSet rs = prestmt.executeQuery();
 
-            if(rs.next()) {
+            while(rs.next()) {
                 Eleitor e = new Eleitor();
 
                 e.setId( rs.getLong("id") );

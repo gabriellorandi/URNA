@@ -16,27 +16,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GrupoController {
-    @FXML TextField txtId;
     @FXML TextField txtNome;
-    @FXML TextField txtSigla;
-    @FXML Button btnAdd;
     @FXML Button btnCancel;
+    @FXML Button btnRemover;
+    @FXML Button btnCadastrar;
 
     List<Grupo> grupos;
+    GrupoDAO grupoDAO;
 
     @FXML private TableView<Grupo> tableView;
     @FXML private TableColumn<Grupo, Long> grupoId;
     @FXML private TableColumn<Grupo, String> grupoNome;
-    @FXML private TableColumn<Grupo, String> grupoSigla;
 
     @FXML
     public void initialize() {
-        grupos = new ArrayList<>();
-        tableView.getItems().addAll(grupos);
 
-        grupoId.setCellValueFactory(new PropertyValueFactory<>("grupoId"));
-        grupoNome.setCellValueFactory(new PropertyValueFactory<>("grupoNome"));
-        grupoSigla.setCellValueFactory(new PropertyValueFactory<>("grupoSigla"));
+        grupoId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        grupoNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+
+        grupoDAO = new GrupoDAO();
+        grupos = grupoDAO.selecionarGrupos();
+
+        tableView.getItems().addAll(grupos);
+        tableView.refresh();
 
     }
 
@@ -56,13 +58,32 @@ public class GrupoController {
     public void cadastrarGrupo( ) {
 
         Grupo grupo = new Grupo();
-        grupo.setId( Long.parseLong(txtId.getText()));
         grupo.setNome( txtNome.getText() );
-        grupo.setSigla( txtSigla.getText() );
 
-        grupos.add(grupo);
+        grupoDAO.cadastrarGrupo(grupo);
 
+        grupos = grupoDAO.selecionarGrupos();
+
+        tableView.getItems().setAll(grupos);
         tableView.refresh();
 
     }
+
+    public void removerGrupo() {
+
+        Grupo grupo = tableView.getSelectionModel().getSelectedItem();
+
+        if(grupo != null){
+
+            grupos.remove(grupo);
+            grupoDAO.removerGrupo(grupo.getId());
+
+            tableView.getItems().setAll(grupos);
+            tableView.refresh();
+
+        }
+
+
+    }
+
 }

@@ -17,8 +17,7 @@ public class GrupoDAO {
         try {
             Connection conn = PostgreSQLJDBC.conectar();
             PreparedStatement prestmt = conn.prepareStatement("INSERT INTO Grupo(nome) VALUES (?)");
-            prestmt.setLong(1,g.getId());
-            prestmt.setString(2,g.getNome());
+            prestmt.setString(1,g.getNome());
             prestmt.execute();
             prestmt.close();
         } catch (SQLException sql) {
@@ -49,7 +48,7 @@ public class GrupoDAO {
 
             ResultSet rs = prestmt.executeQuery();
 
-            if(rs.next()) {
+            while(rs.next()) {
                 Grupo g = new Grupo();
 
                 g.setId( rs.getLong("id") );

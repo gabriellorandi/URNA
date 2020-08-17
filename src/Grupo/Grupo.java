@@ -13,7 +13,6 @@ public class Grupo {
         this.id = id;
     }
 
-
     public String getNome() {
         return nome;
     }
