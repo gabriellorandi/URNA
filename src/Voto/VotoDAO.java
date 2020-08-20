@@ -2,7 +2,6 @@ package Voto;
 
 import Candidato.Candidato;
 import Eleicao.Eleicao;
-import Eleitor.Eleitor;
 import Utils.PSQLException;
 import Utils.PostgreSQLJDBC;
 
@@ -20,12 +19,11 @@ public class VotoDAO {
 
         try {
             Connection conn = PostgreSQLJDBC.conectar();
-            PreparedStatement prestmt = conn.prepareStatement("INSERT INTO Voto(id,data,eleitor_id,candidato_id,eleicao_id) VALUES (?,?,?,?,?)");
+            PreparedStatement prestmt = conn.prepareStatement("INSERT INTO Voto(id,data,candidato_id,eleicao_id) VALUES (?,?,?,?,?)");
             prestmt.setLong(1,v.getId());
             prestmt.setObject(2,v.getData());
-            prestmt.setLong(3,v.getEleitor().getId());
-            prestmt.setLong(4,v.getCandidato().getId());
-            prestmt.setLong(5,v.getEleicao().getId());
+            prestmt.setLong(3,v.getCandidato().getId());
+            prestmt.setLong(4,v.getEleicao().getId());
             prestmt.execute();
             prestmt.close();
         } catch (SQLException sql) {
@@ -54,7 +52,6 @@ public class VotoDAO {
             Connection conn = PostgreSQLJDBC.conectar();
             PreparedStatement prestmt = conn.prepareStatement(
                     "SELECT id,data,eleitor_id,candidato_id,eleicao_id " +
-                         "INNER JOIN Eleitor e ON e.id = eleitor_id " +
                          "INNER JOIN Candidato c ON c.id = candidato_id " +
                          "INNER JOIN Eleicao el ON el.id = eleicao_id " +
                          "FROM Voto ");
@@ -66,7 +63,6 @@ public class VotoDAO {
 
                 v.setId( rs.getLong("id") );
                 v.setData( rs.getObject("data", ZonedDateTime.class) );
-                v.setEleitor( rs.getObject("e", Eleitor.class) );
                 v.setCandidato( rs.getObject("c", Candidato.class) );
                 v.setEleicao(rs.getObject("el", Eleicao.class));
 

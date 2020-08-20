@@ -2,9 +2,6 @@ package Cargo;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -36,21 +33,15 @@ public class CargoController {
         cargoId.setCellValueFactory(new PropertyValueFactory<>("id"));
         cargoNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
 
-        cargos = cargoDAO.selecionarChapas();
+        cargos = cargoDAO.selecionarCargos();
         tableView.getItems().addAll(cargos);
         tableView.refresh();
     }
 
     public void close(ActionEvent event) throws Exception{
 
-        Parent parent = FXMLLoader.load(getClass().getResource("../Urna/Urna.fxml"));
-
         Stage stage = (Stage)btnCancel.getScene().getWindow();
-
-        stage.setTitle("Urna");
-        Scene scene = new Scene(parent);
-        stage.setScene(scene);
-        stage.show();
+        stage.close();
     }
 
     public void cadastrarCargo() {
@@ -60,7 +51,7 @@ public class CargoController {
 
         cargoDAO.cadastrarCargo(cargo);
 
-        cargos = cargoDAO.selecionarChapas();
+        cargos = cargoDAO.selecionarCargos();
 
         tableView.getItems().setAll(cargos);
         tableView.refresh();

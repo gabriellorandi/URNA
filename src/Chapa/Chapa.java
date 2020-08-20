@@ -6,6 +6,11 @@ public class Chapa {
     private String sigla;
     private String nome;
 
+    @Override
+    public String toString() {
+        return nome;
+    }
+
 
     public Long getId() {
         return id;

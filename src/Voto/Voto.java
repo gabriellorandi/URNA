@@ -12,8 +12,6 @@ public class Voto {
 
     private ZonedDateTime data;
 
-    private Eleitor eleitor;
-
     private Candidato candidato;
 
     private Eleicao eleicao;
@@ -26,13 +24,6 @@ public class Voto {
         this.data = data;
     }
 
-    public Eleitor getEleitor() {
-        return eleitor;
-    }
-
-    public void setEleitor(Eleitor eleitor) {
-        this.eleitor = eleitor;
-    }
 
     public Long getId() {
         return id;

@@ -39,14 +39,8 @@ public class MesarioController {
 
     public void close(ActionEvent event) throws Exception{
 
-        Parent parent = FXMLLoader.load(getClass().getResource("../Urna/Urna.fxml"));
-
         Stage stage = (Stage)btnCancel.getScene().getWindow();
-
-        stage.setTitle("Urna");
-        Scene scene = new Scene(parent);
-        stage.setScene(scene);
-        stage.show();
+        stage.close();
     }
 
 

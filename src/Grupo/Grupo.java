@@ -5,6 +5,12 @@ public class Grupo {
     private Long id;
     private String nome;
 
+    @Override
+    public String toString() {
+        return nome;
+    }
+
+
     public Long getId() {
         return id;
     }

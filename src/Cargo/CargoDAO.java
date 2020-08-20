@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CargoDAO {
-    public List<Cargo> selecionarChapas() {
+    public List<Cargo> selecionarCargos() {
 
 
         List<Cargo> cargos = new ArrayList<>();

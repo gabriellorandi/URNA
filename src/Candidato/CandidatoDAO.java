@@ -1,5 +1,8 @@
 package Candidato;
 
+import Cargo.Cargo;
+import Chapa.Chapa;
+import Grupo.Grupo;
 import Utils.PSQLException;
 import Utils.PostgreSQLJDBC;
 
@@ -12,14 +15,19 @@ import java.util.List;
 
 public class CandidatoDAO {
 
-    public Candidato cadastrarCandidato(Candidato c) {
+    public Candidato cadastrarCandidato(Candidato c, Chapa chapa, Cargo cargo, Grupo grupo) {
 
         try {
             Connection conn = PostgreSQLJDBC.conectar();
-            PreparedStatement prestmt = conn.prepareStatement("INSERT INTO Candidato(id,nome,cpf) VALUES (?,?,?)");
+            PreparedStatement prestmt = conn.prepareStatement(
+                    "INSERT INTO Candidato(id,nome,cpf,chapa_id,cargo_id,grupo_id) " +
+                            "VALUES (?,?,?,?,?,?)");
             prestmt.setLong(1,c.getId());
             prestmt.setString(2,c.getNome());
             prestmt.setLong(3,c.getCpf());
+            prestmt.setLong(4,chapa.getId());
+            prestmt.setLong(5,cargo.getId());
+            prestmt.setLong(6,grupo.getId());
             prestmt.execute();
             prestmt.close();
         } catch (SQLException sql) {
@@ -46,7 +54,15 @@ public class CandidatoDAO {
         List<Candidato> candidatoes = new ArrayList<>();
         try{
             Connection conn = PostgreSQLJDBC.conectar();
-            PreparedStatement prestmt = conn.prepareStatement("SELECT id,nome,cpf FROM Candidato ");
+            PreparedStatement prestmt = conn.prepareStatement(
+                    "SELECT c.id as id,c.nome as nome,c.cpf as cpf," +
+                            " cargo.id as cargoId,cargo.nome as cargoNome," +
+                            " chapa.id as chapaId,chapa.sigla as chapaSigla,chapa.nome as chapaNome, " +
+                            " grupo.id as grupoId, grupo.nome as grupoNome " +
+                            " FROM Candidato c " +
+                            " INNER JOIN Cargo cargo ON cargo.id = cargo_id " +
+                            " INNER JOIN Chapa chapa ON chapa.id = chapa_id " +
+                            " INNER JOIN Grupo grupo ON grupo.id = grupo_id ");
 
             ResultSet rs = prestmt.executeQuery();
 
@@ -56,6 +72,23 @@ public class CandidatoDAO {
                 c.setId( rs.getLong("id") );
                 c.setNome( rs.getString("nome") );
                 c.setCpf( rs.getLong("cpf") );
+
+                Cargo cargo = new Cargo();
+                cargo.setId( rs.getLong("cargoId") );
+                cargo.setNome(  rs.getString("cargoNome") );
+
+                Chapa chapa = new Chapa();
+                chapa.setId(rs.getLong("chapaId"));
+                chapa.setSigla(  rs.getString("chapaSigla") );
+                chapa.setNome(  rs.getString("chapaNome") );
+
+                Grupo grupo = new Grupo();
+                grupo.setId( rs.getLong("grupoId"  ));
+                grupo.setNome(  rs.getString("grupoNome") );
+
+                c.setCargo(cargo);
+                c.setChapa(chapa);
+                c.setGrupo(grupo);
 
                 candidatoes.add(c);
             }

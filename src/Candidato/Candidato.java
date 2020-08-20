@@ -72,4 +72,19 @@ public class Candidato {
     public void setCpf(Long cpf) {
         this.cpf = cpf;
     }
+
+    public String getCargoNome() {
+        return cargo.getNome();
+    }
+
+
+    public String getChapaNome() {
+        return chapa.getNome();
+    }
+
+
+    public String getGrupoNome() {
+        return grupo.getNome();
+    }
+
 }
