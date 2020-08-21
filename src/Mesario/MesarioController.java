@@ -1,6 +1,8 @@
 package Mesario;
 
 import Eleitor.Eleitor;
+import Utils.PSQLException;
+import Utils.PostgreSQLJDBC;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,28 +15,47 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MesarioController {
     @FXML TextField txtId;
     @FXML TextField txtNome;
+    @FXML TextField txtCpf;
+    @FXML TextField txtLogin;
+    @FXML TextField txtSenha;
     @FXML Button btnAdd;
     @FXML Button btnCancel;
 
     @FXML private TableView<Mesario> tableView;
     @FXML private TableColumn<Mesario, Long> mesarioId;
     @FXML private TableColumn<Mesario, String> mesarioNome;
+    @FXML private TableColumn<Mesario, String> mesarioCpf;
+    @FXML private TableColumn<Mesario, String> mesarioLogin;
+    @FXML private TableColumn<Mesario, String> mesarioSenha;
 
     List<Mesario> mesarios;
+    MesarioDAO mesarioDAO;
 
     @FXML
     public void initialize() {
-        mesarios = new ArrayList<>();
+
+        mesarioDAO = new MesarioDAO();
+        mesarios = mesarioDAO.selecionarMesarios();
+
+        mesarioId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        mesarioNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        mesarioCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
+        mesarioLogin.setCellValueFactory(new PropertyValueFactory<>("login"));
+        mesarioSenha.setCellValueFactory(new PropertyValueFactory<>("senha"));
+
         tableView.getItems().addAll(mesarios);
 
-        mesarioId.setCellValueFactory(new PropertyValueFactory<>("mesarioId"));
-        mesarioNome.setCellValueFactory(new PropertyValueFactory<>("mesarioNome"));
+        tableView.refresh();
+
     }
 
     public void close(ActionEvent event) throws Exception{
@@ -43,48 +64,37 @@ public class MesarioController {
         stage.close();
     }
 
-
-    public List<Mesario> buscarMesario(String busca) {
-
-        List<Mesario> buscarCandidatos = new ArrayList<>();
-        for (Mesario mesario : mesarios) {
-            if(mesario.getNome().contains(busca) )
-                buscarCandidatos.add(mesario);
-        }
-
-        return buscarCandidatos;
-
-    }
-
     public void cadastrarMesario() {
 
         Mesario mesario = new Mesario();
-        mesario.setId( Long.parseLong( txtId.getText() ) );
         mesario.setNome( txtNome.getText() );
+        mesario.setCpf( txtCpf.getText() );
+        mesario.setLogin( txtLogin.getText() );
+        mesario.setSenha( txtSenha.getText() );
 
-        mesarios.add(mesario);
+        mesarioDAO.cadastrarMesario(mesario);
+
+        mesarios = mesarioDAO.selecionarMesarios();
+
+        tableView.getItems().setAll(mesarios);
+        tableView.refresh();
 
     }
 
+    public void removerMesario() {
 
-    public Mesario selecionarCandidatos(Long id) {
+        Mesario mesario = tableView.getSelectionModel().getSelectedItem();
 
-        List<Eleitor> buscaEleitores = new ArrayList<>();
-        for (Mesario mesario : mesarios) {
-            if(mesario.getId() == id ){
-                return mesario;
-            }
+        if(mesario != null){
+
+            mesarios.remove(mesario);
+            mesarioDAO.removerMesario(mesario.getId());
+
+            tableView.getItems().setAll(mesarios);
+            tableView.refresh();
+
         }
-        return null;
     }
 
-    public void removerCandidato(Long id) {
-
-        for (Mesario mesario : mesarios) {
-            if(mesario.getId() == id ){
-                mesarios.remove(mesario);
-            }
-        }
-    }
 
 }

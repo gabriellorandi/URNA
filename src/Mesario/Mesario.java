@@ -1,19 +1,12 @@
 package Mesario;
 
-public class Mesario {
+import Usuario.Usuario;
 
-    private Long id;
+public class Mesario extends Usuario {
+
     private String nome;
-    private String login;
-    private String senha;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private String cpf;
 
     public String getNome() {
         return nome;
@@ -23,19 +16,11 @@ public class Mesario {
         this.nome = nome;
     }
 
-    public String getLogin() {
-        return login;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 }

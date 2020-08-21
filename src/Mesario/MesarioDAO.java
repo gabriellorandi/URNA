@@ -16,11 +16,12 @@ public class MesarioDAO {
 
         try {
             Connection conn = PostgreSQLJDBC.conectar();
-            PreparedStatement prestmt = conn.prepareStatement("INSERT INTO Mesario(id,nome,login,senha) VALUES (?,?,?,?)");
-            prestmt.setLong(1,m.getId());
-            prestmt.setString(2,m.getNome());
+            PreparedStatement prestmt = conn.prepareStatement("INSERT INTO Mesario(nome,cpf,login,senha,admin) VALUES (?,?,?,?,?)");
+            prestmt.setString(1,m.getNome());
+            prestmt.setString(2,m.getCpf());
             prestmt.setString(3,m.getLogin());
             prestmt.setString(4,m.getSenha());
+            prestmt.setBoolean(5,m.isAdmin());
             prestmt.execute();
             prestmt.close();
         } catch (SQLException sql) {
@@ -47,7 +48,7 @@ public class MesarioDAO {
         List<Mesario> mesarios = new ArrayList<>();
         try{
             Connection conn = PostgreSQLJDBC.conectar();
-            PreparedStatement prestmt = conn.prepareStatement("SELECT id,nome,login,senha FROM Mesario ");
+            PreparedStatement prestmt = conn.prepareStatement("SELECT id,nome,cpf,login,senha FROM Mesario ");
 
             ResultSet rs = prestmt.executeQuery();
 
@@ -56,6 +57,7 @@ public class MesarioDAO {
 
                 m.setId( rs.getLong("id") );
                 m.setNome( rs.getString("nome") );
+                m.setCpf( rs.getString("cpf") );
                 m.setLogin( rs.getString("login") );
                 m.setSenha( rs.getString("senha") );
 

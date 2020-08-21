@@ -28,6 +28,24 @@ CREATE TABLE Cargo(
 
 );
 
+CREATE TABLE Usuario(
+
+      id serial not null primary key,
+      login varchar(30) unique not null,
+      senha varchar(50) not null,
+      admin boolean not null
+
+);
+
+INSERT INTO Usuario(login,senha,admin) VALUES ('admin','1234',true);
+
+CREATE TABLE Mesario(
+
+    nome varchar(30) not null,
+    cpf varchar(11) not null
+
+) INHERITS (Usuario) ;
+
 CREATE TABLE Candidato(
 
 	id bigint not null,
