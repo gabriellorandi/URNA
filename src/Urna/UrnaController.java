@@ -1,11 +1,13 @@
 package Urna;
 
+import Login.LoginController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class UrnaController {
@@ -33,6 +35,9 @@ public class UrnaController {
 
     @FXML
     Button btnEleicao;
+
+    @FXML
+    Button btnDeslogar;
 
     @FXML
     public void loadCandidatos(ActionEvent event) throws Exception {
@@ -116,6 +121,24 @@ public class UrnaController {
         stage.setTitle("Adicionar Cargo");
         stage.setScene(scene);
         stage.show();
+    }
+
+    @FXML
+    public void deslogar(ActionEvent event) throws Exception {
+
+        Stage stage = (Stage)btnDeslogar.getScene().getWindow();
+        stage.close();
+
+        Parent parent = FXMLLoader.load(getClass().getResource("../Login/Login.fxml"));
+        stage = new Stage();
+        Scene scene = new Scene(parent, LoginController.WIDTH, LoginController.HEIGHT);
+
+        stage.setTitle("URNA");
+        stage.setScene(scene);
+        stage.show();
+
+
+
     }
 
 }

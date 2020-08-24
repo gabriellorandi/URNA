@@ -1,21 +1,20 @@
 package Eleicao;
 
 import Candidato.Candidato;
-import Mesario.Mesario;
 import Secao.Secao;
-import Voto.Voto;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class Eleicao {
 
     private Long id;
-    private Double hora;
+    private LocalDate dia;
 
-    private List<Mesario> mesarios;
-    private List<Candidato> candidatos;
+
     private List<Secao> secoes;
-    private List<Voto> votos;
+    private List<Candidato> candidatos;
+
 
     public Long getId() {
         return id;
@@ -25,20 +24,21 @@ public class Eleicao {
         this.id = id;
     }
 
-    public Double getHora() {
-        return hora;
+    public LocalDate getDia() {
+        return dia;
     }
 
-    public void setHora(Double hora) {
-        this.hora = hora;
+    public void setDia(LocalDate dia) {
+        this.dia = dia;
     }
 
-    public List<Mesario> getMesarios() {
-        return mesarios;
+
+    public List<Secao> getSecoes() {
+        return secoes;
     }
 
-    public void setMesarios(List<Mesario> mesarios) {
-        this.mesarios = mesarios;
+    public void setSecoes(List<Secao> secoes) {
+        this.secoes = secoes;
     }
 
     public List<Candidato> getCandidatos() {
@@ -49,19 +49,12 @@ public class Eleicao {
         this.candidatos = candidatos;
     }
 
-    public List<Secao> getSecoes() {
-        return secoes;
+    public Boolean getHaCandidatos(){
+        return (candidatos!=null && !candidatos.isEmpty());
     }
 
-    public void setSecoes(List<Secao> secoes) {
-        this.secoes = secoes;
+    public Boolean getHaSecoes(){
+        return (secoes!=null && !secoes.isEmpty());
     }
 
-    public List<Voto> getVotos() {
-        return votos;
-    }
-
-    public void setVotos(List<Voto> votos) {
-        this.votos = votos;
-    }
 }

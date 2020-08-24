@@ -17,6 +17,12 @@ public class Candidato {
     private Cargo cargo;
     private Grupo grupo;
 
+    @Override
+    public String toString() {
+
+        return "Id:"+id+" Nome:"+nome;
+    }
+
     public Long getId() {
         return id;
     }

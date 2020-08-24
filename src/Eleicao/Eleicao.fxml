@@ -4,26 +4,24 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import org.controlsfx.control.CheckComboBox?>
 
 <AnchorPane prefHeight="442.0" prefWidth="809.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Eleicao.EleicaoController">
    <children>
-      <TextField fx:id="txtId" layoutX="23.0" layoutY="30.0" prefHeight="25.0" prefWidth="193.0" promptText="ID" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="593.0" AnchorPane.topAnchor="30.0" />
       <Button fx:id="btnCadastrar" layoutX="650.0" layoutY="30.0" mnemonicParsing="false" onAction="#cadastrarEleicao" prefHeight="25.0" prefWidth="139.0" text="Adicionar" />
-      <Button fx:id="btnCancel" cancelButton="true" layoutX="493.0" layoutY="382.0" mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="139.0" text="Cancelar" />
-      <Button fx:id="btnCancel1" cancelButton="true" layoutX="177.0" layoutY="382.0" mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="139.0" text="Mesários" />
+      <Button fx:id="btnCancel" cancelButton="true" layoutX="650.0" layoutY="382.0" mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="139.0" text="Cancelar" />
       <TableView fx:id="tableView" layoutX="22.0" layoutY="72.0" prefHeight="284.0" prefWidth="760.0">
          <columns>
             <TableColumn fx:id="eleicaoId" prefWidth="135.0" text="ID" />
-            <TableColumn fx:id="eleicaoHora" prefWidth="156.0" text="Nome" />
-            <TableColumn fx:id="eleicaoCandidato" prefWidth="156.0" text="Candidato" />
-            <TableColumn fx:id="eleicaoMesario" prefWidth="156.0" text="Mesário" />
-            <TableColumn fx:id="acao" prefWidth="172.0" text="Ação" />
+            <TableColumn fx:id="eleicaoDia" prefWidth="244.0" text="Dia" />
+            <TableColumn fx:id="eleicaoCandidato" prefWidth="176.0" text="Candidatos" />
+            <TableColumn fx:id="eleicaoSecoes" prefWidth="200.0" text="Seções" />
          </columns>
       </TableView>
-      <Button fx:id="btnCancel11" cancelButton="true" layoutX="333.0" layoutY="382.0" mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="139.0" text="Candidato" />
-      <Button fx:id="btnCancel111" cancelButton="true" layoutX="22.0" layoutY="382.0" mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="139.0" text="Seção" />
-      <DatePicker layoutX="229.0" layoutY="30.0" />
+      <Button fx:id="btnSecao" cancelButton="true" layoutX="22.0" layoutY="382.0" mnemonicParsing="false" onAction="#abrirSecao" prefHeight="25.0" prefWidth="139.0" text="Seção" />
+      <CheckComboBox fx:id="ccbCandidatos" layoutX="228.0" layoutY="30.0" prefHeight="25.0" prefWidth="162.0" />
+      <DatePicker fx:id="dateEleicao" layoutX="22.0" layoutY="30.0" />
+      <Button fx:id="btnRemover" cancelButton="true" layoutX="196.0" layoutY="382.0" mnemonicParsing="false" onAction="#removerEleicao" prefHeight="25.0" prefWidth="139.0" text="Remover" />
    </children>
 </AnchorPane>

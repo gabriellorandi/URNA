@@ -1,11 +1,21 @@
 package Secao;
 
+import Eleitor.Eleitor;
+import Mesario.Mesario;
+import Voto.Voto;
+
+import java.util.List;
+
 public class Secao {
 
     private Long id;
     private String logradouro;
     private Integer numero;
-    private String complemento;
+
+    private List<Voto> votos;
+    private List<Eleitor> eleitores;
+    private Mesario mesario;
+
 
     public Long getId() {
         return id;
@@ -24,13 +34,6 @@ public class Secao {
         this.numero = numero;
     }
 
-    public String getComplemento() {
-        return complemento;
-    }
-
-    public void setComplemento(String complemento) {
-        this.complemento = complemento;
-    }
 
     public String getLogradouro() {
         return logradouro;
@@ -38,5 +41,39 @@ public class Secao {
 
     public void setLogradouro(String logradouro) {
         this.logradouro = logradouro;
+    }
+
+    public List<Voto> getVotos() {
+        return votos;
+    }
+
+    public void setVotos(List<Voto> votos) {
+        this.votos = votos;
+    }
+
+    public Mesario getMesario() {
+        return mesario;
+    }
+
+    public String getMesarioNome() {
+        return mesario.getNome();
+    }
+
+    public Integer getEleitoresQuantidade() {
+        return eleitores.size();
+    }
+
+
+    public void setMesario(Mesario mesario) {
+        this.mesario = mesario;
+    }
+
+
+    public List<Eleitor> getEleitores() {
+        return eleitores;
+    }
+
+    public void setEleitores(List<Eleitor> eleitores) {
+        this.eleitores = eleitores;
     }
 }

@@ -2,7 +2,6 @@ package Voto;
 
 import Candidato.Candidato;
 import Eleicao.Eleicao;
-import Eleitor.Eleitor;
 
 import java.time.ZonedDateTime;
 

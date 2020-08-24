@@ -1,6 +1,8 @@
 package Login;
 
-import Usuario.UsuarioDAO;
+import Eleicao.Controle.ControleEleicaoController;
+import Mesario.Mesario;
+import Mesario.MesarioDAO;
 import Utils.PostgreSQLJDBC;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -8,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -29,10 +32,11 @@ public class LoginController extends Application {
     @FXML
     ImageView imageView;
 
-    UsuarioDAO usuarioDAO = new UsuarioDAO();
+    private Mesario mesario;
+    private MesarioDAO mesarioDAO = new MesarioDAO();
 
-    private static final int HEIGHT = 400;
-    private static final int WIDTH = 600;
+    public static final int HEIGHT = 400;
+    public static final int WIDTH = 600;
 
     @Override public void start(Stage stage) throws Exception {
         Pane sceneGraph = FXMLLoader.load(getClass().getResource("../Login/Login.fxml"));
@@ -53,7 +57,28 @@ public class LoginController extends Application {
 
         bancoDados.conectar();
 
-        if(usuarioDAO.isAdmin(txtLogin.getText(),txtSenha.getText())) {
+        Long mesarioId = mesarioDAO.getLogin(txtLogin.getText(),txtSenha.getText(),false);
+
+        if(mesarioId!=null) {
+
+            mesario = mesarioDAO.selecionarMesario(mesarioId);
+
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation((getClass().getResource("../Eleicao/Controle/ControleEleicao.fxml")));
+            Parent parent = loader.load();
+
+            ControleEleicaoController controleEleicaoController = loader.getController();
+            controleEleicaoController.setMesario(mesario);
+
+
+            Stage stage = (Stage)btnLogin.getScene().getWindow();
+
+            stage.setTitle("Eleição");
+            Scene scene = new Scene(parent);
+            stage.setScene(scene);
+            stage.show();
+
+        } else if(isAdmin()) {
 
             Parent parent = FXMLLoader.load(getClass().getResource("../Urna/Urna.fxml"));
 
@@ -63,8 +88,28 @@ public class LoginController extends Application {
             Scene scene = new Scene(parent);
             stage.setScene(scene);
             stage.show();
+
+        } else {
+
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Login");
+            alert.setHeaderText("Senha ou Usuário inválidos!");
+
+            alert.showAndWait();
         }
 
     }
 
+
+    private boolean isAdmin() {
+        return mesarioDAO.getLogin(txtLogin.getText(),txtSenha.getText(),true)!=null;
+    }
+
+    public Mesario getMesario() {
+        return mesario;
+    }
+
+    public void setMesario(Mesario mesario) {
+        this.mesario = mesario;
+    }
 }

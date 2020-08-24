@@ -43,16 +43,44 @@ public class MesarioDAO {
         }
     }
 
+    public Mesario selecionarMesario(Long id) {
+
+        try{
+            Connection conn = PostgreSQLJDBC.conectar();
+            PreparedStatement prestmt = conn.prepareStatement("SELECT id,nome,cpf,login,senha FROM Mesario WHERE id = ? AND admin = FALSE ");
+            prestmt.setLong(1,id);
+
+            ResultSet rs = prestmt.executeQuery();
+
+            if(rs.next()) {
+                Mesario m = new Mesario();
+
+                m.setId( rs.getLong("id") );
+                m.setNome( rs.getString("nome") );
+                m.setCpf( rs.getString("cpf") );
+                m.setLogin( rs.getString("login") );
+                m.setSenha( rs.getString("senha") );
+
+               return m;
+            }
+
+            prestmt.close();
+        }catch (SQLException sql) {
+            new PSQLException(sql);
+        }
+        return null;
+    }
+
     public List<Mesario> selecionarMesarios() {
 
         List<Mesario> mesarios = new ArrayList<>();
         try{
             Connection conn = PostgreSQLJDBC.conectar();
-            PreparedStatement prestmt = conn.prepareStatement("SELECT id,nome,cpf,login,senha FROM Mesario ");
+            PreparedStatement prestmt = conn.prepareStatement("SELECT id,nome,cpf,login,senha FROM Mesario WHERE  admin = FALSE  ");
 
             ResultSet rs = prestmt.executeQuery();
 
-            if(rs.next()) {
+            while(rs.next()) {
                 Mesario m = new Mesario();
 
                 m.setId( rs.getLong("id") );
@@ -69,6 +97,34 @@ public class MesarioDAO {
             new PSQLException(sql);
         }
         return mesarios;
+    }
+
+    public Long getLogin(String login, String senha, Boolean admin) {
+
+        try{
+            Connection conn = PostgreSQLJDBC.conectar();
+            PreparedStatement prestmt = conn.prepareStatement(
+                    "SELECT id FROM Mesario WHERE login LIKE ? AND senha LIKE ? AND admin = ? ");
+
+            prestmt.setString(1,login.toLowerCase());
+            prestmt.setString(2,senha);
+            prestmt.setBoolean(3,admin);
+
+            ResultSet rs = prestmt.executeQuery();
+
+            if(rs.next()) {
+                Long id = rs.getLong( "id" );
+                prestmt.close();
+                return id;
+            }
+
+            return null;
+
+
+        }catch (SQLException sql) {
+            new PSQLException(sql);
+        }
+        return null;
     }
 
 }

@@ -17,6 +17,7 @@
                   <Button fx:id="btnGrupos" layoutX="27.0" layoutY="247.0" mnemonicParsing="false" onAction="#loadGrupos" text="Grupos" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="27.0" AnchorPane.topAnchor="247.0" />
                   <Button fx:id="btnEleicao" layoutX="27.0" layoutY="287.0" mnemonicParsing="false" onAction="#loadEleicao" text="Eleição" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="27.0" AnchorPane.topAnchor="287.0" />
                   <Button fx:id="btnCargos" layoutX="27.0" layoutY="126.0" mnemonicParsing="false" onAction="#loadCargos" prefHeight="25.0" prefWidth="552.0" text="Cargos" />
+                  <Button fx:id="btnDeslogar" layoutX="218.0" layoutY="342.0" mnemonicParsing="false" onAction="#deslogar" prefHeight="25.0" prefWidth="171.0" text="Deslogar" />
                </children>
             </AnchorPane>
         </items>

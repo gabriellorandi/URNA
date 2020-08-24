@@ -21,6 +21,7 @@ public class CandidatoController {
     @FXML TextField txtCpf;
     @FXML Button btnAdd;
     @FXML Button btnCancel;
+    @FXML Button btnAddEleicao;
 
     @FXML private TableView<Candidato> tableView;
     @FXML private TableColumn<Candidato, Long> candidatoId;
@@ -28,6 +29,7 @@ public class CandidatoController {
     @FXML private TableColumn<Candidato, String> candidatoChapa;
     @FXML private TableColumn<Candidato, String> candidatoGrupo;
     @FXML private TableColumn<Candidato, String> candidatoCargo;
+
 
     @FXML private ComboBox cbGrupo;
     @FXML private ComboBox cbChapa;
@@ -93,7 +95,7 @@ public class CandidatoController {
         candidatoDAO.cadastrarCandidato(candidato,chapa,cargo,grupo);
 
         candidatos = candidatoDAO.selecionarCandidatos();
-        tableView.getItems().addAll(candidatos);
+        tableView.getItems().setAll(candidatos);
         tableView.refresh();
 
     }
