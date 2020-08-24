@@ -3,23 +3,24 @@ package Voto;
 import Candidato.Candidato;
 import Eleicao.Eleicao;
 
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 
 public class Voto {
 
     private Long id;
 
-    private ZonedDateTime data;
+    private LocalDate data;
 
     private Candidato candidato;
 
     private Eleicao eleicao;
 
-    public ZonedDateTime getData() {
+    public LocalDate getData() {
         return data;
     }
 
-    public void setData(ZonedDateTime data) {
+    public void setData(LocalDate data) {
         this.data = data;
     }
 

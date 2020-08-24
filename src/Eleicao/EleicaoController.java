@@ -35,8 +35,8 @@ public class EleicaoController {
     @FXML private TableView<Eleicao> tableView;
     @FXML private TableColumn<Eleicao, Long> eleicaoId;
     @FXML private TableColumn<Eleicao, LocalDate> eleicaoDia;
-    @FXML private TableColumn<Eleicao, Boolean> eleicaoCandidato;
-    @FXML private TableColumn<Eleicao, Boolean> eleicaoSecoes;
+    @FXML private TableColumn<Eleicao, Integer> eleicaoCandidato;
+    @FXML private TableColumn<Eleicao, Integer> eleicaoSecoes;
 
     private static final int HEIGHT = 600;
     private static final int WIDTH = 800;
@@ -60,13 +60,14 @@ public class EleicaoController {
 
         eleicaoDAO = new EleicaoDAO();
         candidatoDAO = new CandidatoDAO();
+        secaoDAO = new SecaoDAO();
 
         eleicaos = eleicaoDAO.selecionarEleicoes();
         candidatos = candidatoDAO.selecionarCandidatos();
         secaos = secaoDAO.selecionarSecoes();
 
         eleicaoId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        eleicaoDia.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        eleicaoDia.setCellValueFactory(new PropertyValueFactory<>("dia"));
         eleicaoCandidato.setCellValueFactory(new PropertyValueFactory<>("haCandidatos"));
         eleicaoSecoes.setCellValueFactory(new PropertyValueFactory<>("haSecoes"));
 
@@ -89,8 +90,6 @@ public class EleicaoController {
     }
 
     public void close(ActionEvent event) throws Exception{
-
-
         Stage stage = (Stage)btnCancel.getScene().getWindow();
         stage.close();
     }
@@ -117,11 +116,10 @@ public class EleicaoController {
         Parent parent = FXMLLoader.load(getClass().getResource("../Secao/Secao.fxml"));
 
         Stage stage = new Stage();
-        Scene scene = new Scene(parent,WIDTH,HEIGHT);
+        Scene scene = new Scene(parent);
         stage.setTitle("Adicionar Seção");
         stage.setScene(scene);
         stage.show();
-
 
     }
 

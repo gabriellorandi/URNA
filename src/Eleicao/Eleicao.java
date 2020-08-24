@@ -49,12 +49,14 @@ public class Eleicao {
         this.candidatos = candidatos;
     }
 
-    public Boolean getHaCandidatos(){
-        return (candidatos!=null && !candidatos.isEmpty());
+    public Integer getHaCandidatos(){
+        if(candidatos==null) return 0;
+        return candidatos.size();
     }
 
-    public Boolean getHaSecoes(){
-        return (secoes!=null && !secoes.isEmpty());
+    public Integer getHaSecoes(){
+        if(secoes==null) return 0;
+        return secoes.size();
     }
 
 }

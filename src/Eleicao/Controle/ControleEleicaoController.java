@@ -1,52 +1,83 @@
 package Eleicao.Controle;
 
-import Eleitor.Eleitor;
-import Login.LoginController;
+import Eleicao.Eleicao;
+import Eleicao.EleicaoDAO;
 import Mesario.Mesario;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class ControleEleicaoController {
 
-    @FXML private TableView<Eleitor> tableView;
-    @FXML private TableColumn<Eleitor, Long> eleitorId;
-    @FXML private TableColumn<Eleitor, String> eleitorNome;
-    @FXML private TableColumn<Eleitor, String> eleitorCpf;
+    @FXML private Button btnIniciar;
 
-    private List<Eleitor> eleitores;
+    @FXML private TableView<Eleicao> tableView;
+    @FXML private TableColumn<Eleicao, Long> eleicaoId;
+    @FXML private TableColumn<Eleicao, LocalDate> eleicaoDia;
+
+    private List<Eleicao> eleicoes;
+    private EleicaoDAO eleicaoDAO;
+
     private Mesario mesario;
 
 
     @FXML
     public void initialize() {
 
+        eleicaoDAO = new EleicaoDAO();
 
-
-        eleitorId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        eleitorNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        eleitorCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
-
-
-    }
-
-    public void autorizarVotar() {
-
-
+        eleicaoId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        eleicaoDia.setCellValueFactory(new PropertyValueFactory<>("dia"));
 
 
     }
 
-    public List<Eleitor> getEleitores() {
-        return eleitores;
+    public void load(Mesario mesario) {
+
+        setMesario(mesario);
+
+        eleicoes = eleicaoDAO.selecionarEleicoes(mesario);
+
+        tableView.getItems().addAll(eleicoes);
+        tableView.refresh();
+
     }
 
-    public void setEleitores(List<Eleitor> eleitores) {
-        this.eleitores = eleitores;
+    public void iniciarVotacao() throws Exception{
+
+        Eleicao eleicao = tableView.getSelectionModel().getSelectedItem();
+
+        if(eleicao != null) {
+
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation((getClass().getResource("../Controle/ControleEleitor.fxml")));
+            Parent parent = loader.load();
+
+            ControleEleitorController controleEleitorController = loader.getController();
+            controleEleitorController.load(mesario,eleicao);
+
+
+            Stage stage = (Stage)btnIniciar.getScene().getWindow();
+
+            stage.setTitle("Eleição");
+            Scene scene = new Scene(parent);
+            stage.setScene(scene);
+            stage.show();
+
+        }
+
+
     }
+
 
     public Mesario getMesario() {
         return mesario;
@@ -54,5 +85,8 @@ public class ControleEleicaoController {
 
     public void setMesario(Mesario mesario) {
         this.mesario = mesario;
+
     }
+
+
 }

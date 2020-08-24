@@ -47,6 +47,7 @@ public class SecaoController {
 
         secaoDAO = new SecaoDAO();
         mesarioDAO = new MesarioDAO();
+        eleitorDAO = new EleitorDAO();
 
         secoes = secaoDAO.selecionarSecoes();
         mesarios = mesarioDAO.selecionarMesarios();
@@ -88,8 +89,7 @@ public class SecaoController {
 
         secaoDAO.cadastrarSecao(secao);
 
-        secoes.add(secao);
-
+        secoes = secaoDAO.selecionarSecoes();
         tableView.getItems().setAll(secoes);
         tableView.refresh();
 

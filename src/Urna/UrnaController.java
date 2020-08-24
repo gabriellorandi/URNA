@@ -7,13 +7,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class UrnaController {
 
-    private static final int HEIGHT = 600;
-    private static final int WIDTH = 800;
+    public static final int HEIGHT = 600;
+    public static final int WIDTH = 800;
 
     @FXML
     Button btnCandidatos;

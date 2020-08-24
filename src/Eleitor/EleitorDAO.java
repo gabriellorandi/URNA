@@ -1,6 +1,7 @@
 package Eleitor;
 
 
+import Mesario.Mesario;
 import Utils.PSQLException;
 import Utils.PostgreSQLJDBC;
 
@@ -41,6 +42,40 @@ public class EleitorDAO {
         } catch (SQLException sql) {
             new PSQLException(sql);
         }
+    }
+
+
+    public List<Eleitor> selecionarEleitoresEleicao(Mesario m) {
+
+        List<Eleitor> eleitores = new ArrayList<>();
+        try{
+            Connection conn = PostgreSQLJDBC.conectar();
+            PreparedStatement prestmt = conn.prepareStatement(
+                    "SELECT e.id as id,e.nome as nome, e.cpf as cpf FROM Eleitor e " +
+                            "INNER JOIN Secao_Eleitor se ON se.eleitor_id = e.id " +
+                            "INNER JOIN Secao s ON  s.id = se.secao_id " +
+                            "INNER JOIN Eleicao_Secao els ON els.secao_id = s.id  " +
+                            "WHERE s.mesario_id = ? ");
+
+            prestmt.setLong(1,m.getId());
+
+            ResultSet rs = prestmt.executeQuery();
+
+            while(rs.next()) {
+                Eleitor e = new Eleitor();
+
+                e.setId( rs.getLong("id") );
+                e.setNome( rs.getString("nome") );
+                e.setCpf( rs.getLong("cpf") );
+
+                eleitores.add(e);
+            }
+
+            prestmt.close();
+        }catch (SQLException sql) {
+            new PSQLException(sql);
+        }
+        return eleitores;
     }
 
     public List<Eleitor> selecionarEleitores() {

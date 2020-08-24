@@ -11,7 +11,7 @@
 
 <AnchorPane prefHeight="442.0" prefWidth="916.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Secao.SecaoController">
    <children>
-      <TextField fx:id="txtLogradouro" layoutX="29.0" layoutY="30.0" prefHeight="25.0" prefWidth="178.0" promptText="Logradouro" AnchorPane.leftAnchor="29.0" AnchorPane.rightAnchor="602.0" AnchorPane.topAnchor="30.0" />
+      <TextField fx:id="txtLogradouro" layoutX="29.0" layoutY="30.0" prefHeight="25.0" prefWidth="178.0" promptText="Logradouro" AnchorPane.leftAnchor="29.0" AnchorPane.rightAnchor="709.0" AnchorPane.topAnchor="30.0" />
       <Button fx:id="btnCadastrar" layoutX="756.0" layoutY="30.0" mnemonicParsing="false" onAction="#cadastrarSecao" prefHeight="25.0" prefWidth="139.0" text="Adicionar" />
       <Button fx:id="btnCancel" cancelButton="true" layoutX="643.0" layoutY="377.0" mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="139.0" text="Cancelar" />
       <TableView fx:id="tableView" layoutX="22.0" layoutY="72.0" prefHeight="284.0" prefWidth="880.0">

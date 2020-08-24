@@ -7,13 +7,12 @@
 
 <AnchorPane prefHeight="474.0" prefWidth="764.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Eleicao.Controle.ControleEleicaoController">
    <children>
-      <TableView layoutX="37.0" layoutY="37.0" prefHeight="341.0" prefWidth="701.0">
+      <TableView fx:id="tableView" layoutX="37.0" layoutY="37.0" prefHeight="341.0" prefWidth="701.0">
         <columns>
-          <TableColumn fx:id="eleitorId" prefWidth="105.0" text="ID" />
-          <TableColumn fx:id="eleitorNome" prefWidth="302.0" text="Nome" />
-            <TableColumn fx:id="eleitorCpf" prefWidth="293.0" text="CPF" />
+          <TableColumn fx:id="eleicaoId" prefWidth="105.0" text="ID" />
+          <TableColumn fx:id="eleicaoDia" prefWidth="302.0" text="Dia" />
         </columns>
       </TableView>
-      <Button fx:id="btnAutorizar" layoutX="37.0" layoutY="401.0" mnemonicParsing="false" onAction="#autorizarVotar" prefHeight="25.0" prefWidth="140.0" text="Autorizar a votar" />
+      <Button fx:id="btnIniciar" layoutX="37.0" layoutY="401.0" mnemonicParsing="false" onAction="#iniciarVotacao" prefHeight="25.0" prefWidth="140.0" text="Iniciar Eleição" />
    </children>
 </AnchorPane>

@@ -1,6 +1,7 @@
 package Login;
 
 import Eleicao.Controle.ControleEleicaoController;
+import Eleicao.Controle.ControleEleitorController;
 import Mesario.Mesario;
 import Mesario.MesarioDAO;
 import Utils.PostgreSQLJDBC;
@@ -68,7 +69,7 @@ public class LoginController extends Application {
             Parent parent = loader.load();
 
             ControleEleicaoController controleEleicaoController = loader.getController();
-            controleEleicaoController.setMesario(mesario);
+            controleEleicaoController.load(mesario);
 
 
             Stage stage = (Stage)btnLogin.getScene().getWindow();

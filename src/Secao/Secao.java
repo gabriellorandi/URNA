@@ -16,6 +16,11 @@ public class Secao {
     private List<Eleitor> eleitores;
     private Mesario mesario;
 
+    @Override
+    public String toString() {
+        return logradouro+", "+numero;
+    }
+
 
     public Long getId() {
         return id;
@@ -60,7 +65,8 @@ public class Secao {
     }
 
     public Integer getEleitoresQuantidade() {
-        return eleitores.size();
+        if(eleitores==null) return 0;
+        return  eleitores.size();
     }
 
 
