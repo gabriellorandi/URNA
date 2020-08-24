@@ -20,19 +20,33 @@ public class VotoDAO {
 
         Long candidatoId = (v.getCandidato()!=null)?v.getCandidato().getId():null;
 
+        if(candidatoId != null) {
+            try {
+                Connection conn = PostgreSQLJDBC.conectar();
+                PreparedStatement prestmt = conn.prepareStatement("INSERT INTO Voto(data,candidato_id,eleicao_id) VALUES (?,?,?)");
+                prestmt.setObject(1,v.getData());
+                prestmt.setLong(2,candidatoId);
+                prestmt.setLong(3,v.getEleicao().getId());
+                prestmt.execute();
+                prestmt.close();
+            } catch (SQLException sql) {
+                new PSQLException(sql);
+            }
+            return v;
+        }
+
         try {
             Connection conn = PostgreSQLJDBC.conectar();
-            PreparedStatement prestmt = conn.prepareStatement("INSERT INTO Voto(id,data,candidato_id,eleicao_id) VALUES (?,?,?,?,?)");
-            prestmt.setLong(1,v.getId());
-            prestmt.setObject(2,v.getData());
-            prestmt.setLong(3,candidatoId);
-            prestmt.setLong(4,v.getEleicao().getId());
+            PreparedStatement prestmt = conn.prepareStatement("INSERT INTO Voto(data,eleicao_id) VALUES (?,?)");
+            prestmt.setObject(1,v.getData());
+            prestmt.setLong(2,v.getEleicao().getId());
             prestmt.execute();
             prestmt.close();
         } catch (SQLException sql) {
             new PSQLException(sql);
         }
         return v;
+
     }
 
     public void removerVoto(Long id) {

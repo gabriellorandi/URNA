@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 
 import java.time.LocalDate;
 
@@ -25,7 +26,11 @@ public class VotoController {
 
     @FXML Button btnBranco;
     @FXML Button btnConfirmar;
-    @FXML Label numeroCandidato;
+    @FXML Label lblNumeroCandidato;
+    @FXML Label lblNomeCandidato;
+    @FXML Label lblPartidoCandidato;
+    @FXML Label lblPartidoCandidato1;
+
 
     private VotoDAO votoDAO;
     private CandidatoDAO candidatoDAO;
@@ -52,58 +57,76 @@ public class VotoController {
 
     public void digito1(ActionEvent actionEvent) {
         votoNumero += "1";
+        lblNumeroCandidato.setText(votoNumero);
         procurarCandidato();
     }
 
     public void digito2(ActionEvent actionEvent) {
         votoNumero += "2";
+        lblNumeroCandidato.setText(votoNumero);
         procurarCandidato();
     }
 
     public void digito3(ActionEvent actionEvent) {
         votoNumero += "3";
+        lblNumeroCandidato.setText(votoNumero);
         procurarCandidato();
     }
 
     public void digito4(ActionEvent actionEvent) {
         votoNumero += "4";
+        lblNumeroCandidato.setText(votoNumero);
         procurarCandidato();
     }
 
     public void digito5(ActionEvent actionEvent) {
         votoNumero += "5";
+        lblNumeroCandidato.setText(votoNumero);
         procurarCandidato();
     }
 
     public void digito6(ActionEvent actionEvent) {
         votoNumero += "6";
+        lblNumeroCandidato.setText(votoNumero);
         procurarCandidato();
     }
 
     public void digito7(ActionEvent actionEvent) {
         votoNumero += "7";
+        lblNumeroCandidato.setText(votoNumero);
         procurarCandidato();
     }
 
     public void digito8(ActionEvent actionEvent) {
         votoNumero += "8";
+        lblNumeroCandidato.setText(votoNumero);
         procurarCandidato();
     }
 
     public void digito9(ActionEvent actionEvent) {
         votoNumero += "9";
+        lblNumeroCandidato.setText(votoNumero);
         procurarCandidato();
     }
 
     private void procurarCandidato() {
 
         candidato = candidatoDAO.procurarCandidato(eleicao,Long.parseLong(votoNumero));
-
+        if(candidato != null) {
+            lblNomeCandidato.setText(candidato.getNome());
+            lblPartidoCandidato.setText(candidato.getGrupoNome());
+            lblPartidoCandidato1.setText(candidato.getCargoNome());
+        } else {
+            lblNomeCandidato.setText("");
+            lblPartidoCandidato.setText("");
+            lblPartidoCandidato1.setText("");
+        }
     }
 
     public void corrige(ActionEvent actionEvent) {
         if(!votoNumero.isEmpty()){
             votoNumero.substring(0, votoNumero.length() - 1);
+            lblNumeroCandidato.setText(votoNumero);
         }
     }
 
@@ -116,6 +139,9 @@ public class VotoController {
 
         votoDAO.cadastrarVoto(v);
 
+        Stage stage = (Stage)btnBranco.getScene().getWindow();
+        stage.close();
+
     }
 
     public void confirmarVoto(ActionEvent actionEvent) {
@@ -126,6 +152,9 @@ public class VotoController {
         v.setData(LocalDate.now());
 
         votoDAO.cadastrarVoto(v);
+
+        Stage stage = (Stage)btnConfirmar.getScene().getWindow();
+        stage.close();
 
     }
 
