@@ -114,7 +114,6 @@ public class VotoController {
         candidato = candidatoDAO.procurarCandidato(eleicao,Long.parseLong(votoNumero));
         if(candidato != null) {
             lblNomeCandidato.setText(candidato.getNome());
-            lblPartidoCandidato.setText(candidato.getGrupoNome());
             lblPartidoCandidato1.setText(candidato.getCargoNome());
         } else {
             lblNomeCandidato.setText("");

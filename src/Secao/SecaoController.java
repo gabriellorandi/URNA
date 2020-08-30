@@ -1,10 +1,10 @@
 package Secao;
 
+import Eleicao.Eleicao;
 import Eleitor.Eleitor;
+import Eleitor.EleitorDAO;
 import Mesario.Mesario;
 import Mesario.MesarioDAO;
-import Eleitor.EleitorDAO;
-import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -39,8 +39,8 @@ public class SecaoController {
     private List<Secao> secoes;
     private List<Mesario> mesarios;
 
-    private List<Eleitor> eleitores;
-    private List<Eleitor> eleitoresSelecionados;
+
+    private Eleicao eleicao;
 
     @FXML
     public void initialize() {
@@ -51,7 +51,6 @@ public class SecaoController {
 
         secoes = secaoDAO.selecionarSecoes();
         mesarios = mesarioDAO.selecionarMesarios();
-        eleitores = eleitorDAO.selecionarEleitores();
 
         cbMesarios.getItems().addAll(mesarios);
 
@@ -65,13 +64,6 @@ public class SecaoController {
 
         tableView.refresh();
 
-        ccbEleitores.getItems().addAll(eleitores);
-
-        ccbEleitores.getCheckModel().getCheckedItems().addListener(new ListChangeListener<Eleitor>() {
-            public void onChanged(ListChangeListener.Change<? extends Eleitor> e) {
-                eleitoresSelecionados = ccbEleitores.getCheckModel().getCheckedItems();
-            }
-        });
 
     }
 
@@ -82,8 +74,6 @@ public class SecaoController {
         secao.setNumero( Integer.parseInt( txtNumero.getText() ) );
 
         Mesario mesario = (Mesario) cbMesarios.getSelectionModel().getSelectedItem();
-
-        secao.setEleitores(eleitoresSelecionados);
 
         secao.setMesario(mesario);
 
@@ -120,4 +110,7 @@ public class SecaoController {
 
     }
 
+    public void load(Eleicao eleicao) {
+        this.eleicao = eleicao;
+    }
 }

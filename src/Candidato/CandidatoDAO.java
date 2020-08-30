@@ -24,14 +24,11 @@ public class CandidatoDAO {
             PreparedStatement prestmt = conn.prepareStatement(
                     "SELECT c.id as id,c.nome as nome,c.cpf as cpf," +
                             " cargo.id as cargoId,cargo.nome as cargoNome," +
-                            " chapa.id as chapaId,chapa.sigla as chapaSigla,chapa.nome as chapaNome, " +
-                            " grupo.id as grupoId, grupo.nome as grupoNome " +
+                            " chapa.id as chapaId,chapa.sigla as chapaSigla,chapa.nome as chapaNome " +
                             " FROM Candidato c " +
                             " INNER JOIN Cargo cargo ON cargo.id = cargo_id " +
                             " INNER JOIN Chapa chapa ON chapa.id = chapa_id " +
-                            " INNER JOIN Grupo grupo ON grupo.id = grupo_id " +
-                            " INNER JOIN Eleicao_Candidato ec ON ec.candidato_id = c.id " +
-                            " INNER JOIN Eleicao e ON ec.eleicao_id = e.id " +
+                            " INNER JOIN Eleicao e ON e.id = eleicao_id " +
                             " WHERE e.id = ? AND c.id = ? ");
 
             prestmt.setLong(1, e.getId() );
@@ -55,13 +52,8 @@ public class CandidatoDAO {
                 chapa.setSigla(  rs.getString("chapaSigla") );
                 chapa.setNome(  rs.getString("chapaNome") );
 
-                Grupo grupo = new Grupo();
-                grupo.setId( rs.getLong("grupoId"  ));
-                grupo.setNome(  rs.getString("grupoNome") );
-
                 c.setCargo(cargo);
                 c.setChapa(chapa);
-                c.setGrupo(grupo);
 
                 prestmt.close();
                 return c;
@@ -76,19 +68,19 @@ public class CandidatoDAO {
 
     }
 
-    public Candidato cadastrarCandidato(Candidato c, Chapa chapa, Cargo cargo, Grupo grupo) {
+    public Candidato cadastrarCandidato(Candidato c, Eleicao e) {
 
         try {
             Connection conn = PostgreSQLJDBC.conectar();
             PreparedStatement prestmt = conn.prepareStatement(
-                    "INSERT INTO Candidato(id,nome,cpf,chapa_id,cargo_id,grupo_id) " +
+                    "INSERT INTO Candidato(id,nome,cpf,chapa_id,cargo_id,eleicao_id) " +
                             "VALUES (?,?,?,?,?,?)");
             prestmt.setLong(1,c.getId());
             prestmt.setString(2,c.getNome());
             prestmt.setLong(3,c.getCpf());
-            prestmt.setLong(4,chapa.getId());
-            prestmt.setLong(5,cargo.getId());
-            prestmt.setLong(6,grupo.getId());
+            prestmt.setLong(4,c.getChapa().getId());
+            prestmt.setLong(5,c.getCargo().getId());
+            prestmt.setLong(6,e.getId());
             prestmt.execute();
             prestmt.close();
         } catch (SQLException sql) {
@@ -118,12 +110,10 @@ public class CandidatoDAO {
             PreparedStatement prestmt = conn.prepareStatement(
                     "SELECT c.id as id,c.nome as nome,c.cpf as cpf," +
                             " cargo.id as cargoId,cargo.nome as cargoNome," +
-                            " chapa.id as chapaId,chapa.sigla as chapaSigla,chapa.nome as chapaNome, " +
-                            " grupo.id as grupoId, grupo.nome as grupoNome " +
+                            " chapa.id as chapaId,chapa.sigla as chapaSigla,chapa.nome as chapaNome " +
                             " FROM Candidato c " +
                             " INNER JOIN Cargo cargo ON cargo.id = cargo_id " +
-                            " INNER JOIN Chapa chapa ON chapa.id = chapa_id " +
-                            " INNER JOIN Grupo grupo ON grupo.id = grupo_id ");
+                            " INNER JOIN Chapa chapa ON chapa.id = chapa_id ");
 
             ResultSet rs = prestmt.executeQuery();
 
@@ -143,13 +133,8 @@ public class CandidatoDAO {
                 chapa.setSigla(  rs.getString("chapaSigla") );
                 chapa.setNome(  rs.getString("chapaNome") );
 
-                Grupo grupo = new Grupo();
-                grupo.setId( rs.getLong("grupoId"  ));
-                grupo.setNome(  rs.getString("grupoNome") );
-
                 c.setCargo(cargo);
                 c.setChapa(chapa);
-                c.setGrupo(grupo);
 
                 candidatoes.add(c);
             }

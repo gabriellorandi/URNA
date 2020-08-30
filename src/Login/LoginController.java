@@ -4,6 +4,7 @@ import Eleicao.Controle.ControleEleicaoController;
 import Eleicao.Controle.ControleEleitorController;
 import Mesario.Mesario;
 import Mesario.MesarioDAO;
+import Utils.AlertUtils;
 import Utils.PostgreSQLJDBC;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -39,6 +40,9 @@ public class LoginController extends Application {
     public static final int HEIGHT = 400;
     public static final int WIDTH = 600;
 
+    public static final int ADMIN_HEIGHT = 500;
+    public static final int ADMIN_WIDTH = 810;
+
     @Override public void start(Stage stage) throws Exception {
         Pane sceneGraph = FXMLLoader.load(getClass().getResource("../Login/Login.fxml"));
         Scene scene = new Scene(sceneGraph, WIDTH, HEIGHT);
@@ -71,7 +75,6 @@ public class LoginController extends Application {
             ControleEleicaoController controleEleicaoController = loader.getController();
             controleEleicaoController.load(mesario);
 
-
             Stage stage = (Stage)btnLogin.getScene().getWindow();
 
             stage.setTitle("Eleição");
@@ -81,22 +84,18 @@ public class LoginController extends Application {
 
         } else if(isAdmin()) {
 
-            Parent parent = FXMLLoader.load(getClass().getResource("../Urna/Urna.fxml"));
+            Parent parent = FXMLLoader.load(getClass().getResource("../Eleicao/Eleicao.fxml"));
 
-            Stage stage = (Stage)btnLogin.getScene().getWindow();
-
-            stage.setTitle("Urna");
-            Scene scene = new Scene(parent);
+            Stage stage = new Stage();
+            Scene scene = new Scene(parent,ADMIN_WIDTH,ADMIN_HEIGHT);
+            stage.setTitle("Adicionar Eleição");
             stage.setScene(scene);
             stage.show();
 
         } else {
 
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Login");
-            alert.setHeaderText("Senha ou Usuário inválidos!");
+            AlertUtils.alert("Login","Senha ou Usuário inválidos!",Alert.AlertType.WARNING);
 
-            alert.showAndWait();
         }
 
     }

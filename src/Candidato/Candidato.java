@@ -2,7 +2,6 @@ package Candidato;
 
 import Cargo.Cargo;
 import Chapa.Chapa;
-import Grupo.Grupo;
 
 import java.io.File;
 
@@ -15,7 +14,6 @@ public class Candidato {
 
     private Chapa chapa;
     private Cargo cargo;
-    private Grupo grupo;
 
     @Override
     public String toString() {
@@ -63,13 +61,6 @@ public class Candidato {
         this.chapa = chapa;
     }
 
-    public Grupo getGrupo() {
-        return grupo;
-    }
-
-    public void setGrupo(Grupo grupo) {
-        this.grupo = grupo;
-    }
 
     public Long getCpf() {
         return cpf;
@@ -88,9 +79,5 @@ public class Candidato {
         return chapa.getNome();
     }
 
-
-    public String getGrupoNome() {
-        return grupo.getNome();
-    }
 
 }

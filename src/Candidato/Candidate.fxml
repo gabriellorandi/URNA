@@ -8,37 +8,34 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="442.0" prefWidth="809.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Candidato.CandidatoController">
+<AnchorPane prefHeight="502.0" prefWidth="930.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Candidato.CandidatoController">
     <children>
-        <TextField fx:id="txtId" layoutX="22.0" layoutY="30.0" prefHeight="25.0" prefWidth="96.0" promptText="ID" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="691.0" AnchorPane.topAnchor="30.0" />
-        <TextField fx:id="txtNome" layoutX="131.0" layoutY="30.0" prefHeight="25.0" prefWidth="225.0" promptText="Nome" AnchorPane.leftAnchor="131.0" AnchorPane.rightAnchor="453.0" AnchorPane.topAnchor="30.0" />
-        <Button fx:id="btnCadastrar" layoutX="650.0" layoutY="30.0" mnemonicParsing="false" onAction="#cadastrarCandidato" prefHeight="25.0" prefWidth="139.0" text="Adicionar" />
-        <Button fx:id="btnCancel" cancelButton="true" layoutX="643.0" layoutY="396.0" mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="139.0" text="Cancelar" />
-        <TableView fx:id="tableView" layoutX="22.0" layoutY="107.0" prefHeight="273.0" prefWidth="760.0">
+        <TextField fx:id="txtId" layoutX="22.0" layoutY="30.0" prefHeight="25.0" prefWidth="149.0" promptText="ID" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="759.0" AnchorPane.topAnchor="30.0" />
+        <TextField fx:id="txtNome" layoutX="188.0" layoutY="30.0" prefHeight="25.0" prefWidth="201.0" promptText="Nome" AnchorPane.leftAnchor="188.0" AnchorPane.rightAnchor="541.0" AnchorPane.topAnchor="30.0" />
+        <Button fx:id="btnCadastrar" layoutX="620.0" layoutY="30.0" mnemonicParsing="false" onAction="#cadastrarCandidato" prefHeight="25.0" prefWidth="139.0" text="Adicionar" />
+        <Button fx:id="btnCancel" cancelButton="true" layoutX="746.0" layoutY="396.0" mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="139.0" text="Cancelar" />
+        <TableView fx:id="tableView" layoutX="24.0" layoutY="106.0" prefHeight="273.0" prefWidth="873.0">
             <columns>
                 <TableColumn fx:id="candidatoId" prefWidth="135.0" text="ID" />
-                <TableColumn fx:id="candidatoNome" prefWidth="156.0" text="Nome" />
-                <TableColumn fx:id="candidatoGrupo" prefWidth="156.0" text="Grupo" />
-                <TableColumn fx:id="candidatoChapa" prefWidth="156.0" text="Chapa" />
-                <TableColumn fx:id="candidatoCargo" prefWidth="156.0" text="Cargo" />
+                <TableColumn fx:id="candidatoNome" prefWidth="244.0" text="Nome" />
+                <TableColumn fx:id="candidatoChapa" prefWidth="273.0" text="Chapa" />
+                <TableColumn fx:id="candidatoCargo" prefWidth="220.0" text="Cargo" />
             </columns>
         </TableView>
-      <ComboBox fx:id="cbGrupo" layoutX="22.0" layoutY="69.0" prefHeight="25.0" prefWidth="175.0">
+      <ComboBox fx:id="cbChapa" layoutX="22.0" layoutY="69.0" prefHeight="25.0" prefWidth="201.0">
           <items>
               <FXCollections fx:factory="observableArrayList" />
           </items>
       </ComboBox>
-      <ComboBox fx:id="cbChapa" layoutX="204.0" layoutY="69.0" prefHeight="25.0" prefWidth="201.0">
+      <ComboBox fx:id="cbCargo" layoutX="258.0" layoutY="69.0" prefHeight="25.0" prefWidth="188.0">
           <items>
               <FXCollections fx:factory="observableArrayList" />
           </items>
       </ComboBox>
-      <ComboBox fx:id="cbCargo" layoutX="412.0" layoutY="69.0" prefHeight="25.0" prefWidth="188.0">
-          <items>
-              <FXCollections fx:factory="observableArrayList" />
-          </items>
-      </ComboBox>
-      <Button fx:id="btnRemover" cancelButton="true" layoutX="22.0" layoutY="390.0" mnemonicParsing="false" onAction="#removerCandidato" prefHeight="25.0" prefWidth="139.0" text="Remover" />
-      <TextField fx:id="txtCpf" layoutX="374.0" layoutY="30.0" prefHeight="25.0" prefWidth="225.0" promptText="CPF" />
+      <Button fx:id="btnRemover" cancelButton="true" layoutX="770.0" layoutY="30.0" mnemonicParsing="false" onAction="#removerCandidato" prefHeight="25.0" prefWidth="139.0" text="Remover" />
+      <TextField fx:id="txtCpf" layoutX="411.0" layoutY="30.0" prefHeight="25.0" prefWidth="188.0" promptText="CPF" />
+      <Button fx:id="btnCargo" cancelButton="true" layoutX="22.0" layoutY="396.0" mnemonicParsing="false" onAction="#abrirCargo" prefHeight="25.0" prefWidth="139.0" text="Cargo" />
+      <Button fx:id="btnChapa" cancelButton="true" layoutX="188.0" layoutY="396.0" mnemonicParsing="false" onAction="#abrirChapa" prefHeight="25.0" prefWidth="139.0" text="Chapa" />
+      <Button fx:id="btnImportar" cancelButton="true" layoutX="584.0" layoutY="396.0" mnemonicParsing="false" onAction="#importar" prefHeight="25.0" prefWidth="139.0" text="Importar" />
     </children>
 </AnchorPane>

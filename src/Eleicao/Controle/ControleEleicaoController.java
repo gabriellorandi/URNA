@@ -45,7 +45,6 @@ public class ControleEleicaoController {
 
         setMesario(mesario);
 
-        eleicoes = eleicaoDAO.selecionarEleicoes(mesario);
 
         tableView.getItems().addAll(eleicoes);
         tableView.refresh();

@@ -22,21 +22,21 @@ public class SecaoDAO {
             prestmt.executeUpdate();
 
 
-            ResultSet ids = prestmt.getGeneratedKeys();
-            if (ids.next()) {
-                Long secaoId =  ids.getLong("id");
-
-                for(Eleitor eleitor : s.getEleitores()) {
-
-                    prestmt = conn.prepareStatement("INSERT INTO Secao_Eleitor(secao_id,eleitor_id) VALUES (?,?)");
-                    prestmt.setLong(1,secaoId);
-                    prestmt.setLong(2,eleitor.getId());
-
-                    prestmt.execute();
-
-                }
-
-            }
+//            ResultSet ids = prestmt.getGeneratedKeys();
+//            if (ids.next()) {
+//                Long secaoId =  ids.getLong("id");
+//
+//                for(Eleitor eleitor : s.getEleitores()) {
+//
+//                    prestmt = conn.prepareStatement("INSERT INTO Secao_Eleitor(secao_id,eleitor_id) VALUES (?,?)");
+//                    prestmt.setLong(1,secaoId);
+//                    prestmt.setLong(2,eleitor.getId());
+//
+//                    prestmt.execute();
+//
+//                }
+//
+//            }
 
             prestmt.close();
         } catch (SQLException sql) {

@@ -1,10 +1,11 @@
 package Eleicao;
 
-import Candidato.Candidato;
-import Candidato.CandidatoDAO;
-import Secao.SecaoDAO;
-import Secao.Secao;
-import javafx.collections.ListChangeListener;
+import Candidato.CandidatoController;
+import Eleitor.EleitorController;
+import Login.LoginController;
+import Mesario.MesarioController;
+import Secao.SecaoController;
+import Utils.AlertUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +14,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import org.controlsfx.control.CheckComboBox;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -23,35 +23,22 @@ public class EleicaoController {
     @FXML TextField txtId;
     @FXML TextField txtHora;
     @FXML Button btnAdd;
-    @FXML Button btnAddCandidatoEleicao;
     @FXML Button btnCancel;
     @FXML Button btnSecao;
     @FXML DatePicker dateEleicao;
-
-    @FXML CheckComboBox<Candidato> ccbCandidatos;
-    @FXML CheckComboBox<Secao> ccbSecoes;
-
+    @FXML Button btnEleitores;
+    @FXML Button btnMesario;
+    @FXML Button btnCandidato;
+    @FXML Button btnDeslogar;
 
     @FXML private TableView<Eleicao> tableView;
     @FXML private TableColumn<Eleicao, Long> eleicaoId;
     @FXML private TableColumn<Eleicao, LocalDate> eleicaoDia;
-    @FXML private TableColumn<Eleicao, Integer> eleicaoCandidato;
-    @FXML private TableColumn<Eleicao, Integer> eleicaoSecoes;
-
-    private static final int HEIGHT = 600;
-    private static final int WIDTH = 800;
 
     private EleicaoDAO eleicaoDAO;
-    private CandidatoDAO candidatoDAO;
-    private SecaoDAO secaoDAO;
 
     List<Eleicao> eleicaos;
 
-    List<Candidato> candidatos;
-    List<Secao> secaos;
-
-    List<Candidato> candidatosSelecionados;
-    List<Secao> secoesSelecionados;
 
     @FXML
     public void initialize() {
@@ -59,34 +46,13 @@ public class EleicaoController {
         eleicaos = new ArrayList<>();
 
         eleicaoDAO = new EleicaoDAO();
-        candidatoDAO = new CandidatoDAO();
-        secaoDAO = new SecaoDAO();
 
         eleicaos = eleicaoDAO.selecionarEleicoes();
-        candidatos = candidatoDAO.selecionarCandidatos();
-        secaos = secaoDAO.selecionarSecoes();
 
         eleicaoId.setCellValueFactory(new PropertyValueFactory<>("id"));
         eleicaoDia.setCellValueFactory(new PropertyValueFactory<>("dia"));
-        eleicaoCandidato.setCellValueFactory(new PropertyValueFactory<>("haCandidatos"));
-        eleicaoSecoes.setCellValueFactory(new PropertyValueFactory<>("haSecoes"));
 
         tableView.getItems().addAll(eleicaos);
-
-        ccbCandidatos.getItems().addAll(candidatos);
-        ccbSecoes.getItems().addAll(secaos);
-
-        ccbCandidatos.getCheckModel().getCheckedItems().addListener(new ListChangeListener<Candidato>() {
-            public void onChanged(ListChangeListener.Change<? extends Candidato> c) {
-                candidatosSelecionados = ccbCandidatos.getCheckModel().getCheckedItems();
-            }
-        });
-
-        ccbSecoes.getCheckModel().getCheckedItems().addListener(new ListChangeListener<Secao>() {
-            public void onChanged(ListChangeListener.Change<? extends Secao> s) {
-                secoesSelecionados = ccbSecoes.getCheckModel().getCheckedItems();
-            }
-        });
     }
 
     public void close(ActionEvent event) throws Exception{
@@ -100,8 +66,6 @@ public class EleicaoController {
         Eleicao eleicao = new Eleicao();
 
         eleicao.setDia( dateEleicao.getValue() );
-        eleicao.setCandidatos(candidatosSelecionados);
-        eleicao.setSecoes(secoesSelecionados);
 
         eleicaoDAO.cadastrarEleicao(eleicao);
 
@@ -113,11 +77,107 @@ public class EleicaoController {
 
     public void abrirSecao()  throws Exception  {
 
-        Parent parent = FXMLLoader.load(getClass().getResource("../Secao/Secao.fxml"));
+        Eleicao eleicao = tableView.getSelectionModel().getSelectedItem();
+
+        if(eleicao==null) {
+            AlertUtils.alert("Atenção","Nenhuma eleição selecionada", Alert.AlertType.WARNING);
+            return;
+        }
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation((getClass().getResource("../Secao/Secao.fxml")));
+        Parent parent = loader.load();
+
+        SecaoController secaoController = loader.getController();
+        secaoController.load(eleicao);
+
 
         Stage stage = new Stage();
+
+        stage.setTitle("Adicionar Secao");
         Scene scene = new Scene(parent);
-        stage.setTitle("Adicionar Seção");
+        stage.setScene(scene);
+        stage.show();
+
+    }
+
+
+    public void abrirEleitores()  throws Exception  {
+
+        Eleicao eleicao = tableView.getSelectionModel().getSelectedItem();
+
+
+        if(eleicao==null) {
+            AlertUtils.alert("Atenção","Nenhuma eleição selecionada", Alert.AlertType.WARNING);
+            return;
+        }
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation((getClass().getResource("../Eleitor/Eleitor.fxml")));
+        Parent parent = loader.load();
+
+        EleitorController eleitorController = loader.getController();
+        eleitorController.load(eleicao);
+
+
+        Stage stage = new Stage();
+
+        stage.setTitle("Adicionar Eleitor");
+        Scene scene = new Scene(parent);
+        stage.setScene(scene);
+        stage.show();
+
+    }
+
+    public void abrirMesario() throws Exception {
+
+        Eleicao eleicao = tableView.getSelectionModel().getSelectedItem();
+
+
+        if(eleicao==null) {
+            AlertUtils.alert("Atenção","Nenhuma eleição selecionada", Alert.AlertType.WARNING);
+            return;
+        }
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation((getClass().getResource("../Mesario/Mesario.fxml")));
+        Parent parent = loader.load();
+
+        MesarioController mesarioController = loader.getController();
+        mesarioController.load(eleicao);
+
+
+        Stage stage = new Stage();
+
+        stage.setTitle("Adicionar Mesario");
+        Scene scene = new Scene(parent);
+        stage.setScene(scene);
+        stage.show();
+
+    }
+
+    public void abrirCandidato() throws Exception {
+
+        Eleicao eleicao = tableView.getSelectionModel().getSelectedItem();
+
+
+        if(eleicao==null) {
+            AlertUtils.alert("Atenção","Nenhuma eleição selecionada", Alert.AlertType.WARNING);
+            return;
+        }
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation((getClass().getResource("../Candidato/Candidate.fxml")));
+        Parent parent = loader.load();
+
+        CandidatoController candidatoController = loader.getController();
+        candidatoController.load(eleicao);
+
+
+        Stage stage = new Stage();
+
+        stage.setTitle("Adicionar Candidato");
+        Scene scene = new Scene(parent);
         stage.setScene(scene);
         stage.show();
 
@@ -136,6 +196,24 @@ public class EleicaoController {
             tableView.refresh();
 
         }
+
+
+    }
+
+    @FXML
+    public void deslogar(ActionEvent event) throws Exception {
+
+        Stage stage = (Stage)btnDeslogar.getScene().getWindow();
+        stage.close();
+
+        Parent parent = FXMLLoader.load(getClass().getResource("../Login/Login.fxml"));
+        stage = new Stage();
+        Scene scene = new Scene(parent, LoginController.WIDTH, LoginController.HEIGHT);
+
+        stage.setTitle("URNA");
+        stage.setScene(scene);
+        stage.show();
+
 
 
     }

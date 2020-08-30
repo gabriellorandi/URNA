@@ -1,5 +1,7 @@
 package Eleitor;
 
+import Grupo.Grupo;
+
 import java.util.Objects;
 
 public class Eleitor {
@@ -7,6 +9,8 @@ public class Eleitor {
     private Long id;
     private String nome;
     private Long cpf;
+
+    private Grupo grupo;
 
     public Long getId() {
         return id;
@@ -32,6 +36,10 @@ public class Eleitor {
         this.cpf = cpf;
     }
 
+    public String getGrupoNome() {
+        return (this.grupo!=null)?grupo.getNome():"";
+    }
+
     @Override
     public String toString() {
         return id+" "+nome;
@@ -50,4 +58,11 @@ public class Eleitor {
         return Objects.hash(id);
     }
 
+    public Grupo getGrupo() {
+        return grupo;
+    }
+
+    public void setGrupo(Grupo grupo) {
+        this.grupo = grupo;
+    }
 }

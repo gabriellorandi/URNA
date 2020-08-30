@@ -13,7 +13,6 @@ public class Secao {
     private Integer numero;
 
     private List<Voto> votos;
-    private List<Eleitor> eleitores;
     private Mesario mesario;
 
     @Override
@@ -64,22 +63,8 @@ public class Secao {
         return mesario.getNome();
     }
 
-    public Integer getEleitoresQuantidade() {
-        if(eleitores==null) return 0;
-        return  eleitores.size();
-    }
-
-
     public void setMesario(Mesario mesario) {
         this.mesario = mesario;
     }
 
-
-    public List<Eleitor> getEleitores() {
-        return eleitores;
-    }
-
-    public void setEleitores(List<Eleitor> eleitores) {
-        this.eleitores = eleitores;
-    }
 }

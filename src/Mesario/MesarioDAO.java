@@ -1,5 +1,6 @@
 package Mesario;
 
+import Eleicao.Eleicao;
 import Utils.PSQLException;
 import Utils.PostgreSQLJDBC;
 
@@ -12,16 +13,17 @@ import java.util.List;
 
 public class MesarioDAO {
 
-    public Mesario cadastrarMesario(Mesario m) {
+    public Mesario cadastrarMesario(Mesario m, Eleicao e) {
 
         try {
             Connection conn = PostgreSQLJDBC.conectar();
-            PreparedStatement prestmt = conn.prepareStatement("INSERT INTO Mesario(nome,cpf,login,senha,admin) VALUES (?,?,?,?,?)");
+            PreparedStatement prestmt = conn.prepareStatement("INSERT INTO Mesario(nome,cpf,login,senha,admin,eleicao_id) VALUES (?,?,?,?,?,?)");
             prestmt.setString(1,m.getNome());
             prestmt.setString(2,m.getCpf());
             prestmt.setString(3,m.getLogin());
             prestmt.setString(4,m.getSenha());
             prestmt.setBoolean(5,m.isAdmin());
+            prestmt.setLong(6,e.getId());
             prestmt.execute();
             prestmt.close();
         } catch (SQLException sql) {

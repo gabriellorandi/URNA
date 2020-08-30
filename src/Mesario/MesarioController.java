@@ -1,5 +1,6 @@
 package Mesario;
 
+import Eleicao.Eleicao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -29,6 +30,8 @@ public class MesarioController {
 
     List<Mesario> mesarios;
     MesarioDAO mesarioDAO;
+
+    Eleicao eleicao;
 
     @FXML
     public void initialize() {
@@ -62,7 +65,7 @@ public class MesarioController {
         mesario.setLogin( txtLogin.getText() );
         mesario.setSenha( txtSenha.getText() );
 
-        mesarioDAO.cadastrarMesario(mesario);
+        mesarioDAO.cadastrarMesario(mesario,eleicao);
 
         mesarios = mesarioDAO.selecionarMesarios();
 
@@ -87,4 +90,7 @@ public class MesarioController {
     }
 
 
+    public void load(Eleicao eleicao) {
+        this.eleicao = eleicao;
+    }
 }

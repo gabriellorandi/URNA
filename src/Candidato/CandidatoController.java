@@ -4,34 +4,42 @@ import Cargo.Cargo;
 import Cargo.CargoDAO;
 import Chapa.Chapa;
 import Chapa.ChapaDAO;
+import Eleicao.Eleicao;
 import Grupo.Grupo;
 import Grupo.GrupoDAO;
+import Utils.ImportUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public class CandidatoController {
     @FXML TextField txtId;
     @FXML TextField txtNome;
     @FXML TextField txtCpf;
-    @FXML Button btnAdd;
+    @FXML Button btnCadastrar;
     @FXML Button btnCancel;
-    @FXML Button btnAddEleicao;
+    @FXML Button btnCargo;
+    @FXML Button btnChapa;
+    @FXML Button btnImportar;
 
     @FXML private TableView<Candidato> tableView;
     @FXML private TableColumn<Candidato, Long> candidatoId;
     @FXML private TableColumn<Candidato, String> candidatoNome;
     @FXML private TableColumn<Candidato, String> candidatoChapa;
-    @FXML private TableColumn<Candidato, String> candidatoGrupo;
     @FXML private TableColumn<Candidato, String> candidatoCargo;
 
 
-    @FXML private ComboBox cbGrupo;
     @FXML private ComboBox cbChapa;
     @FXML private ComboBox cbCargo;
 
@@ -44,8 +52,7 @@ public class CandidatoController {
     List<Chapa> chapas;
     ChapaDAO chapaDAO;
 
-    List<Grupo> grupos;
-    GrupoDAO grupoDAO;
+    Eleicao eleicao;
 
     @FXML
     public void initialize() {
@@ -53,22 +60,18 @@ public class CandidatoController {
         candidatoDAO = new CandidatoDAO();
         cargoDAO = new CargoDAO();
         chapaDAO = new ChapaDAO();
-        grupoDAO = new GrupoDAO();
 
         cargos = cargoDAO.selecionarCargos();
         chapas = chapaDAO.selecionarChapas();
-        grupos = grupoDAO.selecionarGrupos();
         candidatos = candidatoDAO.selecionarCandidatos();
 
         candidatoId.setCellValueFactory(new PropertyValueFactory<>("id"));
         candidatoNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         candidatoChapa.setCellValueFactory(new PropertyValueFactory<>("chapaNome"));
-        candidatoGrupo.setCellValueFactory(new PropertyValueFactory<>("grupoNome"));
         candidatoCargo.setCellValueFactory(new PropertyValueFactory<>("cargoNome"));
 
         cbCargo.getItems().setAll(cargos);
         cbChapa.getItems().setAll(chapas);
-        cbGrupo.getItems().setAll(grupos);
 
         tableView.getItems().addAll(candidatos);
         tableView.refresh();
@@ -89,10 +92,12 @@ public class CandidatoController {
         candidato.setCpf(Long.parseLong(txtCpf.getText()));
 
         Cargo cargo = (Cargo) cbCargo.getSelectionModel().getSelectedItem();
-        Grupo grupo = (Grupo) cbGrupo.getSelectionModel().getSelectedItem();
         Chapa chapa = (Chapa) cbChapa.getSelectionModel().getSelectedItem();
 
-        candidatoDAO.cadastrarCandidato(candidato,chapa,cargo,grupo);
+        candidato.setChapa(chapa);
+        candidato.setCargo(cargo);
+
+        candidatoDAO.cadastrarCandidato(candidato,eleicao);
 
         candidatos = candidatoDAO.selecionarCandidatos();
         tableView.getItems().setAll(candidatos);
@@ -117,5 +122,55 @@ public class CandidatoController {
 
     }
 
+    public void abrirChapa() throws Exception {
 
+        Parent parent = FXMLLoader.load(getClass().getResource("../Chapa/Chapa.fxml"));
+
+        Stage stage = new Stage();
+        Scene scene = new Scene(parent);
+        stage.setTitle("Adicionar Chapa");
+        stage.setScene(scene);
+        stage.show();
+
+
+    }
+
+    public void abrirCargo() throws Exception  {
+
+        Parent parent = FXMLLoader.load(getClass().getResource("../Cargo/Cargo.fxml"));
+
+        Stage stage = new Stage();
+        Scene scene = new Scene(parent);
+        stage.setTitle("Adicionar Cargo");
+        stage.setScene(scene);
+        stage.show();
+
+
+    }
+
+    public void importar() throws IOException {
+
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Open File");
+        File file = chooser.showOpenDialog(new Stage());
+
+        if(file != null) {
+
+            List<Candidato> candidatos = ImportUtils.loadCandidato(file);
+
+            for(Candidato candidato : candidatos) {
+                candidatoDAO.cadastrarCandidato(candidato,eleicao);
+            }
+
+            candidatos = candidatoDAO.selecionarCandidatos();
+            tableView.getItems().setAll(candidatos);
+            tableView.refresh();
+
+        }
+
+    }
+
+    public void load(Eleicao eleicao) {
+        this.eleicao = eleicao;
+    }
 }

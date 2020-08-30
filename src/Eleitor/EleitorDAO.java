@@ -1,6 +1,8 @@
 package Eleitor;
 
 
+import Eleicao.Eleicao;
+import Grupo.Grupo;
 import Mesario.Mesario;
 import Utils.PSQLException;
 import Utils.PostgreSQLJDBC;
@@ -15,14 +17,16 @@ import java.util.List;
 
 public class EleitorDAO {
 
-    public Eleitor cadastrarEleitor(Eleitor e) {
+    public Eleitor cadastrarEleitor(Eleitor e, Eleicao el) {
 
         try {
             Connection conn = PostgreSQLJDBC.conectar();
-            PreparedStatement prestmt = conn.prepareStatement("INSERT INTO Eleitor(id,nome,cpf) VALUES (?,?,?)");
+            PreparedStatement prestmt = conn.prepareStatement("INSERT INTO Eleitor(id,nome,cpf,eleicao_id,grupo_id) VALUES (?,?,?,?,?)");
             prestmt.setLong(1,e.getId());
             prestmt.setString(2,e.getNome());
             prestmt.setLong(3,e.getCpf());
+            prestmt.setLong(4,el.getId());
+            prestmt.setLong(5,e.getGrupo().getId());
             prestmt.execute();
             prestmt.close();
         } catch (SQLException sql) {
@@ -83,7 +87,9 @@ public class EleitorDAO {
         List<Eleitor> eleitores = new ArrayList<>();
         try{
             Connection conn = PostgreSQLJDBC.conectar();
-            PreparedStatement prestmt = conn.prepareStatement("SELECT id,nome,cpf FROM Eleitor ");
+            PreparedStatement prestmt = conn.prepareStatement(
+                    "SELECT e.id as id ,e.nome as nome ,e.cpf as cpf, g.id as grupoId, g.nome as grupoNome FROM Eleitor e " +
+                         "INNER JOIN Grupo g ON g.id = e.grupo_id ");
 
             ResultSet rs = prestmt.executeQuery();
 
@@ -93,6 +99,12 @@ public class EleitorDAO {
                 e.setId( rs.getLong("id") );
                 e.setNome( rs.getString("nome") );
                 e.setCpf( rs.getLong("cpf") );
+
+                Grupo grupo = new Grupo();
+                grupo.setId( rs.getLong("grupoId"));
+                grupo.setNome( rs.getString("grupoNome"));
+
+                e.setGrupo(grupo);
 
                 eleitores.add(e);
             }
