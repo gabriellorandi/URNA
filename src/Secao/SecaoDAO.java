@@ -1,6 +1,6 @@
 package Secao;
 
-import Eleitor.Eleitor;
+import Eleicao.Eleicao;
 import Mesario.Mesario;
 import Utils.PSQLException;
 import Utils.PostgreSQLJDBC;
@@ -11,14 +11,15 @@ import java.util.List;
 
 public class SecaoDAO {
 
-    public Secao cadastrarSecao(Secao s) {
+    public Secao cadastrarSecao(Secao s, Eleicao e) {
 
         try {
             Connection conn = PostgreSQLJDBC.conectar();
-            PreparedStatement prestmt = conn.prepareStatement("INSERT INTO Secao(logradouro,numero,mesario_id) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement prestmt = conn.prepareStatement("INSERT INTO Secao(logradouro,numero,mesario_id,eleicao_id) VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             prestmt.setString(1,s.getLogradouro());
             prestmt.setInt(2,s.getNumero());
             prestmt.setLong(3,s.getMesario().getId());
+            prestmt.setLong(4,e.getId());
             prestmt.executeUpdate();
 
 
@@ -51,12 +52,7 @@ public class SecaoDAO {
 
             Connection conn = PostgreSQLJDBC.conectar();
 
-            PreparedStatement prestmt = conn.prepareStatement("DELETE FROM Secao_Eleitor WHERE secao_id = ?");
-            prestmt.setLong(1,id);
-            prestmt.execute();
-
-
-            prestmt = conn.prepareStatement("DELETE FROM Secao WHERE id = ?");
+            PreparedStatement prestmt = conn.prepareStatement("DELETE FROM Secao WHERE id = ?");
             prestmt.setLong(1,id);
             prestmt.execute();
             prestmt.close();
@@ -77,7 +73,7 @@ public class SecaoDAO {
 
             ResultSet rs = prestmt.executeQuery();
 
-            if(rs.next()) {
+            while(rs.next()) {
                 Secao s = new Secao();
 
                 s.setId( rs.getLong("id") );

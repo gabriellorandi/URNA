@@ -1,6 +1,5 @@
 package Secao;
 
-import Eleitor.Eleitor;
 import Mesario.Mesario;
 import Voto.Voto;
 
