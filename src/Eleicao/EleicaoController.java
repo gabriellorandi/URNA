@@ -62,7 +62,6 @@ public class EleicaoController {
 
     public void cadastrarEleicao( ) {
 
-
         Eleicao eleicao = new Eleicao();
 
         eleicao.setDia( dateEleicao.getValue() );

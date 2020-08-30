@@ -1,12 +1,11 @@
 package Mesario;
 
 import Eleicao.Eleicao;
+import Utils.AlertUtils;
+import Utils.ValidateFields;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -59,18 +58,23 @@ public class MesarioController {
 
     public void cadastrarMesario() {
 
-        Mesario mesario = new Mesario();
-        mesario.setNome( txtNome.getText() );
-        mesario.setCpf( txtCpf.getText() );
-        mesario.setLogin( txtLogin.getText() );
-        mesario.setSenha( txtSenha.getText() );
+        if (ValidateFields.validateTextField(txtNome.getText())
+        && ValidateFields.validateNumberField(txtCpf.getText())) {
+            Mesario mesario = new Mesario();
+            mesario.setNome( txtNome.getText() );
+            mesario.setCpf( txtCpf.getText() );
+            mesario.setLogin( txtLogin.getText() );
+            mesario.setSenha( txtSenha.getText() );
 
-        mesarioDAO.cadastrarMesario(mesario,eleicao);
+            mesarioDAO.cadastrarMesario(mesario,eleicao);
 
-        mesarios = mesarioDAO.selecionarMesarios();
+            mesarios = mesarioDAO.selecionarMesarios();
 
-        tableView.getItems().setAll(mesarios);
-        tableView.refresh();
+            tableView.getItems().setAll(mesarios);
+            tableView.refresh();
+        } else {
+            AlertUtils.alert("Valores incorretos!", "Os valores inseridos nos campos estão incorretos. Tente novamente.", Alert.AlertType.ERROR);
+        }
 
     }
 

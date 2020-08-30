@@ -7,7 +7,9 @@ import Chapa.ChapaDAO;
 import Eleicao.Eleicao;
 import Grupo.Grupo;
 import Grupo.GrupoDAO;
+import Utils.AlertUtils;
 import Utils.ImportUtils;
+import Utils.ValidateFields;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -86,22 +88,28 @@ public class CandidatoController {
 
     public void cadastrarCandidato() {
 
-        Candidato candidato = new Candidato();
-        candidato.setId(Long.parseLong(txtId.getText()));
-        candidato.setNome(txtNome.getText());
-        candidato.setCpf(Long.parseLong(txtCpf.getText()));
+        if (ValidateFields.validateNumberField(txtId.getText())
+        && ValidateFields.validateTextField(txtNome.getText())
+        && ValidateFields.validateTextField(txtCpf.getText())) {
+            Candidato candidato = new Candidato();
+            candidato.setId(Long.parseLong(txtId.getText()));
+            candidato.setNome(txtNome.getText());
+            candidato.setCpf(Long.parseLong(txtCpf.getText()));
 
-        Cargo cargo = (Cargo) cbCargo.getSelectionModel().getSelectedItem();
-        Chapa chapa = (Chapa) cbChapa.getSelectionModel().getSelectedItem();
+            Cargo cargo = (Cargo) cbCargo.getSelectionModel().getSelectedItem();
+            Chapa chapa = (Chapa) cbChapa.getSelectionModel().getSelectedItem();
 
-        candidato.setChapa(chapa);
-        candidato.setCargo(cargo);
+            candidato.setChapa(chapa);
+            candidato.setCargo(cargo);
 
-        candidatoDAO.cadastrarCandidato(candidato,eleicao);
+            candidatoDAO.cadastrarCandidato(candidato,eleicao);
 
-        candidatos = candidatoDAO.selecionarCandidatos();
-        tableView.getItems().setAll(candidatos);
-        tableView.refresh();
+            candidatos = candidatoDAO.selecionarCandidatos();
+            tableView.getItems().setAll(candidatos);
+            tableView.refresh();
+        } else {
+            AlertUtils.alert("Valores incorretos!", "Os valores inseridos nos campos estão incorretos. Tente novamente.", Alert.AlertType.ERROR);
+        }
 
     }
 

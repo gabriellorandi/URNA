@@ -3,7 +3,9 @@ package Eleitor;
 import Eleicao.Eleicao;
 import Grupo.Grupo;
 import Grupo.GrupoDAO;
+import Utils.AlertUtils;
 import Utils.ImportUtils;
+import Utils.ValidateFields;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -76,19 +78,24 @@ public class EleitorController {
 
     public void cadastrarEleitor() {
 
-        Eleitor eleitor = new Eleitor();
-        eleitor.setId( Long.parseLong(txtId.getText()) );
-        eleitor.setCpf( Long.parseLong(txtCpf.getText()) );
-        eleitor.setNome( txtNome.getText() );
+        if(ValidateFields.validateNumberField(txtId.getText())
+        && ValidateFields.validateNumberField(txtCpf.getText())
+        && ValidateFields.validateTextField(txtNome.getText())) {
+            Eleitor eleitor = new Eleitor();
+            eleitor.setId( Long.parseLong(txtId.getText()) );
+            eleitor.setCpf( Long.parseLong(txtCpf.getText()) );
+            eleitor.setNome( txtNome.getText() );
 
-        if(!contemEleitor(eleitor)) {
+            if(!contemEleitor(eleitor)) {
 
-            eleitor = eleitorDAO.cadastrarEleitor(eleitor,eleicao);
-            eleitores.add(eleitor);
-            tableView.getItems().setAll(eleitores);
-            tableView.refresh();
+                eleitor = eleitorDAO.cadastrarEleitor(eleitor,eleicao);
+                eleitores.add(eleitor);
+                tableView.getItems().setAll(eleitores);
+                tableView.refresh();
+            }
+        } else {
+            AlertUtils.alert("Valores incorretos!", "Os valores inseridos nos campos estão incorretos. Tente novamente.", Alert.AlertType.ERROR);
         }
-
     }
 
     public void removerEleitor() {
