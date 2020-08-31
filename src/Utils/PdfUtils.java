@@ -1,5 +1,6 @@
 package Utils;
 
+import Candidato.Candidato;
 import Mesario.Mesario;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -9,6 +10,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 public class PdfUtils {
     private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
@@ -16,13 +18,13 @@ public class PdfUtils {
     private static Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12,
             Font.BOLD);
 
-    public static void createPdf(String fileLocation, String title, Mesario mesario){
+    public static void createPdf(String fileLocation, String title, Mesario mesario, List<Candidato> candidatos){
         Document document = new Document();
         try {
             PdfWriter.getInstance(document, new FileOutputStream(fileLocation));
             document.open();
             addTitlePage(document, title, mesario);
-            addContent(document);
+            addContent(document, candidatos);
         } catch(DocumentException de) {
             System.err.println(de.getMessage());
         }
@@ -51,16 +53,16 @@ public class PdfUtils {
         document.newPage();
     }
 
-    private static void addContent(Document document) throws DocumentException {
+    private static void addContent(Document document, List<Candidato> candidatos) throws DocumentException {
         Paragraph preface = new Paragraph();
         addEmptyLine(preface, 1);
         preface.add(new Paragraph("Resultados da eleição", catFont));
 
-        createTable(preface);
+        createTable(preface, candidatos);
 
     }
 
-    private static void createTable(Paragraph preface)
+    private static void createTable(Paragraph preface, List<Candidato> candidatos)
             throws BadElementException {
         PdfPTable table = new PdfPTable(3);
 
@@ -77,12 +79,11 @@ public class PdfUtils {
         table.addCell(c1);
         table.setHeaderRows(1);
 
-        table.addCell("Lula");
-        table.addCell("10");
-        table.addCell("50%");
-        table.addCell("Bolsonaro");
-        table.addCell("10");
-        table.addCell("50%");
+        for (Candidato candidato : candidatos) {
+            table.addCell(candidato.getNome());
+            table.addCell(candidato.getCargoNome());
+            table.addCell(candidato.getChapaNome());
+        }
 
         preface.add(table);
 
