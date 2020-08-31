@@ -59,6 +59,7 @@ public class GrupoController {
             grupos = grupoDAO.selecionarGrupos();
 
             tableView.getItems().setAll(grupos);
+            txtNome.clear();
             tableView.refresh();
         } else {
             AlertUtils.alert("Valores incorretos!", "Os valores inseridos nos campos estão incorretos. Tente novamente.", Alert.AlertType.ERROR);

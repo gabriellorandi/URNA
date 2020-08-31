@@ -107,6 +107,11 @@ public class EleitorController {
                 eleitor = eleitorDAO.cadastrarEleitor(eleitor,eleicao);
                 eleitores.add(eleitor);
                 tableView.getItems().setAll(eleitores);
+                txtId.clear();
+                txtNome.clear();
+                txtCpf.clear();
+                cbGrupo.getSelectionModel().clearSelection();
+                cbSecao.getSelectionModel().clearSelection();
                 tableView.refresh();
             }
         } else {

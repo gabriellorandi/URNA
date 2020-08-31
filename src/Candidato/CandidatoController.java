@@ -104,6 +104,11 @@ public class CandidatoController {
 
             candidatos = candidatoDAO.selecionarCandidatos();
             tableView.getItems().setAll(candidatos);
+            txtId.clear();
+            txtNome.clear();
+            txtCpf.clear();
+            cbCargo.getSelectionModel().clearSelection();
+            cbChapa.getSelectionModel().clearSelection();
             tableView.refresh();
         } else {
             AlertUtils.alert("Valores incorretos!", "Os valores inseridos nos campos estão incorretos. Tente novamente.", Alert.AlertType.ERROR);
