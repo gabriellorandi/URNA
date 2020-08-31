@@ -89,7 +89,10 @@ public class EleitorDAO {
         try{
             Connection conn = PostgreSQLJDBC.conectar();
             PreparedStatement prestmt = conn.prepareStatement(
-                    "SELECT e.id as id,e.nome as nome, e.cpf as cpf FROM Eleitor e " +
+                    "SELECT e.id as id,e.nome as nome, e.cpf as cpf " +
+                            "g.id as grupoId, g.nome as grupoNome " +
+                            "FROM Eleitor e " +
+                            "INNER JOIN Grupo g ON g.id = g.grupo_id " +
                             "INNER JOIN Secao s ON  s.id = e.secao_id " +
                             "WHERE s.id = ? AND e.nome LIKE ? ");
 
@@ -104,6 +107,12 @@ public class EleitorDAO {
                 e.setId( rs.getLong("id") );
                 e.setNome( rs.getString("nome") );
                 e.setCpf( rs.getLong("cpf") );
+
+                Grupo g = new Grupo();
+                g.setId( rs.getLong("grupoId") );
+                g.setNome( rs.getString("grupoNome") );
+
+                e.setGrupo(g);
 
                 eleitores.add(e);
             }

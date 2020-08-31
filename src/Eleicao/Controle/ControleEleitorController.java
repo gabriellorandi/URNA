@@ -1,5 +1,7 @@
 package Eleicao.Controle;
 
+import Cargo.Cargo;
+import Cargo.CargoDAO;
 import Eleicao.Eleicao;
 import Eleitor.Eleitor;
 import Eleitor.EleitorDAO;
@@ -28,6 +30,7 @@ public class ControleEleitorController {
 
     private List<Eleitor> eleitores;
     private EleitorDAO eleitorDAO;
+    private CargoDAO cargoDAO;
 
     @FXML private TextField txtBuscar;
     @FXML private Button btnBusca;
@@ -36,7 +39,7 @@ public class ControleEleitorController {
     private Mesario mesario;
     private Eleicao eleicao;
     private Secao secao;
-
+    private List<Cargo> cargos;
 
     @FXML
     public void initialize() {
@@ -47,7 +50,6 @@ public class ControleEleitorController {
         eleitorNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         eleitorCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
 
-
     }
 
     public void load(Mesario mesario, Eleicao eleicao,Secao secao) {
@@ -56,6 +58,7 @@ public class ControleEleitorController {
         setSecao(secao);
 
         eleitores = eleitorDAO.selecionarEleitoresEleicao(secao);
+        cargos = cargoDAO.selecionarCargosEleicao(eleicao);
 
         tableView.getItems().addAll(eleitores);
         tableView.refresh();
@@ -81,24 +84,27 @@ public class ControleEleitorController {
 
         if(eleitor != null) {
 
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation((getClass().getResource("../../Voto/Voto.fxml")));
-            Parent parent = loader.load();
+            for(Cargo cargo : cargos) {
 
-            VotoController votoController = loader.getController();
-            votoController.load(eleicao);
+                if(eleitor.getGrupo() == null || eleitor.getGrupo().equals(cargo.getGrupo())) {
 
-            Stage stage = new Stage();
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation((getClass().getResource("../../Voto/Voto.fxml")));
+                    Parent parent = loader.load();
 
-            Scene scene = new Scene(parent);
-            stage.setTitle("Votação");
-            stage.setScene(scene);
-            stage.show();
+                    VotoController votoController = loader.getController();
+                    votoController.load(eleicao,cargo);
 
+                    Stage stage = new Stage();
 
+                    Scene scene = new Scene(parent);
+                    stage.setTitle("Votação "+cargo.getNome());
+                    stage.setScene(scene);
+                    stage.showAndWait();
+
+                }
+            }
         }
-
-
     }
 
     public List<Eleitor> getEleitores() {
@@ -115,9 +121,7 @@ public class ControleEleitorController {
 
     public void setMesario(Mesario mesario) {
         this.mesario = mesario;
-
     }
-
 
     public Eleicao getEleicao() {
         return eleicao;

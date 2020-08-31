@@ -1,12 +1,11 @@
 package Candidato;
 
 import Cargo.Cargo;
+import Cargo.CargoController;
 import Cargo.CargoDAO;
 import Chapa.Chapa;
 import Chapa.ChapaDAO;
 import Eleicao.Eleicao;
-import Grupo.Grupo;
-import Grupo.GrupoDAO;
 import Utils.AlertUtils;
 import Utils.ImportUtils;
 import Utils.ValidateFields;
@@ -19,7 +18,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 
 import java.io.File;
 import java.io.IOException;
@@ -145,11 +143,18 @@ public class CandidatoController {
 
     public void abrirCargo() throws Exception  {
 
-        Parent parent = FXMLLoader.load(getClass().getResource("../Cargo/Cargo.fxml"));
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation((getClass().getResource("../Cargo/Cargo.fxml")));
+        Parent parent = loader.load();
+
+        CargoController cargoController = loader.getController();
+        cargoController.load(eleicao);
+
 
         Stage stage = new Stage();
-        Scene scene = new Scene(parent);
+
         stage.setTitle("Adicionar Cargo");
+        Scene scene = new Scene(parent);
         stage.setScene(scene);
         stage.show();
 
