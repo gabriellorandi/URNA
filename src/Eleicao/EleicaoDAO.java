@@ -1,5 +1,6 @@
 package Eleicao;
 
+import Mesario.Mesario;
 import Utils.PSQLException;
 import Utils.PostgreSQLJDBC;
 
@@ -63,4 +64,32 @@ public class EleicaoDAO {
         return eleicoes;
     }
 
+    public Eleicao selecionarEleicaoMesario(Mesario mesario) {
+
+        try{
+            Connection conn = PostgreSQLJDBC.conectar();
+            PreparedStatement prestmt = conn.prepareStatement(
+                    "SELECT e.id as id, e.dia as dia FROM Eleicao e " +
+                            "INNER JOIN Mesario m ON m.eleicao_id = e.id  " +
+                            "WHERE m.id = ? ");
+            prestmt.setLong(1,mesario.getId());
+
+            ResultSet rs = prestmt.executeQuery();
+
+            if(rs.next()) {
+                Eleicao e = new Eleicao();
+
+                e.setId( rs.getLong("id") );
+                e.setDia( rs.getDate( "dia" ).toLocalDate() );
+
+                return e;
+            }
+
+            prestmt.close();
+        }catch (SQLException sql) {
+            new PSQLException(sql);
+        }
+        return null;
+
+    }
 }
