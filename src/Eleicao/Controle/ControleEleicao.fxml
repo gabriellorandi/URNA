@@ -10,6 +10,6 @@
          <font>
             <Font size="22.0" />
          </font></Button>
-      <Button fx:id="btnIniciar1" layoutX="226.0" layoutY="188.0" mnemonicParsing="false" onAction="#iniciarVotacao" prefHeight="39.0" prefWidth="131.0" text="Imprimir Resultados" />
+      <Button fx:id="btnImprimir" layoutX="226.0" layoutY="188.0" mnemonicParsing="false" onAction="#imprimir" prefHeight="39.0" prefWidth="131.0" text="Imprimir Resultados" />
    </children>
 </AnchorPane>
