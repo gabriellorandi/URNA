@@ -1,9 +1,8 @@
 package Candidato;
 
-import Eleicao.Eleicao;
 import Cargo.Cargo;
 import Chapa.Chapa;
-import Grupo.Grupo;
+import Eleicao.Eleicao;
 import Utils.PSQLException;
 import Utils.PostgreSQLJDBC;
 
@@ -17,7 +16,7 @@ import java.util.List;
 public class CandidatoDAO {
 
 
-    public Candidato procurarCandidato(Eleicao e, Long votoId) {
+    public Candidato procurarCandidato(Eleicao e, Cargo c, Long votoId) {
 
         try{
             Connection conn = PostgreSQLJDBC.conectar();
@@ -29,19 +28,20 @@ public class CandidatoDAO {
                             " INNER JOIN Cargo cargo ON cargo.id = cargo_id " +
                             " INNER JOIN Chapa chapa ON chapa.id = chapa_id " +
                             " INNER JOIN Eleicao e ON e.id = eleicao_id " +
-                            " WHERE e.id = ? AND c.id = ? ");
+                            " WHERE e.id = ? AND c.id = ? AND cargo.id = ? ");
 
             prestmt.setLong(1, e.getId() );
             prestmt.setLong(2, votoId );
+            prestmt.setLong(3,c.getId());
 
             ResultSet rs = prestmt.executeQuery();
 
             if(rs.next()) {
-                Candidato c = new Candidato();
+                Candidato cand = new Candidato();
 
-                c.setId( rs.getLong("id") );
-                c.setNome( rs.getString("nome") );
-                c.setCpf( rs.getLong("cpf") );
+                cand.setId( rs.getLong("id") );
+                cand.setNome( rs.getString("nome") );
+                cand.setCpf( rs.getLong("cpf") );
 
                 Cargo cargo = new Cargo();
                 cargo.setId( rs.getLong("cargoId") );
@@ -52,11 +52,11 @@ public class CandidatoDAO {
                 chapa.setSigla(  rs.getString("chapaSigla") );
                 chapa.setNome(  rs.getString("chapaNome") );
 
-                c.setCargo(cargo);
-                c.setChapa(chapa);
+                cand.setCargo(cargo);
+                cand.setChapa(chapa);
 
                 prestmt.close();
-                return c;
+                return cand;
             }
 
 

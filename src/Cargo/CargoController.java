@@ -1,7 +1,9 @@
 package Cargo;
 
 import Grupo.Grupo;
+import Eleicao.Eleicao;
 import Grupo.GrupoDAO;
+import Mesario.Mesario;
 import Utils.AlertUtils;
 import Utils.ValidateFields;
 import javafx.event.ActionEvent;
@@ -25,6 +27,8 @@ public class CargoController {
     @FXML private TableColumn<Cargo, String> cargoGrupo;
 
     @FXML private ComboBox cbGrupo;
+
+    private Eleicao eleicao;
 
     List<Cargo> cargos;
     CargoDAO cargoDAO;
@@ -51,6 +55,10 @@ public class CargoController {
         tableView.refresh();
     }
 
+    public void load(Eleicao eleicao) {
+        this.eleicao = eleicao;
+    }
+
     public void close(ActionEvent event) throws Exception{
 
         Stage stage = (Stage)btnCancel.getScene().getWindow();
@@ -66,7 +74,7 @@ public class CargoController {
             Grupo grupo = (Grupo) cbGrupo.getSelectionModel().getSelectedItem();
             cargo.setGrupo(grupo);
 
-            cargoDAO.cadastrarCargo(cargo);
+            cargoDAO.cadastrarCargo(cargo, eleicao);
 
             cargos = cargoDAO.selecionarCargos();
 
@@ -94,4 +102,11 @@ public class CargoController {
     }
 
 
+    public Eleicao getEleicao() {
+        return eleicao;
+    }
+
+    public void setEleicao(Eleicao eleicao) {
+        this.eleicao = eleicao;
+    }
 }

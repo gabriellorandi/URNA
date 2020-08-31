@@ -1,6 +1,7 @@
 package Voto;
 
 import Candidato.Candidato;
+import Cargo.Cargo;
 import Candidato.CandidatoDAO;
 import Eleicao.Eleicao;
 import Eleitor.Eleitor;
@@ -40,6 +41,8 @@ public class VotoController {
     private Eleitor eleitor;
 
     private Candidato candidato;
+    private Cargo cargo;
+
     private String votoNumero;
 
     @FXML
@@ -51,8 +54,9 @@ public class VotoController {
 
     }
 
-    public void load(Eleicao eleicao) {
-        setEleicao(eleicao);
+    public void load(Eleicao eleicao, Cargo cargo) {
+        this.eleicao = eleicao;
+        this.cargo = cargo;
     }
 
 
@@ -117,7 +121,7 @@ public class VotoController {
 
     private void procurarCandidato() {
 
-        candidato = candidatoDAO.procurarCandidato(eleicao,Long.parseLong(votoNumero));
+        candidato = candidatoDAO.procurarCandidato(eleicao,cargo,Long.parseLong(votoNumero));
         if(candidato != null) {
             lblNomeCandidato.setText(candidato.getNome());
             lblPartidoCandidato1.setText(candidato.getCargoNome());

@@ -15,9 +15,11 @@ CREATE TABLE Grupo(
 CREATE TABLE Cargo(
 
   id serial not null primary key,
+  eleicao_id bigint not null,
   grupo_id bigint,
   nome varchar(30) not null,
 
+  FOREIGN KEY (eleicao_id) REFERENCES Eleicao(id),
   FOREIGN KEY (grupo_id) REFERENCES Grupo(id)
 
 );
