@@ -25,6 +25,7 @@ public class PdfUtils {
             document.open();
             addTitlePage(document, title, mesario);
             addContent(document, candidatos);
+            document.close();
         } catch(DocumentException de) {
             System.err.println(de.getMessage());
         }

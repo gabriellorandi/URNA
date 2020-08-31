@@ -96,10 +96,10 @@ public class EleitorDAO {
                             "FROM Eleitor e " +
                             "INNER JOIN Grupo g ON g.id = e.grupo_id " +
                             "INNER JOIN Secao s ON s.id = e.secao_id " +
-                            "WHERE s.id = ? AND e.nome LIKE ? ");
+                            "WHERE s.id = ? AND LOWER(e.nome) LIKE ? ");
 
             prestmt.setLong(1,s.getId());
-            prestmt.setString(2,"%"+busca+"%");
+            prestmt.setString(2,"%"+busca.toLowerCase()+"%");
 
             ResultSet rs = prestmt.executeQuery();
 
