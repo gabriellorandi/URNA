@@ -5,8 +5,10 @@ import Eleicao.Eleicao;
 import Grupo.Grupo;
 import Mesario.Mesario;
 import Secao.Secao;
+import Utils.AlertUtils;
 import Utils.PSQLException;
 import Utils.PostgreSQLJDBC;
+import javafx.scene.control.Alert;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,7 +35,7 @@ public class EleitorDAO {
             prestmt.execute();
             prestmt.close();
         } catch (SQLException sql) {
-            new PSQLException(sql);
+            AlertUtils.alert("Erro no banco de dados","Code: "+sql.getErrorCode()+" - Erro:"+sql.getMessage(), Alert.AlertType.ERROR);
         }
         return e;
     }
@@ -47,7 +49,7 @@ public class EleitorDAO {
             prestmt.execute();
             prestmt.close();
         } catch (SQLException sql) {
-            new PSQLException(sql);
+            AlertUtils.alert("Erro no banco de dados","Code: "+sql.getErrorCode()+" - Erro:"+sql.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
@@ -89,11 +91,11 @@ public class EleitorDAO {
         try{
             Connection conn = PostgreSQLJDBC.conectar();
             PreparedStatement prestmt = conn.prepareStatement(
-                    "SELECT e.id as id,e.nome as nome, e.cpf as cpf " +
+                    "SELECT e.id as id,e.nome as nome, e.cpf as cpf, " +
                             "g.id as grupoId, g.nome as grupoNome " +
                             "FROM Eleitor e " +
-                            "INNER JOIN Grupo g ON g.id = g.grupo_id " +
-                            "INNER JOIN Secao s ON  s.id = e.secao_id " +
+                            "INNER JOIN Grupo g ON g.id = e.grupo_id " +
+                            "INNER JOIN Secao s ON s.id = e.secao_id " +
                             "WHERE s.id = ? AND e.nome LIKE ? ");
 
             prestmt.setLong(1,s.getId());
@@ -119,14 +121,19 @@ public class EleitorDAO {
 
             prestmt.close();
         }catch (SQLException sql) {
-            new PSQLException(sql);
+            AlertUtils.alert("Erro no banco de dados","Code: "+sql.getErrorCode()+" - Erro:"+sql.getMessage(), Alert.AlertType.ERROR);
         }
         return eleitores;
     }
 
-    public List<Eleitor> selecionarEleitores() {
+    public List<Eleitor> selecionarEleitores(Eleicao eleicao) {
 
         List<Eleitor> eleitores = new ArrayList<>();
+
+        if(eleicao == null) {
+            return eleitores;
+        }
+
         try{
             Connection conn = PostgreSQLJDBC.conectar();
             PreparedStatement prestmt = conn.prepareStatement(
@@ -134,7 +141,9 @@ public class EleitorDAO {
                             "g.id as grupoId, g.nome as grupoNome, " +
                             "s.id as secaoId, s.logradouro as secaoLogradouro, s.numero as secaoNumero FROM Eleitor e " +
                          "INNER JOIN Grupo g ON g.id = e.grupo_id " +
-                         "INNER JOIN Secao s ON s.id = e.secao_id ");
+                         "INNER JOIN Secao s ON s.id = e.secao_id " +
+                            " WHERE e.eleicao_id = ? ");
+            prestmt.setLong(1,eleicao.getId());
 
             ResultSet rs = prestmt.executeQuery();
 
@@ -162,7 +171,7 @@ public class EleitorDAO {
 
             prestmt.close();
         }catch (SQLException sql) {
-            new PSQLException(sql);
+            AlertUtils.alert("Erro no banco de dados","Code: "+sql.getErrorCode()+" - Erro:"+sql.getMessage(), Alert.AlertType.ERROR);
         }
          return eleitores;
     }

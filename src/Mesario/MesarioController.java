@@ -36,7 +36,13 @@ public class MesarioController {
     public void initialize() {
 
         mesarioDAO = new MesarioDAO();
-        mesarios = mesarioDAO.selecionarMesarios();
+
+    }
+
+    public void load(Eleicao eleicao) {
+
+        this.eleicao = eleicao;
+        mesarios = mesarioDAO.selecionarMesarios(eleicao);
 
         mesarioId.setCellValueFactory(new PropertyValueFactory<>("id"));
         mesarioNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
@@ -47,7 +53,6 @@ public class MesarioController {
         tableView.getItems().addAll(mesarios);
 
         tableView.refresh();
-
     }
 
     public void close(ActionEvent event) throws Exception{
@@ -68,7 +73,7 @@ public class MesarioController {
 
             mesarioDAO.cadastrarMesario(mesario,eleicao);
 
-            mesarios = mesarioDAO.selecionarMesarios();
+            mesarios = mesarioDAO.selecionarMesarios(eleicao);
 
             tableView.getItems().setAll(mesarios);
             txtNome.clear();
@@ -97,8 +102,4 @@ public class MesarioController {
         }
     }
 
-
-    public void load(Eleicao eleicao) {
-        this.eleicao = eleicao;
-    }
 }

@@ -1,17 +1,16 @@
 package Grupo;
 
+import Eleitor.EleitorController;
 import Utils.AlertUtils;
 import Utils.ValidateFields;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GrupoController {
@@ -43,6 +42,12 @@ public class GrupoController {
 
 
     public void close(ActionEvent event) throws Exception{
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation((getClass().getResource("../Eleitor/Eleitor.fxml")));
+        loader.load();
+        loader.getController();
+
 
         Stage stage = (Stage)btnCancel.getScene().getWindow();
         stage.close();

@@ -61,9 +61,14 @@ public class CandidatoController {
         cargoDAO = new CargoDAO();
         chapaDAO = new ChapaDAO();
 
-        cargos = cargoDAO.selecionarCargos();
+    }
+
+    public void load(Eleicao eleicao) {
+        this.eleicao = eleicao;
+
+        cargos = cargoDAO.selecionarCargos(eleicao);
         chapas = chapaDAO.selecionarChapas();
-        candidatos = candidatoDAO.selecionarCandidatos();
+        candidatos = candidatoDAO.selecionarCandidatos(eleicao);
 
         candidatoId.setCellValueFactory(new PropertyValueFactory<>("id"));
         candidatoNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
@@ -75,7 +80,6 @@ public class CandidatoController {
 
         tableView.getItems().addAll(candidatos);
         tableView.refresh();
-
     }
 
     public void close(ActionEvent event) throws Exception{
@@ -97,12 +101,22 @@ public class CandidatoController {
             Cargo cargo = (Cargo) cbCargo.getSelectionModel().getSelectedItem();
             Chapa chapa = (Chapa) cbChapa.getSelectionModel().getSelectedItem();
 
+            if(chapa == null) {
+                AlertUtils.alert("informação faltando","Por favor selecionar uma chapa para cadastro", Alert.AlertType.WARNING);
+                return;
+            }
+
+            if(cargo == null) {
+                AlertUtils.alert("informação faltando","Por favor selecionar um cargo para cadastro", Alert.AlertType.WARNING);
+                return;
+            }
+
             candidato.setChapa(chapa);
             candidato.setCargo(cargo);
 
             candidatoDAO.cadastrarCandidato(candidato,eleicao);
 
-            candidatos = candidatoDAO.selecionarCandidatos();
+            candidatos = candidatoDAO.selecionarCandidatos(eleicao);
             tableView.getItems().setAll(candidatos);
             tableView.refresh();
         } else {
@@ -175,7 +189,7 @@ public class CandidatoController {
                 candidatoDAO.cadastrarCandidato(candidato,eleicao);
             }
 
-            candidatos = candidatoDAO.selecionarCandidatos();
+            candidatos = candidatoDAO.selecionarCandidatos(eleicao);
             tableView.getItems().setAll(candidatos);
             tableView.refresh();
 
@@ -183,7 +197,4 @@ public class CandidatoController {
 
     }
 
-    public void load(Eleicao eleicao) {
-        this.eleicao = eleicao;
-    }
 }

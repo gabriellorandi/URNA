@@ -44,8 +44,14 @@ public class SecaoController {
         secaoDAO = new SecaoDAO();
         mesarioDAO = new MesarioDAO();
 
+    }
+
+    public void load(Eleicao eleicao) {
+
+        this.eleicao = eleicao;
+
         secoes = secaoDAO.selecionarSecoes();
-        mesarios = mesarioDAO.selecionarMesarios();
+        mesarios = mesarioDAO.selecionarMesarios(eleicao);
 
         cbMesarios.getItems().addAll(mesarios);
 
@@ -58,7 +64,6 @@ public class SecaoController {
 
         tableView.refresh();
 
-
     }
 
     public void cadastrarSecao() {
@@ -70,6 +75,11 @@ public class SecaoController {
             secao.setNumero( Integer.parseInt( txtNumero.getText() ) );
 
             Mesario mesario = (Mesario) cbMesarios.getSelectionModel().getSelectedItem();
+
+            if(mesario == null) {
+                AlertUtils.alert("informação faltando","Por favor selecionar um mesario para cadastro", Alert.AlertType.WARNING);
+                return;
+            }
 
             secao.setMesario(mesario);
 
@@ -108,9 +118,5 @@ public class SecaoController {
         }
 
 
-    }
-
-    public void load(Eleicao eleicao) {
-        this.eleicao = eleicao;
     }
 }

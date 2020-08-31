@@ -1,8 +1,10 @@
 package Mesario;
 
 import Eleicao.Eleicao;
+import Utils.AlertUtils;
 import Utils.PSQLException;
 import Utils.PostgreSQLJDBC;
+import javafx.scene.control.Alert;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,7 +29,7 @@ public class MesarioDAO {
             prestmt.execute();
             prestmt.close();
         } catch (SQLException sql) {
-            new PSQLException(sql);
+            AlertUtils.alert("Erro no banco de dados","Code: "+sql.getErrorCode()+" - Erro:"+sql.getMessage(), Alert.AlertType.ERROR);
         }
         return m;
     }
@@ -41,7 +43,7 @@ public class MesarioDAO {
             prestmt.execute();
             prestmt.close();
         } catch (SQLException sql) {
-            new PSQLException(sql);
+            AlertUtils.alert("Erro no banco de dados","Code: "+sql.getErrorCode()+" - Erro:"+sql.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
@@ -68,17 +70,23 @@ public class MesarioDAO {
 
             prestmt.close();
         }catch (SQLException sql) {
-            new PSQLException(sql);
+            AlertUtils.alert("Erro no banco de dados","Code: "+sql.getErrorCode()+" - Erro:"+sql.getMessage(), Alert.AlertType.ERROR);
         }
         return null;
     }
 
-    public List<Mesario> selecionarMesarios() {
+    public List<Mesario> selecionarMesarios(Eleicao eleicao) {
 
         List<Mesario> mesarios = new ArrayList<>();
+
+        if(eleicao == null) {
+            return mesarios;
+        }
+
         try{
             Connection conn = PostgreSQLJDBC.conectar();
-            PreparedStatement prestmt = conn.prepareStatement("SELECT id,nome,cpf,login,senha FROM Mesario WHERE  admin = FALSE  ");
+            PreparedStatement prestmt = conn.prepareStatement("SELECT id,nome,cpf,login,senha FROM Mesario WHERE  admin = FALSE AND eleicao_id = ? ");
+            prestmt.setLong(1,eleicao.getId());
 
             ResultSet rs = prestmt.executeQuery();
 
@@ -96,7 +104,7 @@ public class MesarioDAO {
 
             prestmt.close();
         }catch (SQLException sql) {
-            new PSQLException(sql);
+            AlertUtils.alert("Erro no banco de dados","Code: "+sql.getErrorCode()+" - Erro:"+sql.getMessage(), Alert.AlertType.ERROR);
         }
         return mesarios;
     }
@@ -124,7 +132,7 @@ public class MesarioDAO {
 
 
         }catch (SQLException sql) {
-            new PSQLException(sql);
+            AlertUtils.alert("Erro no banco de dados","Code: "+sql.getErrorCode()+" - Erro:"+sql.getMessage(), Alert.AlertType.ERROR);
         }
         return null;
     }

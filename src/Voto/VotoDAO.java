@@ -2,8 +2,10 @@ package Voto;
 
 import Candidato.Candidato;
 import Eleicao.Eleicao;
+import Utils.AlertUtils;
 import Utils.PSQLException;
 import Utils.PostgreSQLJDBC;
+import javafx.scene.control.Alert;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,14 +25,15 @@ public class VotoDAO {
         if(candidatoId != null) {
             try {
                 Connection conn = PostgreSQLJDBC.conectar();
-                PreparedStatement prestmt = conn.prepareStatement("INSERT INTO Voto(data,candidato_id,eleicao_id) VALUES (?,?,?)");
+                PreparedStatement prestmt = conn.prepareStatement("INSERT INTO Voto(data,candidato_id,eleicao_id,secao_id) VALUES (?,?,?,?)");
                 prestmt.setObject(1,v.getData());
                 prestmt.setLong(2,candidatoId);
                 prestmt.setLong(3,v.getEleicao().getId());
+                prestmt.setLong(4,v.getSecao().getId());
                 prestmt.execute();
                 prestmt.close();
             } catch (SQLException sql) {
-                new PSQLException(sql);
+                AlertUtils.alert("Erro no banco de dados","Code: "+sql.getErrorCode()+" - Erro:"+sql.getMessage(), Alert.AlertType.ERROR);
             }
             return v;
         }
@@ -43,7 +46,7 @@ public class VotoDAO {
             prestmt.execute();
             prestmt.close();
         } catch (SQLException sql) {
-            new PSQLException(sql);
+            AlertUtils.alert("Erro no banco de dados","Code: "+sql.getErrorCode()+" - Erro:"+sql.getMessage(), Alert.AlertType.ERROR);
         }
         return v;
 
@@ -58,7 +61,7 @@ public class VotoDAO {
             prestmt.execute();
             prestmt.close();
         } catch (SQLException sql) {
-            new PSQLException(sql);
+            AlertUtils.alert("Erro no banco de dados","Code: "+sql.getErrorCode()+" - Erro:"+sql.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
@@ -88,7 +91,7 @@ public class VotoDAO {
 
             prestmt.close();
         }catch (SQLException sql) {
-            new PSQLException(sql);
+            AlertUtils.alert("Erro no banco de dados","Code: "+sql.getErrorCode()+" - Erro:"+sql.getMessage(), Alert.AlertType.ERROR);
         }
         return votos;
     }
