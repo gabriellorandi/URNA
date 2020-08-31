@@ -125,9 +125,18 @@
          <font>
             <Font name="Arial" size="30.0" />
          </font></Label>
-      <Label fx:id="lblNomeCandidato" layoutX="663.0" layoutY="254.0" prefHeight="59.0" prefWidth="432.0" style="-fx-border-color: black;" />
-      <Label fx:id="lblPartidoCandidato" layoutX="677.0" layoutY="354.0" prefHeight="59.0" prefWidth="417.0" style="-fx-border-color: black;" />
-      <Label fx:id="lblCargoCandidato" layoutX="661.0" layoutY="454.0" prefHeight="59.0" prefWidth="432.0" style="-fx-border-color: black;" />
+      <Label fx:id="lblNomeCandidato" layoutX="663.0" layoutY="254.0" prefHeight="59.0" prefWidth="432.0" style="-fx-border-color: black;">
+         <font>
+            <Font size="30.0" />
+         </font></Label>
+      <Label fx:id="lblPartidoCandidato" layoutX="677.0" layoutY="354.0" prefHeight="59.0" prefWidth="417.0" style="-fx-border-color: black;">
+         <font>
+            <Font size="30.0" />
+         </font></Label>
+      <Label fx:id="lblCargoCandidato" layoutX="661.0" layoutY="454.0" prefHeight="59.0" prefWidth="432.0" style="-fx-border-color: black;">
+         <font>
+            <Font size="30.0" />
+         </font></Label>
       <Button fx:id="btn0" layoutX="181.0" layoutY="504.0" mnemonicParsing="false" onAction="#digito0" prefHeight="86.0" prefWidth="76.0" text="0" AnchorPane.leftAnchor="181.0" AnchorPane.topAnchor="504.0">
          <font>
             <Font size="40.0" />
