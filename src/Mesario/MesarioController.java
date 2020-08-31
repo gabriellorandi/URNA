@@ -25,7 +25,6 @@ public class MesarioController {
     @FXML private TableColumn<Mesario, String> mesarioNome;
     @FXML private TableColumn<Mesario, String> mesarioCpf;
     @FXML private TableColumn<Mesario, String> mesarioLogin;
-    @FXML private TableColumn<Mesario, String> mesarioSenha;
 
     List<Mesario> mesarios;
     MesarioDAO mesarioDAO;
@@ -48,7 +47,6 @@ public class MesarioController {
         mesarioNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         mesarioCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
         mesarioLogin.setCellValueFactory(new PropertyValueFactory<>("login"));
-        mesarioSenha.setCellValueFactory(new PropertyValueFactory<>("senha"));
 
         tableView.getItems().addAll(mesarios);
 

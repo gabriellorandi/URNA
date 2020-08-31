@@ -16,10 +16,9 @@
       <TableView fx:id="tableView" layoutX="22.0" layoutY="109.0" prefHeight="247.0" prefWidth="760.0">
          <columns>
             <TableColumn fx:id="mesarioId" prefWidth="57.0" text="ID" />
-            <TableColumn fx:id="mesarioNome" prefWidth="161.0" text="Nome" />
-            <TableColumn fx:id="mesarioCpf" prefWidth="178.0" text="CPF" />
-            <TableColumn fx:id="mesarioLogin" prefWidth="191.0" text="Login" />
-            <TableColumn fx:id="mesarioSenha" prefWidth="191.0" text="Senha" />
+            <TableColumn fx:id="mesarioNome" prefWidth="196.0" text="Nome" />
+            <TableColumn fx:id="mesarioCpf" prefWidth="245.0" text="CPF" />
+            <TableColumn fx:id="mesarioLogin" prefWidth="261.0" text="Login" />
          </columns>
       </TableView>
       <TextField fx:id="txtLogin" layoutX="439.0" layoutY="30.0" prefHeight="25.0" prefWidth="160.0" promptText="Login" />

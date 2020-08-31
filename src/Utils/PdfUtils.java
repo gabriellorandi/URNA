@@ -57,7 +57,7 @@ public class PdfUtils {
 
         addEmptyLine(preface, 3);
         preface.add(new Paragraph(
-                "Este documento apresenta os resultados desta eleição. ",
+                "Este documento apresenta os resultados desta seção. ",
                 smallBold));
 
         document.add(preface);
