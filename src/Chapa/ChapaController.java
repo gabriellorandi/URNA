@@ -60,6 +60,9 @@ public class ChapaController {
             chapas = chapaDAO.selecionarChapas();
 
             tableView.getItems().setAll(chapas);
+            //txtId.clear();
+            txtNome.clear();
+            txtSigla.clear();
             tableView.refresh();
         } else {
             AlertUtils.alert("Valores incorretos!", "Os valores inseridos nos campos estão incorretos. Tente novamente.", Alert.AlertType.ERROR);

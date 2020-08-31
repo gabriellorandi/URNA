@@ -80,6 +80,7 @@ public class CargoController {
             cargos = cargoDAO.selecionarCargos(eleicao);
 
             tableView.getItems().setAll(cargos);
+            txtNome.clear();
             tableView.refresh();
         } else {
             AlertUtils.alert("Valores incorretos!", "Os valores inseridos nos campos estão incorretos. Tente novamente.", Alert.AlertType.ERROR);
