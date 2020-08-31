@@ -71,6 +71,10 @@ public class MesarioController {
             mesarios = mesarioDAO.selecionarMesarios();
 
             tableView.getItems().setAll(mesarios);
+            txtNome.clear();
+            txtCpf.clear();
+            txtLogin.clear();
+            txtSenha.clear();
             tableView.refresh();
         } else {
             AlertUtils.alert("Valores incorretos!", "Os valores inseridos nos campos estão incorretos. Tente novamente.", Alert.AlertType.ERROR);
