@@ -5,7 +5,9 @@ import Grupo.Grupo;
 import Grupo.GrupoDAO;
 import Secao.Secao;
 import Secao.SecaoDAO;
+import Utils.AlertUtils;
 import Utils.ImportUtils;
+import Utils.ValidateFields;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +20,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EleitorController {
@@ -87,10 +90,13 @@ public class EleitorController {
 
     public void cadastrarEleitor() {
 
-        Eleitor eleitor = new Eleitor();
-        eleitor.setId( Long.parseLong(txtId.getText()) );
-        eleitor.setCpf( Long.parseLong(txtCpf.getText()) );
-        eleitor.setNome( txtNome.getText() );
+        if(ValidateFields.validateNumberField(txtId.getText())
+        && ValidateFields.validateNumberField(txtCpf.getText())
+        && ValidateFields.validateTextField(txtNome.getText())) {
+            Eleitor eleitor = new Eleitor();
+            eleitor.setId( Long.parseLong(txtId.getText()) );
+            eleitor.setCpf( Long.parseLong(txtCpf.getText()) );
+            eleitor.setNome( txtNome.getText() );
 
         Secao secao = (Secao) cbSecao.getSelectionModel().getSelectedItem();
 
@@ -98,12 +104,14 @@ public class EleitorController {
 
         if(!contemEleitor(eleitor)) {
 
-            eleitor = eleitorDAO.cadastrarEleitor(eleitor,eleicao);
-            eleitores.add(eleitor);
-            tableView.getItems().setAll(eleitores);
-            tableView.refresh();
+                eleitor = eleitorDAO.cadastrarEleitor(eleitor,eleicao);
+                eleitores.add(eleitor);
+                tableView.getItems().setAll(eleitores);
+                tableView.refresh();
+            }
+        } else {
+            AlertUtils.alert("Valores incorretos!", "Os valores inseridos nos campos estão incorretos. Tente novamente.", Alert.AlertType.ERROR);
         }
-
     }
 
     public void removerEleitor() {

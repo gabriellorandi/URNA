@@ -12,6 +12,16 @@ CREATE TABLE Grupo(
 
 );
 
+CREATE TABLE Cargo(
+
+  id serial not null primary key,
+  grupo_id bigint,
+  nome varchar(30) not null,
+
+  FOREIGN KEY (grupo_id) REFERENCES Grupo(id)
+
+);
+
 CREATE TABLE Mesario(
 
   id serial not null primary key,
@@ -54,13 +64,6 @@ FOREIGN KEY (grupo_id) REFERENCES Grupo(id)
 
 );
 
-
-CREATE TABLE Cargo(
-
-  id serial not null primary key,
-  nome varchar(30) not null
-
-);
 
 CREATE TABLE Chapa(
 

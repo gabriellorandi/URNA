@@ -1,14 +1,13 @@
 package Grupo;
 
+import Utils.AlertUtils;
+import Utils.ValidateFields;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -51,16 +50,19 @@ public class GrupoController {
 
     public void cadastrarGrupo( ) {
 
-        Grupo grupo = new Grupo();
-        grupo.setNome( txtNome.getText() );
+        if (ValidateFields.validateTextField((txtNome.getText()))) {
+            Grupo grupo = new Grupo();
+            grupo.setNome( txtNome.getText() );
 
-        grupoDAO.cadastrarGrupo(grupo);
+            grupoDAO.cadastrarGrupo(grupo);
 
-        grupos = grupoDAO.selecionarGrupos();
+            grupos = grupoDAO.selecionarGrupos();
 
-        tableView.getItems().setAll(grupos);
-        tableView.refresh();
-
+            tableView.getItems().setAll(grupos);
+            tableView.refresh();
+        } else {
+            AlertUtils.alert("Valores incorretos!", "Os valores inseridos nos campos estão incorretos. Tente novamente.", Alert.AlertType.ERROR);
+        }
     }
 
     public void removerGrupo() {

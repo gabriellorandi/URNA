@@ -86,7 +86,7 @@ public class LoginController extends Application {
 
             Parent parent = FXMLLoader.load(getClass().getResource("../Eleicao/Eleicao.fxml"));
 
-            Stage stage = new Stage();
+            Stage stage = (Stage)btnLogin.getScene().getWindow();
             Scene scene = new Scene(parent,ADMIN_WIDTH,ADMIN_HEIGHT);
             stage.setTitle("Adicionar Eleição");
             stage.setScene(scene);

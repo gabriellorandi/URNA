@@ -1,9 +1,13 @@
 package Cargo;
 
+import Grupo.Grupo;
+
 public class Cargo {
 
     private Long id;
     private String nome;
+
+    private Grupo grupo;
 
     @Override
     public String toString() {
@@ -24,5 +28,17 @@ public class Cargo {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getGrupoNome() {
+        return getGrupo().toString();
+    }
+
+    public Grupo getGrupo() {
+        return grupo;
+    }
+
+    public void setGrupo(Grupo grupo) {
+        this.grupo = grupo;
     }
 }

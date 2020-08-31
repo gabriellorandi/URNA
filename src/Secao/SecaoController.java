@@ -3,6 +3,8 @@ package Secao;
 import Eleicao.Eleicao;
 import Mesario.Mesario;
 import Mesario.MesarioDAO;
+import Utils.AlertUtils;
+import Utils.ValidateFields;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -61,21 +63,24 @@ public class SecaoController {
 
     public void cadastrarSecao() {
 
-        Secao secao = new Secao();
-        secao.setLogradouro( txtLogradouro.getText() );
-        secao.setNumero( Integer.parseInt( txtNumero.getText() ) );
+        if (ValidateFields.validateTextField(txtLogradouro.getText())
+        && ValidateFields.validateNumberField(txtNumero.getText())){
+            Secao secao = new Secao();
+            secao.setLogradouro( txtLogradouro.getText() );
+            secao.setNumero( Integer.parseInt( txtNumero.getText() ) );
 
-        Mesario mesario = (Mesario) cbMesarios.getSelectionModel().getSelectedItem();
+            Mesario mesario = (Mesario) cbMesarios.getSelectionModel().getSelectedItem();
 
-        secao.setMesario(mesario);
+            secao.setMesario(mesario);
 
-        secaoDAO.cadastrarSecao(secao,eleicao);
+            secaoDAO.cadastrarSecao(secao,eleicao);
 
-        secoes = secaoDAO.selecionarSecoes();
-        tableView.getItems().setAll(secoes);
-        tableView.refresh();
-
-
+            secoes = secaoDAO.selecionarSecoes();
+            tableView.getItems().setAll(secoes);
+            tableView.refresh();
+        } else {
+            AlertUtils.alert("Valores incorretos!", "Os valores inseridos nos campos estão incorretos. Tente novamente.", Alert.AlertType.ERROR);
+        }
     }
 
     public void close(ActionEvent event) throws Exception{

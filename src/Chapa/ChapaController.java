@@ -1,15 +1,14 @@
 package Chapa;
 
 
+import Utils.AlertUtils;
+import Utils.ValidateFields;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -54,18 +53,21 @@ public class ChapaController {
 
     public void cadastrarChapa() {
 
-        Chapa chapa = new Chapa();
-        chapa.setSigla( txtSigla.getText() );
-        chapa.setNome( txtNome.getText());
+        if (ValidateFields.validateTextField(txtSigla.getText())
+        && ValidateFields.validateTextField(txtNome.getText())){
+            Chapa chapa = new Chapa();
+            chapa.setSigla(txtSigla.getText() );
+            chapa.setNome(txtNome.getText());
 
-        chapaDAO.cadastrarChapa(chapa);
+            chapaDAO.cadastrarChapa(chapa);
 
-        chapas = chapaDAO.selecionarChapas();
+            chapas = chapaDAO.selecionarChapas();
 
-        tableView.getItems().setAll(chapas);
-        tableView.refresh();
-
-
+            tableView.getItems().setAll(chapas);
+            tableView.refresh();
+        } else {
+            AlertUtils.alert("Valores incorretos!", "Os valores inseridos nos campos estão incorretos. Tente novamente.", Alert.AlertType.ERROR);
+        }
     }
 
     public void removerChapa() {
