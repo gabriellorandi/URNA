@@ -1,97 +1,139 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="645.0" prefWidth="1043.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Voto.VotoController">
+<AnchorPane prefHeight="709.0" prefWidth="1108.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Voto.VotoController">
    <children>
-      <ImageView fitHeight="262.0" fitWidth="200.0" layoutX="322.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="btn1" layoutX="557.0" layoutY="50.0" mnemonicParsing="false" onAction="#digito1" prefHeight="129.0" prefWidth="127.0" text="1">
+      <ImageView fitHeight="262.0" fitWidth="200.0" layoutX="829.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="btn1" layoutX="56.0" layoutY="204.0" mnemonicParsing="false" onAction="#digito1" prefHeight="48.0" prefWidth="43.0" text="1" AnchorPane.leftAnchor="56.0" AnchorPane.topAnchor="204.0">
          <font>
-            <Font size="60.0" />
+            <Font size="40.0" />
          </font>
+         <effect>
+            <DropShadow />
+         </effect>
       </Button>
-      <Button fx:id="btn2" layoutX="708.0" layoutY="50.0" mnemonicParsing="false" onAction="#digito2" prefHeight="129.0" prefWidth="127.0" text="2">
+      <Button fx:id="btn2" layoutX="181.0" layoutY="204.0" mnemonicParsing="false" onAction="#digito2" prefHeight="48.0" prefWidth="43.0" text="2" AnchorPane.leftAnchor="181.0" AnchorPane.topAnchor="204.0">
          <font>
-            <Font size="60.0" />
+            <Font size="40.0" />
          </font>
+         <effect>
+            <DropShadow />
+         </effect>
       </Button>
-      <Button fx:id="btn3" layoutX="862.0" layoutY="50.0" mnemonicParsing="false" onAction="#digito3" prefHeight="129.0" prefWidth="127.0" text="3">
+      <Button fx:id="btn3" layoutX="306.0" layoutY="204.0" mnemonicParsing="false" onAction="#digito3" prefHeight="86.0" prefWidth="76.0" text="3" AnchorPane.leftAnchor="306.0" AnchorPane.topAnchor="204.0">
          <font>
-            <Font size="60.0" />
+            <Font size="40.0" />
          </font>
+         <effect>
+            <DropShadow />
+         </effect>
       </Button>
-      <Button fx:id="btn4" layoutX="557.0" layoutY="197.0" mnemonicParsing="false" onAction="#digito4" prefHeight="129.0" prefWidth="127.0" text="4">
+      <Button fx:id="btn4" layoutX="56.0" layoutY="304.0" mnemonicParsing="false" onAction="#digito4" prefHeight="86.0" prefWidth="76.0" text="4" AnchorPane.leftAnchor="56.0" AnchorPane.topAnchor="304.0">
          <font>
-            <Font size="60.0" />
+            <Font size="40.0" />
          </font>
+         <effect>
+            <DropShadow />
+         </effect>
       </Button>
-      <Button fx:id="btn5" layoutX="708.0" layoutY="197.0" mnemonicParsing="false" onAction="#digito5" prefHeight="129.0" prefWidth="127.0" text="5">
+      <Button fx:id="btn5" layoutX="181.0" layoutY="304.0" mnemonicParsing="false" onAction="#digito5" prefHeight="86.0" prefWidth="76.0" text="5" AnchorPane.leftAnchor="181.0" AnchorPane.topAnchor="304.0">
          <font>
-            <Font size="60.0" />
+            <Font size="40.0" />
          </font>
+         <effect>
+            <DropShadow />
+         </effect>
       </Button>
-      <Button fx:id="btn6" layoutX="862.0" layoutY="197.0" mnemonicParsing="false" onAction="#digito6" prefHeight="129.0" prefWidth="127.0" text="6">
+      <Button fx:id="btn6" layoutX="306.0" layoutY="304.0" mnemonicParsing="false" onAction="#digito6" prefHeight="86.0" prefWidth="76.0" text="6" AnchorPane.leftAnchor="306.0" AnchorPane.topAnchor="304.0">
          <font>
-            <Font size="60.0" />
+            <Font size="40.0" />
          </font>
+         <effect>
+            <DropShadow />
+         </effect>
       </Button>
-      <Button fx:id="btn7" layoutX="556.0" layoutY="346.0" mnemonicParsing="false" onAction="#digito7" prefHeight="129.0" prefWidth="127.0" text="7">
+      <Button fx:id="btn7" layoutX="56.0" layoutY="404.0" mnemonicParsing="false" onAction="#digito7" prefHeight="86.0" prefWidth="76.0" text="7" AnchorPane.leftAnchor="56.0" AnchorPane.topAnchor="404.0">
          <font>
-            <Font size="60.0" />
+            <Font size="40.0" />
          </font>
+         <effect>
+            <DropShadow />
+         </effect>
       </Button>
-      <Button fx:id="btn8" layoutX="707.0" layoutY="346.0" mnemonicParsing="false" onAction="#digito8" prefHeight="129.0" prefWidth="127.0" text="8">
+      <Button fx:id="btn8" layoutX="181.0" layoutY="404.0" mnemonicParsing="false" onAction="#digito8" prefHeight="86.0" prefWidth="76.0" text="8" AnchorPane.leftAnchor="181.0" AnchorPane.topAnchor="404.0">
          <font>
-            <Font size="60.0" />
+            <Font size="40.0" />
          </font>
+         <effect>
+            <DropShadow />
+         </effect>
       </Button>
-      <Button fx:id="btn9" layoutX="861.0" layoutY="346.0" mnemonicParsing="false" onAction="#digito9" prefHeight="129.0" prefWidth="127.0" text="9">
+      <Button fx:id="btn9" layoutX="306.0" layoutY="404.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#digito9" prefHeight="86.0" prefWidth="76.0" text="9" AnchorPane.leftAnchor="306.0" AnchorPane.topAnchor="404.0">
          <font>
-            <Font size="60.0" />
+            <Font size="40.0" />
          </font>
+         <effect>
+            <DropShadow />
+         </effect>
       </Button>
-      <Button layoutX="586.0" layoutY="509.0" mnemonicParsing="false" onAction="#corrige" prefHeight="95.0" prefWidth="194.0" text="Corrige">
+      <Button layoutX="168.0" layoutY="619.0" mnemonicParsing="false" onAction="#corrige" prefHeight="48.0" prefWidth="108.0" style="-fx-background-color: orange; -fx-border-color: black;" text="Corrige" AnchorPane.leftAnchor="168.0" AnchorPane.topAnchor="619.0">
          <font>
-            <Font size="36.0" />
+            <Font size="21.0" />
          </font>
+         <effect>
+            <DropShadow />
+         </effect>
       </Button>
-      <Button fx:id="btnBranco" layoutX="342.0" layoutY="509.0" mnemonicParsing="false" onAction="#votarBranco" prefHeight="95.0" prefWidth="215.0" text="Branco">
+      <Button fx:id="btnBranco" layoutX="286.0" layoutY="619.0" mnemonicParsing="false" onAction="#votarBranco" prefHeight="48.0" prefWidth="138.0" style="-fx-background-color: WHITE; -fx-border-color: black;" text="Branco" AnchorPane.leftAnchor="286.0" AnchorPane.topAnchor="619.0">
          <font>
-            <Font size="36.0" />
+            <Font size="21.0" />
          </font>
+         <effect>
+            <DropShadow />
+         </effect>
       </Button>
-      <Button fx:id="btnConfirmar" layoutX="800.0" layoutY="509.0" mnemonicParsing="false" onAction="#confirmarVoto" prefHeight="95.0" prefWidth="209.0" text="Confirmar">
+      <Button fx:id="btnConfirmar" layoutX="32.0" layoutY="619.0" mnemonicParsing="false" onAction="#confirmarVoto" prefHeight="48.0" prefWidth="124.0" style="-fx-background-color: green; -fx-border-color: black;" text="Confirmar" textFill="WHITE" AnchorPane.leftAnchor="32.0" AnchorPane.topAnchor="619.0">
          <font>
-            <Font size="36.0" />
+            <Font size="21.0" />
          </font>
+         <effect>
+            <DropShadow />
+         </effect>
       </Button>
-      <Label layoutX="14.0" layoutY="31.0" prefHeight="59.0" prefWidth="117.0" text="Número:">
+      <Label layoutX="569.0" layoutY="254.0" prefHeight="59.0" prefWidth="117.0" text="Nome:">
          <font>
             <Font size="29.0" />
          </font>
       </Label>
-      <Label layoutX="14.0" layoutY="100.0" prefHeight="59.0" prefWidth="117.0" text="Nome:">
+      <Label layoutX="569.0" layoutY="354.0" prefHeight="59.0" prefWidth="117.0" text="Partido:">
          <font>
             <Font size="29.0" />
          </font>
       </Label>
-      <Label layoutX="14.0" layoutY="168.0" prefHeight="59.0" prefWidth="117.0" text="Partido:">
+      <Label layoutX="569.0" layoutY="454.0" prefHeight="59.0" prefWidth="117.0" text="Cargo:">
          <font>
             <Font size="29.0" />
          </font>
       </Label>
-      <Label layoutX="14.0" layoutY="232.0" prefHeight="59.0" prefWidth="117.0" text="Cargo:">
+      <Label fx:id="lblNumeroCandidato" layoutX="56.0" layoutY="116.0" prefHeight="59.0" prefWidth="327.0" style="-fx-border-color: black; -fx-font-style: normal;" AnchorPane.leftAnchor="56.0" AnchorPane.topAnchor="116.0">
          <font>
-            <Font size="29.0" />
+            <Font name="Arial" size="30.0" />
+         </font></Label>
+      <Label fx:id="lblNomeCandidato" layoutX="663.0" layoutY="254.0" prefHeight="59.0" prefWidth="432.0" style="-fx-border-color: black;" />
+      <Label fx:id="lblPartidoCandidato" layoutX="677.0" layoutY="354.0" prefHeight="59.0" prefWidth="417.0" style="-fx-border-color: black;" />
+      <Label fx:id="lblPartidoCandidato1" layoutX="661.0" layoutY="454.0" prefHeight="59.0" prefWidth="432.0" style="-fx-border-color: black;" />
+      <Button fx:id="btn0" layoutX="181.0" layoutY="504.0" mnemonicParsing="false" onAction="#digito0" prefHeight="86.0" prefWidth="76.0" text="0" AnchorPane.leftAnchor="181.0" AnchorPane.topAnchor="504.0">
+         <font>
+            <Font size="40.0" />
          </font>
-      </Label>
-      <Label fx:id="lblNumeroCandidato" layoutX="142.0" layoutY="31.0" prefHeight="59.0" prefWidth="153.0" />
-      <Label fx:id="lblNomeCandidato" layoutX="131.0" layoutY="100.0" prefHeight="59.0" prefWidth="153.0" />
-      <Label fx:id="lblPartidoCandidato" layoutX="142.0" layoutY="168.0" prefHeight="59.0" prefWidth="153.0" />
-      <Label fx:id="lblPartidoCandidato1" layoutX="118.0" layoutY="232.0" prefHeight="59.0" prefWidth="153.0" />
+         <effect>
+            <DropShadow />
+         </effect>
+      </Button>
    </children>
 </AnchorPane>
