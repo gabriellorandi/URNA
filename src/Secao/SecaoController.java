@@ -77,6 +77,9 @@ public class SecaoController {
 
             secoes = secaoDAO.selecionarSecoes();
             tableView.getItems().setAll(secoes);
+            txtLogradouro.clear();
+            txtNumero.clear();
+            cbMesarios.getSelectionModel().clearSelection();
             tableView.refresh();
         } else {
             AlertUtils.alert("Valores incorretos!", "Os valores inseridos nos campos estão incorretos. Tente novamente.", Alert.AlertType.ERROR);
