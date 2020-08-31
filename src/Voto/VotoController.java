@@ -8,6 +8,7 @@ import Candidato.CandidatoDAO;
 import Eleicao.Eleicao;
 import Eleitor.Eleitor;
 import Secao.Secao;
+import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -67,7 +68,6 @@ public class VotoController {
         this.secao = secao;
         this.eleitor = eleitor;
     }
-
 
     public void digito1(ActionEvent actionEvent) {
         votoNumero += "1";
@@ -144,11 +144,12 @@ public class VotoController {
 
     public void corrige(ActionEvent actionEvent) {
         if(!votoNumero.isEmpty()){
-            votoNumero = votoNumero.substring(0, votoNumero.length() - 1);
+            votoNumero = "";
             lblNumeroCandidato.setText(votoNumero);
-
+            if(!votoNumero.isEmpty()){
+                procurarCandidato();
+            }
         }
-        procurarCandidato();
     }
 
     public void votarBranco(ActionEvent actionEvent) {
