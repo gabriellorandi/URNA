@@ -4,11 +4,14 @@ import Candidato.Candidato;
 import Candidato.CandidatoDAO;
 import Eleicao.Eleicao;
 import Eleicao.EleicaoDAO;
+import Eleitor.EleitorDAO;
 import Mesario.Mesario;
 import Secao.Secao;
 import Secao.SecaoDAO;
 import Utils.AlertUtils;
 import Utils.PdfUtils;
+import Voto.Voto;
+import Voto.VotoDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -29,6 +32,8 @@ public class ControleEleicaoController {
     private EleicaoDAO eleicaoDAO;
     private SecaoDAO secaoDAO;
     private CandidatoDAO candidatoDAO;
+    private VotoDAO votoDAO;
+    private EleitorDAO eleitorDAO;
 
     @FXML
     public void initialize() {
@@ -36,6 +41,8 @@ public class ControleEleicaoController {
         eleicaoDAO = new EleicaoDAO();
         secaoDAO = new SecaoDAO();
         candidatoDAO = new CandidatoDAO();
+        votoDAO = new VotoDAO();
+        eleitorDAO = new EleitorDAO();
 
     }
 
@@ -79,7 +86,11 @@ public class ControleEleicaoController {
 
         List<Candidato> candidatos = candidatoDAO.selecionarCandidatos(eleicao);
 
-        PdfUtils.createPdf("C:\\Users\\Gabriel\\Desktop\\resultados.pdf","Resultados",mesario,candidatos);
+        List<Voto> votos = votoDAO.selecionarVotos(eleicao,secao);
+
+        Integer numeroTotal = eleitorDAO.selecionarEleitoresEleicao(secao).size();
+
+        PdfUtils.createPdf("C:\\Users\\Gabriel\\Desktop\\resultados.pdf","Resultados",mesario,candidatos,votos,numeroTotal);
 
         AlertUtils.alert("Resultados","O arquivo foi gerado com sucesso", Alert.AlertType.CONFIRMATION);
     }

@@ -8,8 +8,10 @@ import Candidato.CandidatoDAO;
 import Eleicao.Eleicao;
 import Eleitor.Eleitor;
 import Secao.Secao;
+import Utils.AlertUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
@@ -157,8 +159,18 @@ public class VotoController {
         v.setEleicao(eleicao);
         v.setCandidato(null);
         v.setData(LocalDate.now());
+        v.setSecao(secao);
 
         votoDAO.cadastrarVoto(v);
+
+        Comprovante comprovante = new Comprovante();
+        comprovante.setEleicao(eleicao);
+        comprovante.setEleitor(eleitor);
+        comprovante.setSecao(secao);
+
+        comprovanteDAO.cadastrarComprovante(comprovante);
+
+        AlertUtils.alert("Voto realizado","Voto Confirmado! ", Alert.AlertType.CONFIRMATION);
 
         Stage stage = (Stage)btnBranco.getScene().getWindow();
         stage.close();
@@ -181,6 +193,9 @@ public class VotoController {
         comprovante.setSecao(secao);
 
         comprovanteDAO.cadastrarComprovante(comprovante);
+
+        AlertUtils.alert("Voto realizado","Voto Confirmado! ", Alert.AlertType.CONFIRMATION);
+
 
         Stage stage = (Stage)btnConfirmar.getScene().getWindow();
         stage.close();
