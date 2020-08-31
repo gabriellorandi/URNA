@@ -14,6 +14,7 @@ import java.time.LocalDate;
 
 public class VotoController {
 
+    @FXML Button btn0;
     @FXML Button btn1;
     @FXML Button btn2;
     @FXML Button btn3;
@@ -105,6 +106,11 @@ public class VotoController {
 
     public void digito9(ActionEvent actionEvent) {
         votoNumero += "9";
+        lblNumeroCandidato.setText(votoNumero);
+        procurarCandidato();
+    }
+    public void digito0(ActionEvent actionEvent) {
+        votoNumero += "0";
         lblNumeroCandidato.setText(votoNumero);
         procurarCandidato();
     }
