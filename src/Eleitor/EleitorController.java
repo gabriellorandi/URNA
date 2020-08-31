@@ -3,6 +3,8 @@ package Eleitor;
 import Eleicao.Eleicao;
 import Grupo.Grupo;
 import Grupo.GrupoDAO;
+import Secao.Secao;
+import Secao.SecaoDAO;
 import Utils.AlertUtils;
 import Utils.ImportUtils;
 import Utils.ValidateFields;
@@ -29,21 +31,26 @@ public class EleitorController {
     @FXML Button btnCadastrar;
     @FXML Button btnCancel;
     @FXML Button btnGrupo;
+    @FXML Button btnImportar;
 
     @FXML private TableView<Eleitor> tableView;
     @FXML private TableColumn<Eleitor, Long> eleitorId;
     @FXML private TableColumn<Eleitor, String> eleitorNome;
     @FXML private TableColumn<Eleitor, Long> eleitorCPF;
     @FXML private TableColumn<Eleitor, String> eleitorGrupo;
+    @FXML private TableColumn<Eleitor, String> eleitorSecao;
 
     @FXML private ComboBox cbGrupo;
-
+    @FXML private ComboBox cbSecao;
 
     List<Eleitor> eleitores;
     EleitorDAO eleitorDAO;
 
     List<Grupo> grupos;
     GrupoDAO grupoDAO;
+
+    List<Secao> secaos;
+    SecaoDAO secaoDAO;
 
     private Eleicao eleicao;
 
@@ -56,12 +63,17 @@ public class EleitorController {
         grupoDAO = new GrupoDAO();
         grupos = grupoDAO.selecionarGrupos();
 
+        secaoDAO = new SecaoDAO();
+        secaos = secaoDAO.selecionarSecoes();
+
         cbGrupo.getItems().addAll(grupos);
+        cbSecao.getItems().addAll(secaos);
 
         eleitorId.setCellValueFactory(new PropertyValueFactory<Eleitor,Long>("id"));
         eleitorNome.setCellValueFactory(new PropertyValueFactory<Eleitor,String>("nome"));
         eleitorCPF.setCellValueFactory(new PropertyValueFactory<Eleitor,Long>("cpf"));
         eleitorGrupo.setCellValueFactory(new PropertyValueFactory<Eleitor,String>("grupoNome"));
+        eleitorSecao.setCellValueFactory(new PropertyValueFactory<Eleitor,String>("secaoNome"));
 
         tableView.getItems().addAll(eleitores);
         tableView.refresh();
@@ -86,7 +98,11 @@ public class EleitorController {
             eleitor.setCpf( Long.parseLong(txtCpf.getText()) );
             eleitor.setNome( txtNome.getText() );
 
-            if(!contemEleitor(eleitor)) {
+        Secao secao = (Secao) cbSecao.getSelectionModel().getSelectedItem();
+
+        eleitor.setSecao(secao);
+
+        if(!contemEleitor(eleitor)) {
 
                 eleitor = eleitorDAO.cadastrarEleitor(eleitor,eleicao);
                 eleitores.add(eleitor);
@@ -142,11 +158,14 @@ public class EleitorController {
         chooser.setTitle("Open File");
         File file = chooser.showOpenDialog(new Stage());
 
+        Secao secao = (Secao) cbSecao.getSelectionModel().getSelectedItem();
+
         if(file != null) {
 
             List<Eleitor> eleitores = ImportUtils.loadEleitores(file);
 
             for(Eleitor eleitor : eleitores) {
+                eleitor.setSecao(secao);
                 eleitorDAO.cadastrarEleitor(eleitor,eleicao);
             }
 

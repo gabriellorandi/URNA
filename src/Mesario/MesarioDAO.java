@@ -108,7 +108,7 @@ public class MesarioDAO {
             PreparedStatement prestmt = conn.prepareStatement(
                     "SELECT id FROM Mesario WHERE login LIKE ? AND senha LIKE ? AND admin = ? ");
 
-            prestmt.setString(1,login.toLowerCase());
+            prestmt.setString(1,login);
             prestmt.setString(2,senha);
             prestmt.setBoolean(3,admin);
 

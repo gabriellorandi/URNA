@@ -1,5 +1,6 @@
 package Cargo;
 
+import Grupo.Grupo;
 import Utils.PSQLException;
 import Utils.PostgreSQLJDBC;
 
@@ -17,7 +18,9 @@ public class CargoDAO {
         List<Cargo> cargos = new ArrayList<>();
         try{
             Connection conn = PostgreSQLJDBC.conectar();
-            PreparedStatement prestmt = conn.prepareStatement("SELECT id,nome FROM Cargo ");
+            PreparedStatement prestmt = conn.prepareStatement(
+                    "SELECT c.id as id, c.nome as nome, g.id as grupoId, g.nome as grupoNome FROM Cargo c " +
+                        "LEFT JOIN Grupo g ON g.id = c.grupo_id  ");
 
             ResultSet rs = prestmt.executeQuery();
 
@@ -26,6 +29,13 @@ public class CargoDAO {
 
                 c.setId( rs.getLong("id") );
                 c.setNome( rs.getString("nome") );
+
+                Grupo g = new Grupo();
+
+                g.setId( rs.getLong("grupoId") );
+                g.setNome(rs.getString("grupoNome"));
+
+                c.setGrupo(g);
 
                 cargos.add(c);
             }
@@ -54,15 +64,34 @@ public class CargoDAO {
 
     public Cargo cadastrarCargo(Cargo c) {
 
-        try {
-            Connection conn = PostgreSQLJDBC.conectar();
-            PreparedStatement prestmt = conn.prepareStatement("INSERT INTO Cargo(nome) VALUES (?)");
-            prestmt.setString(1,c.getNome());
-            prestmt.execute();
-            prestmt.close();
-        } catch (SQLException sql) {
-            new PSQLException(sql);
+        if(c.getGrupo() == null) {
+
+            try {
+                Connection conn = PostgreSQLJDBC.conectar();
+                PreparedStatement prestmt = conn.prepareStatement("INSERT INTO Cargo(nome) VALUES (?)");
+                prestmt.setString(1,c.getNome());
+                prestmt.execute();
+                prestmt.close();
+            } catch (SQLException sql) {
+                new PSQLException(sql);
+            }
+
+        } else {
+
+            try {
+                Connection conn = PostgreSQLJDBC.conectar();
+                PreparedStatement prestmt = conn.prepareStatement("INSERT INTO Cargo(nome,grupo_id) VALUES (?,?)");
+                prestmt.setString(1,c.getNome());
+                prestmt.setLong(2,c.getGrupo().getId());
+                prestmt.execute();
+                prestmt.close();
+            } catch (SQLException sql) {
+                new PSQLException(sql);
+            }
+
         }
+
+
         return c;
 
     }

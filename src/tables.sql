@@ -12,24 +12,19 @@ CREATE TABLE Grupo(
 
 );
 
+CREATE TABLE Cargo(
 
-CREATE TABLE Eleitor(
-
-  id bigint not null primary key,
-  eleicao_id bigint not null,
-  secao_id bigint,
+  id serial not null primary key,
   grupo_id bigint,
-  nome varchar(80) not null,
-  cpf bigint not null,
+  nome varchar(30) not null,
 
-  FOREIGN KEY (eleicao_id) REFERENCES Eleicao(id),
-FOREIGN KEY (grupo_id) REFERENCES Grupo(id)
+  FOREIGN KEY (grupo_id) REFERENCES Grupo(id)
 
 );
 
 CREATE TABLE Mesario(
 
-  id serial not null primary key  ,
+  id serial not null primary key,
   eleicao_id bigint,
   login varchar(30) unique not null,
   senha varchar(50) not null,
@@ -54,13 +49,21 @@ FOREIGN KEY (mesario_id) REFERENCES Mesario(id)
 );
 
 
+CREATE TABLE Eleitor(
 
-CREATE TABLE Cargo(
+  id bigint not null primary key,
+  eleicao_id bigint not null,
+  secao_id bigint,
+  grupo_id bigint,
+  nome varchar(80) not null,
+  cpf bigint not null,
 
-  id serial not null primary key,
-  nome varchar(30) not null
+  FOREIGN KEY (secao_id) REFERENCES Secao(id),
+FOREIGN KEY (eleicao_id) REFERENCES Eleicao(id),
+FOREIGN KEY (grupo_id) REFERENCES Grupo(id)
 
 );
+
 
 CREATE TABLE Chapa(
 

@@ -14,17 +14,19 @@
       <TextField fx:id="txtCpf" layoutX="399.0" layoutY="30.0" prefHeight="25.0" prefWidth="192.0" promptText="CPF" AnchorPane.leftAnchor="399.0" AnchorPane.rightAnchor="326.0" AnchorPane.topAnchor="30.0" />
       <Button fx:id="btnCadastrar" layoutX="609.0" layoutY="30.0" mnemonicParsing="false" onAction="#cadastrarEleitor" prefHeight="25.0" prefWidth="139.0" text="Adicionar" />
       <Button fx:id="btnCancel" cancelButton="true" layoutX="764.0" layoutY="382.0" mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="139.0" text="Cancelar" />
-      <Button fx:id="btnCancel1" cancelButton="true" layoutX="594.0" layoutY="382.0" mnemonicParsing="false" onAction="#importar" prefHeight="25.0" prefWidth="139.0" text="Importar" />
+      <Button fx:id="btnImportar" cancelButton="true" layoutX="594.0" layoutY="382.0" mnemonicParsing="false" onAction="#importar" prefHeight="25.0" prefWidth="139.0" text="Importar" />
       <TableView fx:id="tableView" layoutX="22.0" layoutY="102.0" prefHeight="254.0" prefWidth="877.0">
         <columns>
-          <TableColumn fx:id="eleitorId" prefWidth="194.0" text="ID" />
-          <TableColumn fx:id="eleitorNome" minWidth="0.0" prefWidth="242.0" text="Nome" />
-            <TableColumn fx:id="eleitorCPF" prefWidth="201.0" text="CPF" />
-            <TableColumn fx:id="eleitorGrupo" prefWidth="239.0" text="Grupo" />
+          <TableColumn fx:id="eleitorId" prefWidth="128.0" text="ID" />
+          <TableColumn fx:id="eleitorNome" minWidth="0.0" prefWidth="240.0" text="Nome" />
+            <TableColumn fx:id="eleitorCPF" prefWidth="186.0" text="CPF" />
+            <TableColumn fx:id="eleitorGrupo" prefWidth="170.0" text="Grupo" />
+            <TableColumn fx:id="eleitorSecao" prefWidth="152.0" text="Seção" />
         </columns>
       </TableView>
       <Button fx:id="btnRemover" layoutX="764.0" layoutY="30.0" mnemonicParsing="false" onAction="#removerEleitor" prefHeight="25.0" prefWidth="139.0" text="Remover" />
       <Button fx:id="btnGrupo" cancelButton="true" layoutX="23.0" layoutY="382.0" mnemonicParsing="false" onAction="#abrirGrupo" prefHeight="25.0" prefWidth="139.0" text="Grupo" />
       <ComboBox fx:id="cbGrupo" layoutX="23.0" layoutY="66.0" prefHeight="25.0" prefWidth="192.0" />
+      <ComboBox fx:id="cbSecao" layoutX="236.0" layoutY="66.0" prefHeight="25.0" prefWidth="192.0" />
    </children>
 </AnchorPane>

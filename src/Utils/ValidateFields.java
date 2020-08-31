@@ -7,7 +7,7 @@ public class ValidateFields {
     private static final String REGEX_NUMBER;
 
     static {
-        REGEX_TEXT = "[a-zA-Z\\u00C0-\\u00FF ]*";
+        REGEX_TEXT = "[a-zA-Z\u00C0-\u00FF ]*";
         REGEX_NUMBER = "[0-9]*";
     }
 
