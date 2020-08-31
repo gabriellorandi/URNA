@@ -92,7 +92,7 @@ public class CandidatoController {
 
         if (ValidateFields.validateNumberField(txtId.getText())
         && ValidateFields.validateTextField(txtNome.getText())
-        && ValidateFields.validateTextField(txtCpf.getText())) {
+        && ValidateFields.validateNumberField(txtCpf.getText())) {
             Candidato candidato = new Candidato();
             candidato.setId(Long.parseLong(txtId.getText()));
             candidato.setNome(txtNome.getText());
