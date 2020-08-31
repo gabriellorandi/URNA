@@ -96,4 +96,34 @@ public class SecaoDAO {
         return mesarios;
     }
 
+    public Secao selecionarSecaoMesario(Mesario mesario) {
+
+        try{
+            Connection conn = PostgreSQLJDBC.conectar();
+            PreparedStatement prestmt = conn.prepareStatement(
+                    "SELECT c.id as id ,c.logradouro as logradouro,c.numero as numero " +
+                            "FROM Secao c " +
+                            "INNER JOIN Mesario m ON c.mesario_id = m.id ");
+
+            ResultSet rs = prestmt.executeQuery();
+
+            if(rs.next()) {
+                Secao s = new Secao();
+
+                s.setId( rs.getLong("id") );
+                s.setLogradouro( rs.getString("logradouro") );
+                s.setNumero( rs.getInt("numero") );
+
+                s.setMesario(mesario);
+
+                return s;
+            }
+
+            prestmt.close();
+        }catch (SQLException sql) {
+            new PSQLException(sql);
+        }
+        return null;
+
+    }
 }

@@ -4,13 +4,16 @@ import Eleicao.Eleicao;
 import Eleitor.Eleitor;
 import Eleitor.EleitorDAO;
 import Mesario.Mesario;
+import Secao.Secao;
 import Voto.VotoController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -26,8 +29,13 @@ public class ControleEleitorController {
     private List<Eleitor> eleitores;
     private EleitorDAO eleitorDAO;
 
+    @FXML private TextField txtBuscar;
+    @FXML private Button btnBusca;
+    @FXML private Button btnEncerrar;
+
     private Mesario mesario;
     private Eleicao eleicao;
+    private Secao secao;
 
 
     @FXML
@@ -42,15 +50,29 @@ public class ControleEleitorController {
 
     }
 
-    public void load(Mesario mesario, Eleicao eleicao) {
+    public void load(Mesario mesario, Eleicao eleicao,Secao secao) {
         setMesario(mesario);
         setEleicao(eleicao);
+        setSecao(secao);
 
-        eleitores = eleitorDAO.selecionarEleitoresEleicao(mesario);
+        eleitores = eleitorDAO.selecionarEleitoresEleicao(secao);
 
         tableView.getItems().addAll(eleitores);
         tableView.refresh();
+    }
 
+    public void buscarEleitor() {
+
+        eleitores = eleitorDAO.selecionarEleitoresEleicao(secao,txtBuscar.getText());
+
+        tableView.getItems().setAll(eleitores);
+        tableView.refresh();
+
+    }
+
+    public void encerrar() {
+        Stage stage = (Stage)btnEncerrar.getScene().getWindow();
+        stage.close();
     }
 
     public void autorizarVotar() throws Exception {
@@ -103,5 +125,13 @@ public class ControleEleitorController {
 
     public void setEleicao(Eleicao eleicao) {
         this.eleicao = eleicao;
+    }
+
+    public Secao getSecao() {
+        return secao;
+    }
+
+    public void setSecao(Secao secao) {
+        this.secao = secao;
     }
 }

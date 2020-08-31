@@ -3,41 +3,29 @@ package Eleicao.Controle;
 import Eleicao.Eleicao;
 import Eleicao.EleicaoDAO;
 import Mesario.Mesario;
+import Secao.Secao;
+import Secao.SecaoDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-
-import java.time.LocalDate;
-import java.util.List;
 
 public class ControleEleicaoController {
 
     @FXML private Button btnIniciar;
 
-    @FXML private TableView<Eleicao> tableView;
-    @FXML private TableColumn<Eleicao, Long> eleicaoId;
-    @FXML private TableColumn<Eleicao, LocalDate> eleicaoDia;
-
-    private List<Eleicao> eleicoes;
-    private EleicaoDAO eleicaoDAO;
-
     private Mesario mesario;
 
+    private EleicaoDAO eleicaoDAO;
+    private SecaoDAO secaoDAO;
 
     @FXML
     public void initialize() {
 
         eleicaoDAO = new EleicaoDAO();
-
-        eleicaoId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        eleicaoDia.setCellValueFactory(new PropertyValueFactory<>("dia"));
-
+        secaoDAO = new SecaoDAO();
 
     }
 
@@ -45,15 +33,12 @@ public class ControleEleicaoController {
 
         setMesario(mesario);
 
-
-        tableView.getItems().addAll(eleicoes);
-        tableView.refresh();
-
     }
 
     public void iniciarVotacao() throws Exception{
 
-        Eleicao eleicao = tableView.getSelectionModel().getSelectedItem();
+        Eleicao eleicao = eleicaoDAO.selecionarEleicaoMesario(mesario);
+        Secao secao = secaoDAO.selecionarSecaoMesario(mesario);
 
         if(eleicao != null) {
 
@@ -62,7 +47,7 @@ public class ControleEleicaoController {
             Parent parent = loader.load();
 
             ControleEleitorController controleEleitorController = loader.getController();
-            controleEleitorController.load(mesario,eleicao);
+            controleEleitorController.load(mesario,eleicao,secao);
 
 
             Stage stage = (Stage)btnIniciar.getScene().getWindow();

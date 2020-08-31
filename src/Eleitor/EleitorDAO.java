@@ -52,19 +52,49 @@ public class EleitorDAO {
     }
 
 
-    public List<Eleitor> selecionarEleitoresEleicao(Mesario m) {
+    public List<Eleitor> selecionarEleitoresEleicao(Secao s) {
 
         List<Eleitor> eleitores = new ArrayList<>();
         try{
             Connection conn = PostgreSQLJDBC.conectar();
             PreparedStatement prestmt = conn.prepareStatement(
                     "SELECT e.id as id,e.nome as nome, e.cpf as cpf FROM Eleitor e " +
-                            "INNER JOIN Secao_Eleitor se ON se.eleitor_id = e.id " +
-                            "INNER JOIN Secao s ON  s.id = se.secao_id " +
-                            "INNER JOIN Eleicao_Secao els ON els.secao_id = s.id  " +
-                            "WHERE s.mesario_id = ? ");
+                            "INNER JOIN Secao s ON  s.id = e.secao_id " +
+                            "WHERE s.id = ? ");
 
-            prestmt.setLong(1,m.getId());
+            prestmt.setLong(1,s.getId());
+
+            ResultSet rs = prestmt.executeQuery();
+
+            while(rs.next()) {
+                Eleitor e = new Eleitor();
+
+                e.setId( rs.getLong("id") );
+                e.setNome( rs.getString("nome") );
+                e.setCpf( rs.getLong("cpf") );
+
+                eleitores.add(e);
+            }
+
+            prestmt.close();
+        }catch (SQLException sql) {
+            new PSQLException(sql);
+        }
+        return eleitores;
+    }
+
+    public List<Eleitor> selecionarEleitoresEleicao(Secao s, String busca) {
+
+        List<Eleitor> eleitores = new ArrayList<>();
+        try{
+            Connection conn = PostgreSQLJDBC.conectar();
+            PreparedStatement prestmt = conn.prepareStatement(
+                    "SELECT e.id as id,e.nome as nome, e.cpf as cpf FROM Eleitor e " +
+                            "INNER JOIN Secao s ON  s.id = e.secao_id " +
+                            "WHERE s.id = ? AND e.nome LIKE ? ");
+
+            prestmt.setLong(1,s.getId());
+            prestmt.setString(2,"%"+busca+"%");
 
             ResultSet rs = prestmt.executeQuery();
 
