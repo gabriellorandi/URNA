@@ -1,10 +1,13 @@
 package Voto;
 
+import Comprovante.ComprovanteDAO;
+import Comprovante.Comprovante;
 import Candidato.Candidato;
 import Cargo.Cargo;
 import Candidato.CandidatoDAO;
 import Eleicao.Eleicao;
 import Eleitor.Eleitor;
+import Secao.Secao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -31,14 +34,17 @@ public class VotoController {
     @FXML Label lblNumeroCandidato;
     @FXML Label lblNomeCandidato;
     @FXML Label lblPartidoCandidato;
-    @FXML Label lblPartidoCandidato1;
+    @FXML Label lblCargoCandidato;
 
 
     private VotoDAO votoDAO;
     private CandidatoDAO candidatoDAO;
 
+    private ComprovanteDAO comprovanteDAO;
+
     private Eleicao eleicao;
     private Eleitor eleitor;
+    private Secao secao;
 
     private Candidato candidato;
     private Cargo cargo;
@@ -50,13 +56,16 @@ public class VotoController {
 
         votoDAO = new VotoDAO();
         candidatoDAO = new CandidatoDAO();
+        comprovanteDAO = new ComprovanteDAO();
         votoNumero = "";
 
     }
 
-    public void load(Eleicao eleicao, Cargo cargo) {
+    public void load(Eleicao eleicao, Cargo cargo, Secao secao, Eleitor eleitor) {
         this.eleicao = eleicao;
         this.cargo = cargo;
+        this.secao = secao;
+        this.eleitor = eleitor;
     }
 
 
@@ -124,19 +133,22 @@ public class VotoController {
         candidato = candidatoDAO.procurarCandidato(eleicao,cargo,Long.parseLong(votoNumero));
         if(candidato != null) {
             lblNomeCandidato.setText(candidato.getNome());
-            lblPartidoCandidato1.setText(candidato.getCargoNome());
+            lblPartidoCandidato.setText(candidato.getChapaNome());
+            lblCargoCandidato.setText(candidato.getCargoNome());
         } else {
             lblNomeCandidato.setText("");
             lblPartidoCandidato.setText("");
-            lblPartidoCandidato1.setText("");
+            lblCargoCandidato.setText("");
         }
     }
 
     public void corrige(ActionEvent actionEvent) {
         if(!votoNumero.isEmpty()){
-            votoNumero.substring(0, votoNumero.length() - 1);
+            votoNumero = votoNumero.substring(0, votoNumero.length() - 1);
             lblNumeroCandidato.setText(votoNumero);
+
         }
+        procurarCandidato();
     }
 
     public void votarBranco(ActionEvent actionEvent) {
@@ -158,9 +170,17 @@ public class VotoController {
         Voto v = new Voto();
         v.setEleicao(eleicao);
         v.setCandidato(candidato);
+        v.setSecao(secao);
         v.setData(LocalDate.now());
 
         votoDAO.cadastrarVoto(v);
+
+        Comprovante comprovante = new Comprovante();
+        comprovante.setEleicao(eleicao);
+        comprovante.setEleitor(eleitor);
+        comprovante.setSecao(secao);
+
+        comprovanteDAO.cadastrarComprovante(comprovante);
 
         Stage stage = (Stage)btnConfirmar.getScene().getWindow();
         stage.close();

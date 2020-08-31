@@ -45,6 +45,7 @@ public class ControleEleitorController {
     public void initialize() {
 
         eleitorDAO = new EleitorDAO();
+        cargoDAO = new CargoDAO();
 
         eleitorId.setCellValueFactory(new PropertyValueFactory<>("id"));
         eleitorNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
@@ -86,14 +87,14 @@ public class ControleEleitorController {
 
             for(Cargo cargo : cargos) {
 
-                if(eleitor.getGrupo() == null || eleitor.getGrupo().equals(cargo.getGrupo())) {
+                if(eleitor.getGrupo() == null ||cargo.getGrupo().getNome() == null  ||  eleitor.getGrupo().getId().equals(cargo.getGrupo().getId())) {
 
                     FXMLLoader loader = new FXMLLoader();
                     loader.setLocation((getClass().getResource("../../Voto/Voto.fxml")));
                     Parent parent = loader.load();
 
                     VotoController votoController = loader.getController();
-                    votoController.load(eleicao,cargo);
+                    votoController.load(eleicao,cargo,secao,eleitor);
 
                     Stage stage = new Stage();
 

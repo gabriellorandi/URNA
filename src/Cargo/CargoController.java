@@ -42,21 +42,22 @@ public class CargoController {
         cargoDAO = new CargoDAO();
         grupoDAO = new GrupoDAO();
 
+    }
+
+    public void load(Eleicao eleicao) {
+        this.eleicao = eleicao;
+
         cargoId.setCellValueFactory(new PropertyValueFactory<>("id"));
         cargoNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         cargoGrupo.setCellValueFactory(new PropertyValueFactory<>("grupoNome"));
 
-        cargos = cargoDAO.selecionarCargos();
+        cargos = cargoDAO.selecionarCargos(eleicao);
         grupos = grupoDAO.selecionarGrupos();
 
         cbGrupo.getItems().addAll(grupos);
 
         tableView.getItems().addAll(cargos);
         tableView.refresh();
-    }
-
-    public void load(Eleicao eleicao) {
-        this.eleicao = eleicao;
     }
 
     public void close(ActionEvent event) throws Exception{
@@ -76,7 +77,7 @@ public class CargoController {
 
             cargoDAO.cadastrarCargo(cargo, eleicao);
 
-            cargos = cargoDAO.selecionarCargos();
+            cargos = cargoDAO.selecionarCargos(eleicao);
 
             tableView.getItems().setAll(cargos);
             tableView.refresh();

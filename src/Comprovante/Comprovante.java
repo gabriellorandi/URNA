@@ -2,6 +2,7 @@ package Comprovante;
 
 import Eleicao.Eleicao;
 import Eleitor.Eleitor;
+import Secao.Secao;
 
 public class Comprovante {
 
@@ -9,6 +10,7 @@ public class Comprovante {
 
     private Eleicao eleicao;
     private Eleitor eleitor;
+    private Secao secao;
 
 
     public Long getId() {
@@ -33,5 +35,13 @@ public class Comprovante {
 
     public void setEleitor(Eleitor eleitor) {
         this.eleitor = eleitor;
+    }
+
+    public Secao getSecao() {
+        return secao;
+    }
+
+    public void setSecao(Secao secao) {
+        this.secao = secao;
     }
 }

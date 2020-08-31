@@ -64,14 +64,19 @@ public class EleicaoController {
 
         Eleicao eleicao = new Eleicao();
 
-        eleicao.setDia( dateEleicao.getValue() );
+        if(dateEleicao.getValue() != null) {
 
-        eleicaoDAO.cadastrarEleicao(eleicao);
+            eleicao.setDia( dateEleicao.getValue() );
 
-        eleicaos = eleicaoDAO.selecionarEleicoes();
-        tableView.getItems().setAll(eleicaos);
-        tableView.refresh();
+            eleicaoDAO.cadastrarEleicao(eleicao);
 
+            eleicaos = eleicaoDAO.selecionarEleicoes();
+            tableView.getItems().setAll(eleicaos);
+            tableView.refresh();
+
+        } else {
+            AlertUtils.alert("Valores incorretos!", "Os valores inseridos nos campos estão incorretos. Tente novamente.", Alert.AlertType.ERROR);
+        }
     }
 
     public void abrirSecao()  throws Exception  {

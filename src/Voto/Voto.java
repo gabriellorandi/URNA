@@ -2,6 +2,7 @@ package Voto;
 
 import Candidato.Candidato;
 import Eleicao.Eleicao;
+import Secao.Secao;
 
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
@@ -15,6 +16,8 @@ public class Voto {
     private Candidato candidato;
 
     private Eleicao eleicao;
+
+    private Secao secao;
 
     public LocalDate getData() {
         return data;
@@ -47,5 +50,13 @@ public class Voto {
 
     public void setEleicao(Eleicao eleicao) {
         this.eleicao = eleicao;
+    }
+
+    public Secao getSecao() {
+        return secao;
+    }
+
+    public void setSecao(Secao secao) {
+        this.secao = secao;
     }
 }

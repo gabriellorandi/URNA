@@ -1,7 +1,6 @@
 package Login;
 
 import Eleicao.Controle.ControleEleicaoController;
-import Eleicao.Controle.ControleEleitorController;
 import Mesario.Mesario;
 import Mesario.MesarioDAO;
 import Utils.AlertUtils;

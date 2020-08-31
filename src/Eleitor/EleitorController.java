@@ -58,12 +58,19 @@ public class EleitorController {
     public void initialize() {
 
         eleitorDAO = new EleitorDAO();
-        eleitores = eleitorDAO.selecionarEleitores();
-
         grupoDAO = new GrupoDAO();
+        secaoDAO = new SecaoDAO();
+
+    }
+
+    public void load(Eleicao eleicao) {
+
+        this.eleicao = eleicao;
+        eleitores = eleitorDAO.selecionarEleitores(eleicao);
+
+
         grupos = grupoDAO.selecionarGrupos();
 
-        secaoDAO = new SecaoDAO();
         secaos = secaoDAO.selecionarSecoes();
 
         cbGrupo.getItems().addAll(grupos);
@@ -77,8 +84,8 @@ public class EleitorController {
 
         tableView.getItems().addAll(eleitores);
         tableView.refresh();
-
     }
+
 
 
     public void close(ActionEvent event) throws Exception{
@@ -99,8 +106,20 @@ public class EleitorController {
             eleitor.setNome( txtNome.getText() );
 
         Secao secao = (Secao) cbSecao.getSelectionModel().getSelectedItem();
+        Grupo grupo = (Grupo) cbGrupo.getSelectionModel().getSelectedItem();
+
+        if(secao == null) {
+            AlertUtils.alert("informação faltando","Por favor selecionar uma seção para cadastro", Alert.AlertType.WARNING);
+            return;
+        }
+
+        if(grupo == null) {
+            AlertUtils.alert("informação faltando","Por favor selecionar um grupo para cadastro", Alert.AlertType.WARNING);
+            return;
+        }
 
         eleitor.setSecao(secao);
+        eleitor.setGrupo(grupo);
 
         if(!contemEleitor(eleitor)) {
 
@@ -165,6 +184,11 @@ public class EleitorController {
 
         Secao secao = (Secao) cbSecao.getSelectionModel().getSelectedItem();
 
+        if(secao == null) {
+            AlertUtils.alert("informação faltando","Por favor selecionar uma seção para cadastro", Alert.AlertType.WARNING);
+            return;
+        }
+
         if(file != null) {
 
             List<Eleitor> eleitores = ImportUtils.loadEleitores(file);
@@ -174,16 +198,12 @@ public class EleitorController {
                 eleitorDAO.cadastrarEleitor(eleitor,eleicao);
             }
 
-            eleitores = eleitorDAO.selecionarEleitores();
+            eleitores = eleitorDAO.selecionarEleitores(eleicao);
             tableView.getItems().setAll(eleitores);
             tableView.refresh();
 
         }
 
-    }
-
-    public void load(Eleicao eleicao) {
-        this.eleicao = eleicao;
     }
 
 }

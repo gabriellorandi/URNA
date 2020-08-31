@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -20,6 +21,7 @@
          </columns>
       </TableView>
       <Button fx:id="btnRemove" layoutX="22.0" layoutY="370.0" mnemonicParsing="false" onAction="#removerCargo" prefHeight="25.0" prefWidth="146.0" text="Remover" />
-      <ComboBox fx:id="cbGrupo" layoutX="239.0" layoutY="30.0" prefHeight="25.0" prefWidth="193.0" />
+      <ComboBox fx:id="cbGrupo" layoutX="306.0" layoutY="30.0" prefHeight="25.0" prefWidth="193.0" />
+      <Label layoutX="250.0" layoutY="34.0" text="Grupos" />
    </children>
 </AnchorPane>

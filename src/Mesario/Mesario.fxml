@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="442.0" prefWidth="809.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Mesario.MesarioController">
+<AnchorPane prefHeight="442.0" prefWidth="809.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Mesario.MesarioController">
    <children>
       <TextField fx:id="txtNome" layoutX="22.0" layoutY="30.0" prefHeight="25.0" prefWidth="184.0" promptText="Nome" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="603.0" AnchorPane.topAnchor="30.0" />
       <TextField fx:id="txtCpf" layoutX="221.0" layoutY="30.0" prefHeight="25.0" prefWidth="193.0" promptText="CPF" AnchorPane.leftAnchor="221.0" AnchorPane.rightAnchor="395.0" AnchorPane.topAnchor="30.0" />
@@ -19,7 +23,7 @@
          </columns>
       </TableView>
       <TextField fx:id="txtLogin" layoutX="439.0" layoutY="30.0" prefHeight="25.0" prefWidth="160.0" promptText="Login" />
-      <Button fx:id="btnRemove" cancelButton="true" layoutX="22.0" layoutY="381.0" mnemonicParsing="false" onAction="#removerMesario" prefHeight="25.0" prefWidth="139.0" text="Remover" />
+      <Button fx:id="btnRemove" cancelButton="true" layoutX="487.0" layoutY="71.0" mnemonicParsing="false" onAction="#removerMesario" prefHeight="25.0" prefWidth="139.0" text="Remover" />
       <PasswordField fx:id="txtSenha" layoutX="626.0" layoutY="30.0" prefHeight="25.0" prefWidth="160.0" promptText="Senha" />
    </children>
 </AnchorPane>

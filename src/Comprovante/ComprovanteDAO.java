@@ -2,8 +2,10 @@ package Comprovante;
 
 import Eleicao.Eleicao;
 import Eleitor.Eleitor;
+import Utils.AlertUtils;
 import Utils.PSQLException;
 import Utils.PostgreSQLJDBC;
+import javafx.scene.control.Alert;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,25 +16,25 @@ import java.util.List;
 
 public class ComprovanteDAO {
 
-    public Comprovante cadastrarCargo(Comprovante c) {
+    public Comprovante cadastrarComprovante(Comprovante c) {
 
         try {
             Connection conn = PostgreSQLJDBC.conectar();
             PreparedStatement prestmt = conn.prepareStatement(
-                    "INSERT INTO Comprovante(id,eleicao_id,eleitor_id) VALUES (?,?,?)");
-            prestmt.setLong(1,c.getId());
+                    "INSERT INTO Comprovante(eleicao_id,eleitor_id,secao_id) VALUES (?,?,?)");
             prestmt.setLong(1,c.getEleicao().getId());
-            prestmt.setLong(1,c.getEleitor().getId());
+            prestmt.setLong(2,c.getEleitor().getId());
+            prestmt.setLong(3,c.getSecao().getId());
             prestmt.execute();
             prestmt.close();
         } catch (SQLException sql) {
-            new PSQLException(sql);
+            AlertUtils.alert("Erro no banco de dados","Code: "+sql.getErrorCode()+" - Erro:"+sql.getMessage(), Alert.AlertType.ERROR);
         }
         return c;
 
     }
 
-    public List<Comprovante> selecionarCargos() {
+    public List<Comprovante> selecionarComprovantes() {
 
 
         List<Comprovante> comprovantes = new ArrayList<>();
@@ -67,7 +69,7 @@ public class ComprovanteDAO {
 
             prestmt.close();
         }catch (SQLException sql) {
-            new PSQLException(sql);
+            AlertUtils.alert("Erro no banco de dados","Code: "+sql.getErrorCode()+" - Erro:"+sql.getMessage(), Alert.AlertType.ERROR);
         }
         return comprovantes;
 

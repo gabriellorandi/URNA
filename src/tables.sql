@@ -116,7 +116,6 @@ FOREIGN KEY (eleicao_id) REFERENCES Eleicao(id)
 CREATE TABLE Comprovante(
 
   id serial not null,
-  data date not null,
 
   secao_id bigint not null,
   eleicao_id bigint not null,

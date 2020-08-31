@@ -3,8 +3,10 @@ package Candidato;
 import Cargo.Cargo;
 import Chapa.Chapa;
 import Eleicao.Eleicao;
+import Utils.AlertUtils;
 import Utils.PSQLException;
 import Utils.PostgreSQLJDBC;
+import javafx.scene.control.Alert;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,7 +29,7 @@ public class CandidatoDAO {
                             " FROM Candidato c " +
                             " INNER JOIN Cargo cargo ON cargo.id = cargo_id " +
                             " INNER JOIN Chapa chapa ON chapa.id = chapa_id " +
-                            " INNER JOIN Eleicao e ON e.id = eleicao_id " +
+                            " INNER JOIN Eleicao e ON e.id = c.eleicao_id " +
                             " WHERE e.id = ? AND c.id = ? AND cargo.id = ? ");
 
             prestmt.setLong(1, e.getId() );
@@ -61,7 +63,7 @@ public class CandidatoDAO {
 
 
         }catch (SQLException sql) {
-            new PSQLException(sql);
+            AlertUtils.alert("Erro no banco de dados","Code: "+sql.getErrorCode()+" - Erro:"+sql.getMessage(), Alert.AlertType.ERROR);
         }
 
         return null;
@@ -84,7 +86,7 @@ public class CandidatoDAO {
             prestmt.execute();
             prestmt.close();
         } catch (SQLException sql) {
-            new PSQLException(sql);
+            AlertUtils.alert("Erro no banco de dados","Code: "+sql.getErrorCode()+" - Erro:"+sql.getMessage(), Alert.AlertType.ERROR);
         }
         return c;
     }
@@ -102,9 +104,14 @@ public class CandidatoDAO {
         }
     }
 
-    public List<Candidato> selecionarCandidatos() {
+    public List<Candidato> selecionarCandidatos(Eleicao eleicao) {
 
         List<Candidato> candidatoes = new ArrayList<>();
+
+        if(eleicao == null) {
+            return candidatoes;
+        }
+
         try{
             Connection conn = PostgreSQLJDBC.conectar();
             PreparedStatement prestmt = conn.prepareStatement(
@@ -113,7 +120,9 @@ public class CandidatoDAO {
                             " chapa.id as chapaId,chapa.sigla as chapaSigla,chapa.nome as chapaNome " +
                             " FROM Candidato c " +
                             " INNER JOIN Cargo cargo ON cargo.id = cargo_id " +
-                            " INNER JOIN Chapa chapa ON chapa.id = chapa_id ");
+                            " INNER JOIN Chapa chapa ON chapa.id = chapa_id " +
+                            " WHERE c.eleicao_id = ? ");
+            prestmt.setLong(1,eleicao.getId());
 
             ResultSet rs = prestmt.executeQuery();
 
@@ -141,7 +150,7 @@ public class CandidatoDAO {
 
             prestmt.close();
         }catch (SQLException sql) {
-            new PSQLException(sql);
+            AlertUtils.alert("Erro no banco de dados","Code: "+sql.getErrorCode()+" - Erro:"+sql.getMessage(), Alert.AlertType.ERROR);
         }
         return candidatoes;
     }

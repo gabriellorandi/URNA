@@ -1,7 +1,9 @@
 package Chapa;
 
+import Utils.AlertUtils;
 import Utils.PSQLException;
 import Utils.PostgreSQLJDBC;
+import javafx.scene.control.Alert;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,7 +24,7 @@ public class ChapaDAO {
             prestmt.execute();
             prestmt.close();
         } catch (SQLException sql) {
-            new PSQLException(sql);
+            AlertUtils.alert("Erro no banco de dados","Code: "+sql.getErrorCode()+" - Erro:"+sql.getMessage(), Alert.AlertType.ERROR);
         }
         return c;
     }
@@ -36,7 +38,7 @@ public class ChapaDAO {
             prestmt.execute();
             prestmt.close();
         } catch (SQLException sql) {
-            new PSQLException(sql);
+            AlertUtils.alert("Erro no banco de dados","Code: "+sql.getErrorCode()+" - Erro:"+sql.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
@@ -61,7 +63,7 @@ public class ChapaDAO {
 
             prestmt.close();
         }catch (SQLException sql) {
-            new PSQLException(sql);
+            AlertUtils.alert("Erro no banco de dados","Code: "+sql.getErrorCode()+" - Erro:"+sql.getMessage(), Alert.AlertType.ERROR);
         }
         return chapas;
     }
