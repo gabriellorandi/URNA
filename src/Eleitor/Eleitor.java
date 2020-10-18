@@ -1,5 +1,7 @@
 package Eleitor;
 
+import java.util.Objects;
+
 public class Eleitor {
 
     private Long id;
@@ -29,4 +31,18 @@ public class Eleitor {
     public void setCpf(Long cpf) {
         this.cpf = cpf;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Eleitor eleitor = (Eleitor) o;
+        return Objects.equals(id, eleitor.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
 }

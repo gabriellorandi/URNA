@@ -10,8 +10,8 @@ import javafx.stage.Stage;
 
 public class UrnaController {
 
-    private static final int HEIGHT = 400;
-    private static final int WIDTH = 600;
+    private static final int HEIGHT = 600;
+    private static final int WIDTH = 800;
 
     @FXML
     Button btnCandidatos;
@@ -36,8 +36,7 @@ public class UrnaController {
 
         Parent parent = FXMLLoader.load(getClass().getResource("../Candidato/Candidate.fxml"));
 
-        Stage stage = (Stage)btnCandidatos.getScene().getWindow();
-
+        Stage stage = new Stage();
         Scene scene = new Scene(parent,WIDTH,HEIGHT);
         stage.setTitle("Adicionar Candidato");
         stage.setScene(scene);
@@ -49,8 +48,7 @@ public class UrnaController {
 
         Parent parent = FXMLLoader.load(getClass().getResource("../Mesario/Mesario.fxml"));
 
-        Stage stage = (Stage)btnCandidatos.getScene().getWindow();
-
+        Stage stage = new Stage();
         Scene scene = new Scene(parent,WIDTH,HEIGHT);
         stage.setTitle("Adicionar Mesário");
         stage.setScene(scene);
@@ -62,8 +60,7 @@ public class UrnaController {
 
         Parent parent = FXMLLoader.load(getClass().getResource("../Eleitor/Eleitor.fxml"));
 
-        Stage stage = (Stage)btnCandidatos.getScene().getWindow();
-
+        Stage stage = new Stage();
         Scene scene = new Scene(parent,WIDTH,HEIGHT);
         stage.setTitle("Adicionar Eleitor");
         stage.setScene(scene);
@@ -75,8 +72,7 @@ public class UrnaController {
 
         Parent parent = FXMLLoader.load(getClass().getResource("../Chapa/Chapa.fxml"));
 
-        Stage stage = (Stage)btnCandidatos.getScene().getWindow();
-
+        Stage stage = new Stage();
         Scene scene = new Scene(parent,WIDTH,HEIGHT);
         stage.setTitle("Adicionar Chapa");
         stage.setScene(scene);
@@ -88,8 +84,7 @@ public class UrnaController {
 
         Parent parent = FXMLLoader.load(getClass().getResource("../Grupo/Grupo.fxml"));
 
-        Stage stage = (Stage)btnCandidatos.getScene().getWindow();
-
+        Stage stage = new Stage();
         Scene scene = new Scene(parent,WIDTH,HEIGHT);
         stage.setTitle("Adicionar Grupo");
         stage.setScene(scene);
@@ -101,8 +96,7 @@ public class UrnaController {
 
         Parent parent = FXMLLoader.load(getClass().getResource("../Eleicao/Eleicao.fxml"));
 
-        Stage stage = (Stage)btnCandidatos.getScene().getWindow();
-
+        Stage stage = new Stage();
         Scene scene = new Scene(parent,WIDTH,HEIGHT);
         stage.setTitle("Adicionar Eleição");
         stage.setScene(scene);

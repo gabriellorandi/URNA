@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Candidato.CandidatoController">
-   <children>
-      <TextField fx:id="txtId" layoutX="198.0" layoutY="102.0" prefHeight="25.0" prefWidth="204.0" promptText="ID" AnchorPane.leftAnchor="198.0" AnchorPane.rightAnchor="198.0" AnchorPane.topAnchor="102.0" />
-      <TextField fx:id="txtNome" layoutX="198.0" layoutY="152.0" prefHeight="25.0" prefWidth="204.0" promptText="Nome" AnchorPane.leftAnchor="198.0" AnchorPane.rightAnchor="198.0" AnchorPane.topAnchor="152.0" />
-      <TextField fx:id="txtCpf" layoutX="198.0" layoutY="202.0" prefHeight="25.0" prefWidth="204.0" promptText="CPF" AnchorPane.leftAnchor="198.0" AnchorPane.rightAnchor="198.0" AnchorPane.topAnchor="202.0" />
-      <Button fx:id="btnAdd" layoutX="145.0" layoutY="303.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="139.0" text="Adicionar" />
-      <Button fx:id="btnCancel" cancelButton="true" layoutX="317.0" layoutY="303.0" mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="139.0" text="Cancelar" />
-   </children>
-
-
+<AnchorPane prefHeight="442.0" prefWidth="809.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Candidato.CandidatoController">
+    <children>
+        <TextField fx:id="txtId" layoutX="23.0" layoutY="30.0" prefHeight="25.0" prefWidth="193.0" promptText="ID" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="593.0" AnchorPane.topAnchor="30.0" />
+        <TextField fx:id="txtNome" layoutX="234.0" layoutY="30.0" prefHeight="25.0" prefWidth="193.0" promptText="Nome" AnchorPane.leftAnchor="234.0" AnchorPane.rightAnchor="382.0" AnchorPane.topAnchor="30.0" />
+        <Button fx:id="btnCadastrar" layoutX="650.0" layoutY="30.0" mnemonicParsing="false" onAction="#cadastrarCandidato" prefHeight="25.0" prefWidth="139.0" text="Adicionar" />
+        <Button fx:id="btnCancel" cancelButton="true" layoutX="22.0" layoutY="382.0" mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="139.0" text="Cancelar" />
+        <Button fx:id="btnCancel1" cancelButton="true" layoutX="192.0" layoutY="382.0" mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="139.0" text="Importar" />
+        <TableView fx:id="tableView" layoutX="22.0" layoutY="72.0" prefHeight="284.0" prefWidth="760.0">
+            <columns>
+                <TableColumn fx:id="candidatoId" prefWidth="135.0" text="ID" />
+                <TableColumn fx:id="candidatoNome" prefWidth="156.0" text="Nome" />
+                <TableColumn fx:id="acao" prefWidth="172.0" text="Ação" />
+            </columns>
+        </TableView>
+    </children>
 </AnchorPane>

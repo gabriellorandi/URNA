@@ -2,6 +2,7 @@ package Candidato;
 
 import Cargo.Cargo;
 import Chapa.Chapa;
+import Grupo.Grupo;
 
 import java.io.File;
 import java.util.List;
@@ -13,8 +14,9 @@ public class Candidato {
     private Long file;
     private File foto;
 
-    private List<Chapa> chapas;
+    private Chapa chapa;
     private Cargo cargo;
+    private Grupo grupo;
 
     public Long getId() {
         return id;
@@ -48,19 +50,27 @@ public class Candidato {
         this.foto = foto;
     }
 
-    public List<Chapa> getChapas() {
-        return chapas;
-    }
-
-    public void setChapas(List<Chapa> chapas) {
-        this.chapas = chapas;
-    }
-
     public Cargo getCargo() {
         return cargo;
     }
 
     public void setCargo(Cargo cargo) {
         this.cargo = cargo;
+    }
+
+    public Chapa getChapa() {
+        return chapa;
+    }
+
+    public void setChapa(Chapa chapa) {
+        this.chapa = chapa;
+    }
+
+    public Grupo getGrupo() {
+        return grupo;
+    }
+
+    public void setGrupo(Grupo grupo) {
+        this.grupo = grupo;
     }
 }

@@ -1,16 +1,60 @@
 package Voto;
 
-import java.util.Date;
+import Candidato.Candidato;
+import Eleicao.Eleicao;
+import Eleitor.Eleitor;
+
+import java.time.ZonedDateTime;
 
 public class Voto {
 
-    private Date data;
+    private Long id;
 
-    public Date getData() {
+    private ZonedDateTime data;
+
+    private Eleitor eleitor;
+
+    private Candidato candidato;
+
+    private Eleicao eleicao;
+
+    public ZonedDateTime getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(ZonedDateTime data) {
         this.data = data;
+    }
+
+    public Eleitor getEleitor() {
+        return eleitor;
+    }
+
+    public void setEleitor(Eleitor eleitor) {
+        this.eleitor = eleitor;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Candidato getCandidato() {
+        return candidato;
+    }
+
+    public void setCandidato(Candidato candidato) {
+        this.candidato = candidato;
+    }
+
+    public Eleicao getEleicao() {
+        return eleicao;
+    }
+
+    public void setEleicao(Eleicao eleicao) {
+        this.eleicao = eleicao;
     }
 }
