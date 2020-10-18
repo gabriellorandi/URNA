@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="442.0" prefWidth="916.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Secao.SecaoController">
+   <children>
+      <TextField fx:id="txtLogradouro" layoutX="29.0" layoutY="30.0" prefHeight="25.0" prefWidth="149.0" promptText="Logradouro" AnchorPane.leftAnchor="29.0" AnchorPane.rightAnchor="738.0" AnchorPane.topAnchor="30.0" />
+      <Button fx:id="btnCadastrar" layoutX="756.0" layoutY="30.0" mnemonicParsing="false" onAction="#cadastrarSecao" prefHeight="25.0" prefWidth="139.0" text="Adicionar" />
+      <Button fx:id="btnCancel" cancelButton="true" layoutX="756.0" layoutY="384.0" mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="139.0" text="Cancelar" />
+      <TableView fx:id="tableView" layoutX="22.0" layoutY="72.0" prefHeight="284.0" prefWidth="880.0">
+         <columns>
+            <TableColumn fx:id="secaoId" prefWidth="86.0" text="ID" />
+            <TableColumn fx:id="secaoLogradouro" minWidth="0.0" prefWidth="278.0" text="Nome" />
+            <TableColumn fx:id="secaoNumero" prefWidth="224.0" text="Numero" />
+            <TableColumn fx:id="secaoMesario" prefWidth="291.0" text="Mesário" />
+         </columns>
+      </TableView>
+      <Button fx:id="btnRemover" cancelButton="true" layoutX="600.0" layoutY="30.0" mnemonicParsing="false" onAction="#removerSecao" prefHeight="25.0" prefWidth="139.0" text="Remover" />
+      <TextField fx:id="txtNumero" layoutX="189.0" layoutY="30.0" prefHeight="25.0" prefWidth="127.0" promptText="Numero" />
+      <ComboBox fx:id="cbMesarios" layoutX="407.0" layoutY="30.0" prefHeight="25.0" prefWidth="139.0">
+         <items>
+            <FXCollections fx:factory="observableArrayList" />
+         </items>
+      </ComboBox>
+      <Label layoutX="350.0" layoutY="34.0" text="Mesários" />
+   </children>
+</AnchorPane>

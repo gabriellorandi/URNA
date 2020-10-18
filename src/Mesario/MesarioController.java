@@ -1,95 +1,102 @@
 package Mesario;
 
-import Eleitor.Eleitor;
+import Eleicao.Eleicao;
+import Utils.AlertUtils;
+import Utils.ValidateFields;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MesarioController {
     @FXML TextField txtId;
     @FXML TextField txtNome;
+    @FXML TextField txtCpf;
+    @FXML TextField txtLogin;
+    @FXML TextField txtSenha;
     @FXML Button btnAdd;
     @FXML Button btnCancel;
 
     @FXML private TableView<Mesario> tableView;
     @FXML private TableColumn<Mesario, Long> mesarioId;
     @FXML private TableColumn<Mesario, String> mesarioNome;
+    @FXML private TableColumn<Mesario, String> mesarioCpf;
+    @FXML private TableColumn<Mesario, String> mesarioLogin;
 
     List<Mesario> mesarios;
+    MesarioDAO mesarioDAO;
+
+    Eleicao eleicao;
 
     @FXML
     public void initialize() {
-        mesarios = new ArrayList<>();
+
+        mesarioDAO = new MesarioDAO();
+
+    }
+
+    public void load(Eleicao eleicao) {
+
+        this.eleicao = eleicao;
+        mesarios = mesarioDAO.selecionarMesarios(eleicao);
+
+        mesarioId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        mesarioNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        mesarioCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
+        mesarioLogin.setCellValueFactory(new PropertyValueFactory<>("login"));
+
         tableView.getItems().addAll(mesarios);
 
-        mesarioId.setCellValueFactory(new PropertyValueFactory<>("mesarioId"));
-        mesarioNome.setCellValueFactory(new PropertyValueFactory<>("mesarioNome"));
+        tableView.refresh();
     }
 
     public void close(ActionEvent event) throws Exception{
 
-        Parent parent = FXMLLoader.load(getClass().getResource("../Urna/Urna.fxml"));
-
         Stage stage = (Stage)btnCancel.getScene().getWindow();
-
-        stage.setTitle("Urna");
-        Scene scene = new Scene(parent);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-
-    public List<Mesario> buscarMesario(String busca) {
-
-        List<Mesario> buscarCandidatos = new ArrayList<>();
-        for (Mesario mesario : mesarios) {
-            if(mesario.getNome().contains(busca) )
-                buscarCandidatos.add(mesario);
-        }
-
-        return buscarCandidatos;
-
+        stage.close();
     }
 
     public void cadastrarMesario() {
 
-        Mesario mesario = new Mesario();
-        mesario.setId( Long.parseLong( txtId.getText() ) );
-        mesario.setNome( txtNome.getText() );
+        if (ValidateFields.validateTextField(txtNome.getText())
+        && ValidateFields.validateNumberField(txtCpf.getText())) {
+            Mesario mesario = new Mesario();
+            mesario.setNome( txtNome.getText() );
+            mesario.setCpf( txtCpf.getText() );
+            mesario.setLogin( txtLogin.getText() );
+            mesario.setSenha( txtSenha.getText() );
 
-        mesarios.add(mesario);
+            mesarioDAO.cadastrarMesario(mesario,eleicao);
 
-    }
+            mesarios = mesarioDAO.selecionarMesarios(eleicao);
 
-
-    public Mesario selecionarCandidatos(Long id) {
-
-        List<Eleitor> buscaEleitores = new ArrayList<>();
-        for (Mesario mesario : mesarios) {
-            if(mesario.getId() == id ){
-                return mesario;
-            }
+            tableView.getItems().setAll(mesarios);
+            txtNome.clear();
+            txtCpf.clear();
+            txtLogin.clear();
+            txtSenha.clear();
+            tableView.refresh();
+        } else {
+            AlertUtils.alert("Valores incorretos!", "Os valores inseridos nos campos estão incorretos. Tente novamente.", Alert.AlertType.ERROR);
         }
-        return null;
+
     }
 
-    public void removerCandidato(Long id) {
+    public void removerMesario() {
 
-        for (Mesario mesario : mesarios) {
-            if(mesario.getId() == id ){
-                mesarios.remove(mesario);
-            }
+        Mesario mesario = tableView.getSelectionModel().getSelectedItem();
+
+        if(mesario != null){
+
+            mesarios.remove(mesario);
+            mesarioDAO.removerMesario(mesario.getId());
+
+            tableView.getItems().setAll(mesarios);
+            tableView.refresh();
+
         }
     }
 

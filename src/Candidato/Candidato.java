@@ -2,21 +2,24 @@ package Candidato;
 
 import Cargo.Cargo;
 import Chapa.Chapa;
-import Grupo.Grupo;
 
 import java.io.File;
-import java.util.List;
 
 public class Candidato {
 
     private Long id;
     private String nome;
-    private Long file;
+    private Long cpf;
     private File foto;
 
     private Chapa chapa;
     private Cargo cargo;
-    private Grupo grupo;
+
+    @Override
+    public String toString() {
+
+        return "Id:"+id+" Nome:"+nome;
+    }
 
     public Long getId() {
         return id;
@@ -32,14 +35,6 @@ public class Candidato {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public Long getFile() {
-        return file;
-    }
-
-    public void setFile(Long file) {
-        this.file = file;
     }
 
     public File getFoto() {
@@ -66,11 +61,23 @@ public class Candidato {
         this.chapa = chapa;
     }
 
-    public Grupo getGrupo() {
-        return grupo;
+
+    public Long getCpf() {
+        return cpf;
     }
 
-    public void setGrupo(Grupo grupo) {
-        this.grupo = grupo;
+    public void setCpf(Long cpf) {
+        this.cpf = cpf;
     }
+
+    public String getCargoNome() {
+        return cargo.getNome();
+    }
+
+
+    public String getChapaNome() {
+        return chapa.getNome();
+    }
+
+
 }
