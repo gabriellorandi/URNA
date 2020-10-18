@@ -1,7 +1,9 @@
 package Grupo;
 
+import Utils.AlertUtils;
 import Utils.PSQLException;
 import Utils.PostgreSQLJDBC;
+import javafx.scene.control.Alert;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,12 +19,11 @@ public class GrupoDAO {
         try {
             Connection conn = PostgreSQLJDBC.conectar();
             PreparedStatement prestmt = conn.prepareStatement("INSERT INTO Grupo(nome) VALUES (?)");
-            prestmt.setLong(1,g.getId());
-            prestmt.setString(2,g.getNome());
+            prestmt.setString(1,g.getNome());
             prestmt.execute();
             prestmt.close();
         } catch (SQLException sql) {
-            new PSQLException(sql);
+            AlertUtils.alert("Erro no banco de dados","Code: "+sql.getErrorCode()+" - Erro:"+sql.getMessage(), Alert.AlertType.ERROR);
         }
         return g;
     }
@@ -36,7 +37,7 @@ public class GrupoDAO {
             prestmt.execute();
             prestmt.close();
         } catch (SQLException sql) {
-            new PSQLException(sql);
+            AlertUtils.alert("Erro no banco de dados","Code: "+sql.getErrorCode()+" - Erro:"+sql.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
@@ -49,7 +50,7 @@ public class GrupoDAO {
 
             ResultSet rs = prestmt.executeQuery();
 
-            if(rs.next()) {
+            while(rs.next()) {
                 Grupo g = new Grupo();
 
                 g.setId( rs.getLong("id") );
@@ -60,7 +61,7 @@ public class GrupoDAO {
 
             prestmt.close();
         }catch (SQLException sql) {
-            new PSQLException(sql);
+            AlertUtils.alert("Erro no banco de dados","Code: "+sql.getErrorCode()+" - Erro:"+sql.getMessage(), Alert.AlertType.ERROR);
         }
         return grupos;
     }

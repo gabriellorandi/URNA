@@ -1,11 +1,24 @@
 package Secao;
 
+import Mesario.Mesario;
+import Voto.Voto;
+
+import java.util.List;
+
 public class Secao {
 
     private Long id;
     private String logradouro;
     private Integer numero;
-    private String complemento;
+
+    private List<Voto> votos;
+    private Mesario mesario;
+
+    @Override
+    public String toString() {
+        return logradouro+", "+numero;
+    }
+
 
     public Long getId() {
         return id;
@@ -24,13 +37,6 @@ public class Secao {
         this.numero = numero;
     }
 
-    public String getComplemento() {
-        return complemento;
-    }
-
-    public void setComplemento(String complemento) {
-        this.complemento = complemento;
-    }
 
     public String getLogradouro() {
         return logradouro;
@@ -39,4 +45,25 @@ public class Secao {
     public void setLogradouro(String logradouro) {
         this.logradouro = logradouro;
     }
+
+    public List<Voto> getVotos() {
+        return votos;
+    }
+
+    public void setVotos(List<Voto> votos) {
+        this.votos = votos;
+    }
+
+    public Mesario getMesario() {
+        return mesario;
+    }
+
+    public String getMesarioNome() {
+        return mesario.getNome();
+    }
+
+    public void setMesario(Mesario mesario) {
+        this.mesario = mesario;
+    }
+
 }

@@ -1,31 +1,16 @@
-package Voto;
+package Comprovante;
 
-import Candidato.Candidato;
 import Eleicao.Eleicao;
+import Eleitor.Eleitor;
 import Secao.Secao;
 
-import java.time.LocalDate;
-import java.time.ZonedDateTime;
-
-public class Voto {
+public class Comprovante {
 
     private Long id;
 
-    private LocalDate data;
-
-    private Candidato candidato;
-
     private Eleicao eleicao;
-
+    private Eleitor eleitor;
     private Secao secao;
-
-    public LocalDate getData() {
-        return data;
-    }
-
-    public void setData(LocalDate data) {
-        this.data = data;
-    }
 
 
     public Long getId() {
@@ -36,20 +21,20 @@ public class Voto {
         this.id = id;
     }
 
-    public Candidato getCandidato() {
-        return candidato;
-    }
-
-    public void setCandidato(Candidato candidato) {
-        this.candidato = candidato;
-    }
-
     public Eleicao getEleicao() {
         return eleicao;
     }
 
     public void setEleicao(Eleicao eleicao) {
         this.eleicao = eleicao;
+    }
+
+    public Eleitor getEleitor() {
+        return eleitor;
+    }
+
+    public void setEleitor(Eleitor eleitor) {
+        this.eleitor = eleitor;
     }
 
     public Secao getSecao() {

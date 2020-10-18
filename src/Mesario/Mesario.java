@@ -1,19 +1,24 @@
 package Mesario;
 
-public class Mesario {
+public class Mesario  {
 
     private Long id;
-    private String nome;
+
     private String login;
     private String senha;
 
-    public Long getId() {
-        return id;
+    private boolean admin = Boolean.FALSE;
+
+
+    private String nome;
+
+    private String cpf;
+
+    @Override
+    public String toString() {
+        return nome;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getNome() {
         return nome;
@@ -21,6 +26,22 @@ public class Mesario {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getLogin() {
@@ -37,5 +58,13 @@ public class Mesario {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 }

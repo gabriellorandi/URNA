@@ -1,21 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane prefHeight="442.0" prefWidth="809.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Mesario.MesarioController">
    <children>
-      <TextField fx:id="txtId" layoutX="23.0" layoutY="30.0" prefHeight="25.0" prefWidth="193.0" promptText="ID" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="593.0" AnchorPane.topAnchor="30.0" />
-      <TextField fx:id="txtNome" layoutX="234.0" layoutY="30.0" prefHeight="25.0" prefWidth="193.0" promptText="Nome" AnchorPane.leftAnchor="234.0" AnchorPane.rightAnchor="382.0" AnchorPane.topAnchor="30.0" />
-      <TextField fx:id="txtCpf" layoutX="443.0" layoutY="30.0" prefHeight="25.0" prefWidth="193.0" promptText="CPF" AnchorPane.leftAnchor="443.0" AnchorPane.rightAnchor="173.0" AnchorPane.topAnchor="30.0" />
-      <Button fx:id="btnCadastrar" layoutX="650.0" layoutY="30.0" mnemonicParsing="false" onAction="#cadastrarMesario" prefHeight="25.0" prefWidth="139.0" text="Adicionar" />
-      <Button fx:id="btnCancel" cancelButton="true" layoutX="22.0" layoutY="382.0" mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="139.0" text="Cancelar" />
-      <TableView fx:id="tableView" layoutX="22.0" layoutY="72.0" prefHeight="284.0" prefWidth="760.0">
+      <TextField fx:id="txtNome" layoutX="22.0" layoutY="30.0" prefHeight="25.0" prefWidth="184.0" promptText="Nome" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="603.0" AnchorPane.topAnchor="30.0" />
+      <TextField fx:id="txtCpf" layoutX="221.0" layoutY="30.0" prefHeight="25.0" prefWidth="193.0" promptText="CPF" AnchorPane.leftAnchor="221.0" AnchorPane.rightAnchor="395.0" AnchorPane.topAnchor="30.0" />
+      <Button fx:id="btnCadastrar" layoutX="643.0" layoutY="71.0" mnemonicParsing="false" onAction="#cadastrarMesario" prefHeight="25.0" prefWidth="139.0" text="Adicionar" />
+      <Button fx:id="btnCancel" cancelButton="true" layoutX="636.0" layoutY="381.0" mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="139.0" text="Cancelar" />
+      <TableView fx:id="tableView" layoutX="22.0" layoutY="109.0" prefHeight="247.0" prefWidth="760.0">
          <columns>
-            <TableColumn fx:id="mesarioId" prefWidth="135.0" text="ID" />
-            <TableColumn fx:id="mesarioNome" prefWidth="156.0" text="Nome" />
-            <TableColumn fx:id="acao" prefWidth="172.0" text="Ação" />
+            <TableColumn fx:id="mesarioId" prefWidth="57.0" text="ID" />
+            <TableColumn fx:id="mesarioNome" prefWidth="196.0" text="Nome" />
+            <TableColumn fx:id="mesarioCpf" prefWidth="245.0" text="CPF" />
+            <TableColumn fx:id="mesarioLogin" prefWidth="261.0" text="Login" />
          </columns>
       </TableView>
+      <TextField fx:id="txtLogin" layoutX="439.0" layoutY="30.0" prefHeight="25.0" prefWidth="160.0" promptText="Login" />
+      <Button fx:id="btnRemove" cancelButton="true" layoutX="487.0" layoutY="71.0" mnemonicParsing="false" onAction="#removerMesario" prefHeight="25.0" prefWidth="139.0" text="Remover" />
+      <PasswordField fx:id="txtSenha" layoutX="626.0" layoutY="30.0" prefHeight="25.0" prefWidth="160.0" promptText="Senha" />
    </children>
 </AnchorPane>

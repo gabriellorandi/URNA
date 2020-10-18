@@ -2,14 +2,17 @@ package Voto;
 
 import Candidato.Candidato;
 import Eleicao.Eleicao;
-import Eleitor.Eleitor;
+import Secao.Secao;
+import Utils.AlertUtils;
 import Utils.PSQLException;
 import Utils.PostgreSQLJDBC;
+import javafx.scene.control.Alert;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,20 +21,37 @@ public class VotoDAO {
 
     public Voto cadastrarVoto(Voto v) {
 
+        Long candidatoId = (v.getCandidato()!=null)?v.getCandidato().getId():null;
+
+        if(candidatoId != null) {
+            try {
+                Connection conn = PostgreSQLJDBC.conectar();
+                PreparedStatement prestmt = conn.prepareStatement("INSERT INTO Voto(data,candidato_id,eleicao_id,secao_id) VALUES (?,?,?,?)");
+                prestmt.setObject(1,v.getData());
+                prestmt.setLong(2,candidatoId);
+                prestmt.setLong(3,v.getEleicao().getId());
+                prestmt.setLong(4,v.getSecao().getId());
+                prestmt.execute();
+                prestmt.close();
+            } catch (SQLException sql) {
+                AlertUtils.alert("Erro no banco de dados","Code: "+sql.getErrorCode()+" - Erro:"+sql.getMessage(), Alert.AlertType.ERROR);
+            }
+            return v;
+        }
+
         try {
             Connection conn = PostgreSQLJDBC.conectar();
-            PreparedStatement prestmt = conn.prepareStatement("INSERT INTO Voto(id,data,eleitor_id,candidato_id,eleicao_id) VALUES (?,?,?,?,?)");
-            prestmt.setLong(1,v.getId());
-            prestmt.setObject(2,v.getData());
-            prestmt.setLong(3,v.getEleitor().getId());
-            prestmt.setLong(4,v.getCandidato().getId());
-            prestmt.setLong(5,v.getEleicao().getId());
+            PreparedStatement prestmt = conn.prepareStatement("INSERT INTO Voto(data,eleicao_id,secao_id) VALUES (?,?,?)");
+            prestmt.setObject(1,v.getData());
+            prestmt.setLong(2,v.getEleicao().getId());
+            prestmt.setLong(3,v.getSecao().getId());
             prestmt.execute();
             prestmt.close();
         } catch (SQLException sql) {
-            new PSQLException(sql);
+            AlertUtils.alert("Erro no banco de dados","Code: "+sql.getErrorCode()+" - Erro:"+sql.getMessage(), Alert.AlertType.ERROR);
         }
         return v;
+
     }
 
     public void removerVoto(Long id) {
@@ -43,39 +63,44 @@ public class VotoDAO {
             prestmt.execute();
             prestmt.close();
         } catch (SQLException sql) {
-            new PSQLException(sql);
+            AlertUtils.alert("Erro no banco de dados","Code: "+sql.getErrorCode()+" - Erro:"+sql.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
-    public List<Voto> selecionarVotos() {
+    public List<Voto> selecionarVotos(Eleicao e, Secao s) {
 
         List<Voto> votos = new ArrayList<>();
         try{
             Connection conn = PostgreSQLJDBC.conectar();
             PreparedStatement prestmt = conn.prepareStatement(
-                    "SELECT id,data,eleitor_id,candidato_id,eleicao_id " +
-                         "INNER JOIN Eleitor e ON e.id = eleitor_id " +
-                         "INNER JOIN Candidato c ON c.id = candidato_id " +
-                         "INNER JOIN Eleicao el ON el.id = eleicao_id " +
-                         "FROM Voto ");
+                    "SELECT v.id as id, v.data as data, c.id as candidatoId  FROM Voto v " +
+                         "LEFT JOIN Candidato c ON c.id = v.candidato_id " +
+                         "INNER JOIN Eleicao el ON el.id = v.eleicao_id " +
+                         "INNER JOIN Secao s ON s.id = v.secao_id " +
+                         " WHERE v.eleicao_id = ? AND v.secao_id = ? ");
+            prestmt.setLong(1,e.getId());
+            prestmt.setLong(2,s.getId());
 
             ResultSet rs = prestmt.executeQuery();
 
-            if(rs.next()) {
+            while(rs.next()) {
                 Voto v = new Voto();
 
                 v.setId( rs.getLong("id") );
-                v.setData( rs.getObject("data", ZonedDateTime.class) );
-                v.setEleitor( rs.getObject("e", Eleitor.class) );
-                v.setCandidato( rs.getObject("c", Candidato.class) );
-                v.setEleicao(rs.getObject("el", Eleicao.class));
+                v.setData( rs.getDate("data").toLocalDate() );
+
+                Candidato candidato = new Candidato();
+                candidato.setId(  rs.getLong("candidatoId") );
+
+
+                v.setCandidato(candidato);
 
                 votos.add(v);
             }
 
             prestmt.close();
         }catch (SQLException sql) {
-            new PSQLException(sql);
+            AlertUtils.alert("Erro no banco de dados","Code: "+sql.getErrorCode()+" - Erro:"+sql.getMessage(), Alert.AlertType.ERROR);
         }
         return votos;
     }

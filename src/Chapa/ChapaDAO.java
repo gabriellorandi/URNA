@@ -1,7 +1,9 @@
 package Chapa;
 
+import Utils.AlertUtils;
 import Utils.PSQLException;
 import Utils.PostgreSQLJDBC;
+import javafx.scene.control.Alert;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,13 +19,12 @@ public class ChapaDAO {
         try {
             Connection conn = PostgreSQLJDBC.conectar();
             PreparedStatement prestmt = conn.prepareStatement("INSERT INTO Chapa(sigla,nome) VALUES (?,?)");
-            prestmt.setLong(1,c.getId());
-            prestmt.setString(2,c.getSigla());
-            prestmt.setString(3,c.getNome());
+            prestmt.setString(1,c.getSigla());
+            prestmt.setString(2,c.getNome());
             prestmt.execute();
             prestmt.close();
         } catch (SQLException sql) {
-            new PSQLException(sql);
+            AlertUtils.alert("Erro no banco de dados","Code: "+sql.getErrorCode()+" - Erro:"+sql.getMessage(), Alert.AlertType.ERROR);
         }
         return c;
     }
@@ -37,7 +38,7 @@ public class ChapaDAO {
             prestmt.execute();
             prestmt.close();
         } catch (SQLException sql) {
-            new PSQLException(sql);
+            AlertUtils.alert("Erro no banco de dados","Code: "+sql.getErrorCode()+" - Erro:"+sql.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
@@ -50,7 +51,7 @@ public class ChapaDAO {
 
             ResultSet rs = prestmt.executeQuery();
 
-            if(rs.next()) {
+            while(rs.next()) {
                 Chapa e = new Chapa();
 
                 e.setId( rs.getLong("id") );
@@ -62,7 +63,7 @@ public class ChapaDAO {
 
             prestmt.close();
         }catch (SQLException sql) {
-            new PSQLException(sql);
+            AlertUtils.alert("Erro no banco de dados","Code: "+sql.getErrorCode()+" - Erro:"+sql.getMessage(), Alert.AlertType.ERROR);
         }
         return chapas;
     }
