@@ -55,7 +55,9 @@ public void importar() throws IOException {
     }
 ```
 
-## Licença
+## Contribuidores
 
+[Thiago Henrique](https://github.com/thn99)
 [Gabriel Lorandi](https://www.linkedin.com/in/gabriel-lorandi/)
+[Brendow Podsclan](https://github.com/Podsclan)
 
